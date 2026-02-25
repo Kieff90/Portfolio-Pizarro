@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedro Pizarro — Delivery Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #181818;
+    --border: #222222;
+    --accent: #e8ff4a;
+    --accent2: #ff6b35;
+    --text: #f0f0f0;
+    --muted: #666666;
+    --muted2: #444444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── NAV ── */
+  nav {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .nav-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(232, 255, 74, 0.08);
+    border: 1px solid rgba(232, 255, 74, 0.2);
+    padding: 4px 12px;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 80px 0 72px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 8vw, 88px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .hero-name span {
+    color: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3.5vw, 36px);
+    font-weight: 400;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 40px;
+  }
+
+  .hero-description {
+    max-width: 560px;
+    font-size: 17px;
+    color: #aaaaaa;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  .hero-description strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #0a0a0a;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover { background: #d4eb3a; transform: translateY(-1px); }
+
+  .btn-secondary {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid var(--muted2);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-secondary:hover { color: var(--text); border-color: var(--text); }
+
+  /* ── STATS ── */
+  .stats {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .stat {
+    padding: 0 32px 0 0;
+    border-right: 1px solid var(--border);
+    margin-right: 32px;
+  }
+  .stat:last-child { border-right: none; margin-right: 0; }
+  .stat:first-child { padding-left: 0; }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section {
+    padding: 72px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 48px;
+  }
+
+  /* ── PROJECTS ── */
+  .projects { display: flex; flex-direction: column; gap: 2px; }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 36px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: default;
+  }
+
+  .project-card:hover {
+    border-color: var(--muted2);
+    background: var(--surface2);
+  }
+
+  .project-index {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .project-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .project-desc {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.65;
+  }
+
+  .project-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .metric-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    background: rgba(232, 255, 74, 0.03);
+    border: 1px solid rgba(232, 255, 74, 0.08);
+    border-radius: 2px;
+  }
+
+  .metric-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    min-width: 80px;
+  }
+
+  .metric-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    line-height: 1.5;
+    padding-top: 4px;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 20px;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience-list { display: flex; flex-direction: column; gap: 0; }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .exp-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .exp-company {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  .exp-domain {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  .exp-content {}
+
+  .exp-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .exp-bullets li {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.6;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .exp-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--muted2);
+    font-size: 12px;
+  }
+
+  .exp-bullets li strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .exp-highlight {
+    display: inline;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ── SKILLS GRID ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .skill-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    transition: border-color 0.2s;
+  }
+
+  .skill-group:hover { border-color: var(--muted2); }
+
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .skill-list li {
+    font-size: 13px;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .skill-list li::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--muted2);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── CERTS ── */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+
+  .cert-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .cert-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted2);
+    min-width: 36px;
+  }
+
+  .cert-name {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .cert-badge {
+    margin-left: auto;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── PUBLICATIONS ── */
+  .pub-list { display: flex; flex-direction: column; gap: 2px; }
+
+  .pub-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 32px;
+    transition: border-color 0.2s;
+  }
+
+  .pub-item:hover { border-color: var(--muted2); }
+
+  .pub-title { font-size: 15px; color: var(--text); font-weight: 400; margin-bottom: 6px; }
+
+  .pub-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  .pub-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--muted2);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 48px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .footer-contact {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .footer-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .footer-link:hover { color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow { animation: fadeInUp 0.5s ease both; }
+  .hero-name { animation: fadeInUp 0.5s 0.1s ease both; }
+  .hero-title { animation: fadeInUp 0.5s 0.2s ease both; }
+  .hero-description { animation: fadeInUp 0.5s 0.3s ease both; }
+  .hero-cta { animation: fadeInUp 0.5s 0.4s ease both; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="container">
+  <nav>
+    <span class="nav-logo">Pedro Pizarro Diaz</span>
+    <span class="nav-tag">Available for hire</span>
+  </nav>
+</div>
+
+<!-- HERO -->
+<div class="container">
+  <section class="hero">
+    <p class="hero-eyebrow">Delivery Manager · AI Implementation · Remote EU</p>
+    <h1 class="hero-name">Pedro<br><span>Pizarro.</span></h1>
+    <p class="hero-title">I ship software. Teams actually deliver.</p>
+    <p class="hero-description">
+      14 years managing delivery across <strong>banking, aerospace, energy, and AI startups</strong>. 
+      Not theory — I've owned release pipelines, fixed broken backlogs, and embedded AI into 
+      sprint rituals that 40+ people now use daily. 
+      I work where <strong>execution matters more than slides</strong>.
+    </p>
+    <div class="hero-cta">
+      <a href="mailto:pedropizarro@live.it" class="btn-primary">Get in touch ↗</a>
+      <a href="https://linkedin.com/in/pedro-pizarro-diaz" class="btn-secondary">LinkedIn profile</a>
+    </div>
+  </section>
+</div>
+
+<!-- STATS -->
+<div class="container">
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-number">14</div>
+      <div class="stat-label">Years<br>in delivery</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">+85%</div>
+      <div class="stat-label">Sprint commit<br>rate achieved</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">−50%</div>
+      <div class="stat-label">Cycle time<br>reduced</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">40+</div>
+      <div class="stat-label">Professionals<br>using my AI setup</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS / PORTFOLIO -->
+<div class="container">
+  <section class="section">
+    <div class="section-label">Selected work</div>
+
+    <div class="projects">
+
+      <!-- Project 1 -->
+      <div class="project-card">
+        <div>
+          <div class="project-index">01 / 03</div>
+          <h3 class="project-title">Enterprise Agile Transformation & Team Performance</h3>
+          <div class="project-role">Agile Delivery Manager · Digital Transformation Lead</div>
+          <p class="project-desc">
+            Major European energy company. 6 business units, 40+ people, 5 concurrent workstreams. 
+            Moved from waterfall to SAFe/Scrum without stopping delivery. Then embedded AI into sprint rituals — story readiness up, manual work down.
+          </p>
+          <div class="project-tags">
+            <span class="tag">SAFe</span>
+            <span class="tag">Scrum</span>
+            <span class="tag">AI Workflows</span>
+            <span class="tag">LLM Governance</span>
+            <span class="tag">6 Business Units</span>
+          </div>
+        </div>
+        <div class="project-metrics">
+          <div class="metric-row">
+            <div class="metric-value">85%</div>
+            <div class="metric-desc">Sprint commit rate — up from 60%</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-value">−50%</div>
+            <div class="metric-desc">Cycle time: 6 days → 3 days</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-value">70%</div>
+            <div class="metric-desc">Enterprise AI adoption rate</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-value">+35%</div>
+            <div class="metric-desc">Story readiness via AI assistants</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card">
+        <div>
+          <div class="project-index">02 / 03</div>
+          <h3 class="project-title">Complex Systems Integration — Jira Migration</h3>
+          <div class="project-role">Technical Project Manager</div>
+          <p class="project-desc">
+            Major logistics company. Jira on-premise → cloud migration for 100+ people, 
+            multiple legacy systems, unrealistic timelines pushed by management. 
+            Used flow metrics to kill the bad timeline before it killed the project. 
+            Zero scope creep, zero post-production firefighting.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Jira Cloud Migration</span>
+            <span class="tag">Flow Metrics</span>
+            <span class="tag">Quality Gates</span>
+            <span class="tag">100+ Users</span>
+          </div>
+        </div>
+        <div class="project-metrics">
+          <div class="metric-row">
+            <div class="metric-value">0</div>
+            <div class="metric-desc">Scope creep — Definition of Done enforced throughout</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-value">3w</div>
+            <div class="metric-desc">Post-production firefighting saved by quality gates</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-value">100+</div>
+            <div class="metric-desc">Users migrated across complex legacy systems</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project-card">
+        <div>
+          <div class="project-index">03 / 03</div>
+          <h3 class="project-title">AI Startup Product Development — FlowMeUp</h3>
+          <div class="project-role">Product Development Coordinator · Business-Tech Bridge</div>
+          <p class="project-desc">
+            Built from zero. AI automation platform for Italian SMEs — knowledge search + process automation. 
+            Translated complex AI capabilities into user stories and market-ready features. 
+            MVP shipped in 2 months. Competitive analysis across 15+ tools (Zapier, Make, n8n).
+          </p>
+          <div class="project-tags">
+            <span class="tag">AI Product</span>
+            <span class="tag">MVP in 2 months</span>
+            <span class="tag">RAG / AREX</span>
+            <span class="tag">N8N</span>
+            <span class="tag">LLM Governance</span>
+          </div>
+        </div>
+        <div class="project-metrics">
+          <div class="metric-row">
+            <div class="metric-value">2mo</div>
+            <div class="metric-desc">Zero to working MVP with iterative releases</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-value">30+</div>
+            <div class="metric-desc">SME owner interviews for feature validation</div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-value">15+</div>
+            <div class="metric-desc">Competitors analyzed in market positioning</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- EXPERIENCE -->
+<div class="container">
+  <section class="section">
+    <div class="section-label">Experience</div>
+
+    <div class="experience-list">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="exp-period">2022 — Now</span>
+          <span class="exp-company">BIP Consulting</span>
+          <span class="exp-domain">Banking · Insurance<br>Energy · Public Sector<br>Logistics</span>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Agile Delivery Manager</div>
+          <ul class="exp-bullets">
+            <li>End-to-end delivery across <strong>5+ concurrent workstreams</strong> — backend, frontend, mobile iOS/Android, QA, design</li>
+            <li>Owned release pipelines with quality gates: UAT, NRT, BDD — <strong>no release without validated acceptance criteria</strong></li>
+            <li>Coordinated API integration delivery (REST, Swagger/OpenAPI) across internal and external services</li>
+            <li>Mobile banking app delivery: backend API dependencies, QA cycles, staged rollouts</li>
+            <li><span class="exp-highlight">AI (2025):</span> Custom assistants + agentic workflows → +35% story readiness, −40% repetitive planning, −30% dependency errors. 4 service lines, LLM governance framework</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="exp-period">2021 — 2022</span>
+          <span class="exp-company">AizoOn</span>
+          <span class="exp-domain">Aerospace (Regulated)<br>DevOps · CI/CD</span>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Scrum Master & Agile Coach</div>
+          <ul class="exp-bullets">
+            <li>Scrum Nexus across <strong>5 interconnected teams (~40 members)</strong> in compliance-audited environment</li>
+            <li>Improved release frequency: bi-monthly → <strong>every 3 weeks</strong> via CI/CD optimization in Azure DevOps</li>
+            <li>Built early-warning monitoring and auditable decision logs aligned with aerospace compliance</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <span class="exp-period">2019 — 2021</span>
+          <span class="exp-company">CWS Digital Solutions</span>
+          <span class="exp-domain">Corporate Training<br>Distributed Teams<br>Italy / India</span>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Scrum Master</div>
+          <ul class="exp-bullets">
+            <li>Distributed teams across Italy and India — <strong>5-6h daily overlap</strong>, structured async communication</li>
+            <li>Lead time cut from <strong>3 weeks → 1.5 weeks (−50%)</strong> via custom Lean-Kanban system</li>
+            <li>Led product discovery for custom CRM: 30+ user interviews, MVP workshops, integration requirements</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- SKILLS -->
+<div class="container">
+  <section class="section">
+    <div class="section-label">Capabilities</div>
+
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Delivery & Planning</div>
+        <ul class="skill-list">
+          <li>Release Management</li>
+          <li>Sprint Planning & Grooming</li>
+          <li>Backlog Hygiene</li>
+          <li>Risk Tracking</li>
+          <li>WIP & Flow Metrics</li>
+          <li>DORA Metrics</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Technical Stack</div>
+        <ul class="skill-list">
+          <li>Jira (full config + migration)</li>
+          <li>Azure DevOps · CI/CD</li>
+          <li>GitHub workflows</li>
+          <li>REST APIs · Swagger/OpenAPI</li>
+          <li>BDD · UAT · NRT</li>
+          <li>N8N · API integration</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">AI in Delivery</div>
+        <ul class="skill-list">
+          <li>Custom AI Assistants</li>
+          <li>Agentic Workflows</li>
+          <li>LLM Governance</li>
+          <li>RAG / AREX systems</li>
+          <li>Claude · ChatGPT · Copilot</li>
+          <li>Inverting Prompting (published)</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Frameworks</div>
+        <ul class="skill-list">
+          <li>SAFe 6</li>
+          <li>Scrum / Scrum Nexus</li>
+          <li>Kanban · Lean</li>
+          <li>DevOps</li>
+          <li>ITIL Foundation</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Domains</div>
+        <ul class="skill-list">
+          <li>Banking · Mobile App</li>
+          <li>Aerospace (regulated)</li>
+          <li>Energy · Insurance</li>
+          <li>Public Sector</li>
+          <li>AI Startups</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Languages</div>
+        <ul class="skill-list">
+          <li>Italian — Native</li>
+          <li>Spanish — Native</li>
+          <li>English — C2</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CERTIFICATIONS -->
+<div class="container">
+  <section class="section">
+    <div class="section-label">Certifications</div>
+
+    <div class="certs-grid">
+      <div class="cert-item">
+        <span class="cert-year">2025</span>
+        <span class="cert-name">Certified SAFe 6 Agilist</span>
+        <span class="cert-badge"></span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-year">2024</span>
+        <span class="cert-name">Professional Scrum Master II — PSM II</span>
+        <span class="cert-badge"></span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-year">2024</span>
+        <span class="cert-name">Professional Certified Coach — ICF ACSTH</span>
+        <span class="cert-badge"></span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-year">2024</span>
+        <span class="cert-name">Asana Workflow Specialist</span>
+        <span class="cert-badge"></span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-year">2023</span>
+        <span class="cert-name">CI/CD Solutions with Azure DevOps</span>
+        <span class="cert-badge"></span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-year">2021</span>
+        <span class="cert-name">Agile with Atlassian Jira — Coursera</span>
+        <span class="cert-badge"></span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-year">2020</span>
+        <span class="cert-name">Professional Scrum Master I — PSM I</span>
+        <span class="cert-badge"></span>
+      </div>
+      <div class="cert-item">
+        <span class="cert-year">2017</span>
+        <span class="cert-name">ITIL Foundation v2011</span>
+        <span class="cert-badge"></span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PUBLICATIONS -->
+<div class="container">
+  <section class="section">
+    <div class="section-label">Published research</div>
+
+    <div class="pub-list">
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">AI, Family, and Educational Change: Rethinking the Parenting Role</div>
+          <div class="pub-meta">ORCID: 0009-0005-8714-8976 · Turin, Italy</div>
+        </div>
+        <div class="pub-year">2025</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">Inverting Prompting: Carl Jacobi's Principle of Inversion in AI</div>
+          <div class="pub-meta">Prompt engineering technique — applied in AI training contexts</div>
+        </div>
+        <div class="pub-year">2024</div>
+      </div>
+      <div class="pub-item">
+        <div>
+          <div class="pub-title">Synergizing Artificial and Emotional Intelligence</div>
+          <div class="pub-meta">EI × AI in Agile environments — case studies and applications</div>
+        </div>
+        <div class="pub-year">2024</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<div class="container">
+  <footer>
+    <div class="footer-name">Pedro Pizarro Diaz</div>
+    <div class="footer-contact">
+      <a href="mailto:pedropizarro@live.it" class="footer-link">pedropizarro@live.it</a>
+      <a href="tel:+393761310537" class="footer-link">+39 376 131 0537</a>
+      <a href="https://linkedin.com/in/pedro-pizarro-diaz" class="footer-link">LinkedIn ↗</a>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
