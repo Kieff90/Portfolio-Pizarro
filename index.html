@@ -741,9 +741,31 @@
   @media (max-width: 768px) {
     .container { padding: 0 16px; }
 
-    body { padding-top: 64px; }
-    nav { padding: 16px 0; }
-    .nav-links { display: none; }
+    body { padding-top: 96px; }
+
+    nav {
+      padding: 10px 0 0;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0;
+    }
+
+    .nav-logo { order: 1; }
+    .nav-tag  { order: 2; margin-left: auto; }
+
+    .nav-links {
+      order: 3;
+      display: flex;
+      width: 100%;
+      gap: 20px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 8px 0 6px;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
 
     .hero { padding: 48px 0 40px; }
 
