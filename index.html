@@ -68,18 +68,6 @@
     gap: 16px;
   }
 
-  .nav-logo {
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: color 0.2s;
-    flex-shrink: 0;
-  }
-  .nav-logo:hover { color: var(--text); }
-
   .nav-links {
     display: flex;
     gap: 24px;
@@ -741,36 +729,24 @@
   @media (max-width: 768px) {
     .container { padding: 0 16px; }
 
-    body { padding-top: 96px; }
+    body { padding-top: 62px; }
 
-    nav {
-      padding: 10px 0 0;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0;
-    }
-
-    .nav-logo { order: 1; }
-    .nav-tag  { order: 2; margin-left: auto; }
+    nav { padding: 12px 0; }
 
     .nav-links {
-      order: 3;
       display: flex;
-      width: 100%;
-      gap: 20px;
+      gap: 16px;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
-      padding: 8px 0 6px;
-      border-top: 1px solid var(--border);
-      margin-top: 8px;
+      padding-bottom: 2px;
     }
     .nav-links::-webkit-scrollbar { display: none; }
     .nav-links a { color: var(--accent); font-weight: 500; }
     .nav-links a:hover { color: var(--text); }
     .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-    .hero { padding: 48px 0 40px; }
+    .hero { padding: 32px 0 40px; }
 
     .stats {
       grid-template-columns: repeat(2, 1fr);
@@ -839,7 +815,6 @@
 <header class="site-header">
   <div class="container">
     <nav>
-      <a href="#" class="nav-logo">Pedro Pizarro Diaz</a>
       <div class="nav-links">
         <a href="#work">Work</a>
         <a href="#experience">Experience</a>
