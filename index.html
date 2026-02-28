@@ -449,10 +449,15 @@
     background: var(--surface);
     border: 1px solid var(--border);
     padding: 28px;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s;
   }
 
-  .skill-group:hover { border-color: var(--muted2); }
+  .skill-group:hover {
+    border-color: var(--muted2);
+    background: var(--surface2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
 
   .skill-group-title {
     font-family: 'DM Mono', monospace;
@@ -526,38 +531,6 @@
     flex-shrink: 0;
   }
 
-  /* ── PUBLICATIONS ── */
-  .pub-list { display: flex; flex-direction: column; gap: 2px; }
-
-  .pub-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 28px 32px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 32px;
-    transition: border-color 0.2s;
-  }
-
-  .pub-item:hover { border-color: var(--muted2); }
-
-  .pub-title { font-size: 15px; color: var(--text); font-weight: 400; margin-bottom: 6px; }
-
-  .pub-meta {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-  }
-
-  .pub-year {
-    font-family: 'Playfair Display', serif;
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--muted2);
-  }
-
   /* ── FOOTER ── */
   footer {
     padding: 48px 0;
@@ -593,14 +566,10 @@
 
   .footer-link:hover { color: var(--accent); }
 
-  /* pub-title clickable */
-  .pub-title a { color: inherit; text-decoration: none; transition: color 0.2s; }
-  .pub-title a:hover { color: var(--accent); }
-
   /* ── ANIMATIONS ── */
   @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
   }
 
   .hero-eyebrow { animation: fadeInUp 0.5s ease both; }
@@ -772,12 +741,6 @@
     .skills-grid { grid-template-columns: repeat(2, 1fr); }
 
     .certs-grid { grid-template-columns: 1fr; }
-
-    .pub-item {
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-    .pub-year { font-size: 22px; }
 
     footer { flex-direction: column; align-items: flex-start; gap: 24px; }
     .footer-contact { flex-wrap: wrap; gap: 16px; }
@@ -1184,34 +1147,6 @@
   </section>
 </div>
 
-<!-- PUBLICATIONS -->
-<div class="container">
-  <section class="section" id="publications">
-    <div class="section-label">Published research</div>
-
-    <div class="pub-list">
-      <div class="pub-item reveal">
-        <div>
-          <div class="pub-title"><a href="https://drive.google.com/file/d/1I7lcN0QrB6kgJeTizV1OXWQUa52Lm8Lf/view?usp=share_link" target="_blank" rel="noopener">AI, Family, and Educational Change: Rethinking the Parenting Role</a></div>
-        </div>
-        <div class="pub-year">2025</div>
-      </div>
-      <div class="pub-item reveal">
-        <div>
-          <div class="pub-title"><a href="https://drive.google.com/file/d/1t3E-Ypao7kxmkSsbhY3uGXFZR43HtxIQ/view?usp=sharing" target="_blank" rel="noopener">Inverting Prompting: Carl Jacobi's Principle of Inversion in AI</a></div>
-        </div>
-        <div class="pub-year">2024</div>
-      </div>
-      <div class="pub-item reveal">
-        <div>
-          <div class="pub-title"><a href="https://drive.google.com/file/d/1ziXyraW3W_oOsrPc60SPm4fsChg6cCS1/view?usp=share_link" target="_blank" rel="noopener">Synergizing Artificial and Emotional Intelligence</a></div>
-        </div>
-        <div class="pub-year">2024</div>
-      </div>
-    </div>
-  </section>
-</div>
-
 <!-- FOOTER -->
 <div class="container" id="contact">
   <footer>
@@ -1270,7 +1205,7 @@
 
   /* ── ACTIVE NAV SECTION ── */
   var navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-  var sectionIds = ['work', 'experience', 'skills', 'certifications', 'publications', 'contact'];
+  var sectionIds = ['work', 'experience', 'skills', 'certifications', 'contact'];
   var sections = sectionIds.map(function (id) { return document.getElementById(id); }).filter(Boolean);
 
   if (navLinks.length && sections.length) {
@@ -1287,6 +1222,18 @@
     sections.forEach(function (s) { navObserver.observe(s); });
   }
 
+  /* ── STAGGER DELAY su grid (pattern: Framer Motion staggered list) ── */
+  var staggerGroups = [
+    '.stats .stat',
+    '.skills-grid .skill-group',
+    '.certs-grid .cert-item',
+  ];
+  staggerGroups.forEach(function(selector) {
+    document.querySelectorAll(selector).forEach(function(el, i) {
+      el.style.transitionDelay = (i * 0.07) + 's';
+    });
+  });
+
   /* ── REVEAL ON SCROLL ── */
   var reveals = document.querySelectorAll('.reveal');
   if (reveals.length && 'IntersectionObserver' in window) {
@@ -1297,7 +1244,7 @@
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.12 });
     reveals.forEach(function (el) { revealObserver.observe(el); });
   } else {
     reveals.forEach(function (el) { el.classList.add('visible'); });
