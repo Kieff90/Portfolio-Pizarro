@@ -175,6 +175,55 @@
     align-items: center;
   }
 
+  /* ── HERO LAYOUT (2 colonne) ── */
+  .hero-layout {
+    display: flex;
+    align-items: center;
+    gap: clamp(40px, 6vw, 96px);
+  }
+  .hero-content {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  /* ── HERO PHOTO (3 layer isolati) ── */
+  .hero-photo-scroll {
+    flex: 0 0 auto;
+    width: clamp(220px, 28vw, 380px);
+    perspective: 800px;
+    will-change: transform;
+  }
+  .hero-photo-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    transition: transform 0.1s linear;
+  }
+  .hero-photo-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    animation: heroFloat 5s ease-in-out infinite;
+  }
+  @keyframes heroFloat {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-10px); }
+  }
+  .hero-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    outline: 1px solid rgba(255,255,255,0.10);
+    outline-offset: 4px;
+    box-shadow:
+      0 0 0 1px rgba(232,255,74,0.15),
+      0 0 0 8px rgba(232,255,74,0.04),
+      0 24px 60px rgba(0,0,0,0.60),
+      0 8px 24px rgba(0,0,0,0.40),
+      inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+
   .btn-primary {
     display: inline-flex;
     align-items: center;
@@ -615,6 +664,7 @@
   .hero-title { animation: fadeInUp 0.5s 0.2s ease both; }
   .hero-description { animation: fadeInUp 0.5s 0.3s ease both; }
   .hero-cta { animation: fadeInUp 0.5s 0.4s ease both; }
+  .hero-photo-scroll { animation: fadeInUp 0.5s 0.5s ease both; }
 
   /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 4px; }
@@ -700,6 +750,13 @@
     .cert-item, #back-to-top, .nav-links a, .scroll-progress {
       transition: none;
     }
+    /* Photo animations off */
+    .hero-photo-inner { animation: none; }
+    .hero-photo-scroll, .hero-photo-wrapper {
+      transform: none !important;
+      transition: none !important;
+      will-change: auto;
+    }
   }
 
   /* ── FOCUS VISIBLE ── */
@@ -733,6 +790,11 @@
     .section { border-bottom-color: #ddd !important; }
     body::before, .bg-mesh { display: none !important; }
     .reveal { opacity: 1 !important; transform: none !important; }
+    .hero-photo-scroll, .hero-photo-wrapper, .hero-photo-inner {
+      transform: none !important; animation: none !important;
+    }
+    .hero-layout { display: flex; gap: 40px; }
+    .hero-photo-scroll { width: 160px; perspective: none; }
   }
 
   /* ── RESPONSIVE: TABLET ── */
@@ -754,6 +816,8 @@
     .nav-links::-webkit-scrollbar { display: none; }
 
     .hero { padding: 28px 0 40px; }
+    .hero-layout { flex-direction: column-reverse; gap: 32px; }
+    .hero-photo-scroll { width: clamp(140px, 40vw, 200px); align-self: center; }
 
     .stats {
       grid-template-columns: repeat(2, 1fr);
@@ -792,6 +856,7 @@
 
     .hero { padding: 36px 0 32px; }
     .hero-cta { flex-direction: column; align-items: flex-start; }
+    .hero-photo-scroll { width: clamp(120px, 36vw, 160px); }
 
     .stats { grid-template-columns: repeat(2, 1fr); gap: 24px 0; }
     .stat:nth-child(odd) { border-right: 1px solid var(--border); padding-right: 16px; }
@@ -831,18 +896,40 @@
 <!-- HERO -->
 <div class="container">
   <section class="hero">
-    <p class="hero-eyebrow">Delivery Manager · AI Implementation · Remote EU</p>
-    <h1 class="hero-name">Pedro<br><span>Pizarro.</span></h1>
-    <p class="hero-title">I ship software. Teams actually deliver.</p>
-    <p class="hero-description">
-      14 years managing delivery across <strong>banking, aerospace, energy, and AI startups</strong>. 
-      Not theory. I've owned release pipelines, fixed broken backlogs, and embedded AI into
-      sprint rituals that 40+ people now use daily.
-      I work where <strong>execution matters more than slides</strong>.
-    </p>
-    <div class="hero-cta">
-      <a href="mailto:pedropizarro@live.it" class="btn-primary copy-email">Get in touch ↗</a>
-      <a href="https://linkedin.com/in/pedro-pizarro-diaz" class="btn-secondary">LinkedIn profile</a>
+    <div class="hero-layout">
+
+      <!-- LEFT: contenuto testuale — nomi classi invariati -->
+      <div class="hero-content">
+        <p class="hero-eyebrow">Delivery Manager · AI Implementation · Remote EU</p>
+        <h1 class="hero-name">Pedro<br><span>Pizarro.</span></h1>
+        <p class="hero-title">I ship software. Teams actually deliver.</p>
+        <p class="hero-description">
+          14 years managing delivery across <strong>banking, aerospace, energy, and AI startups</strong>.
+          Not theory. I've owned release pipelines, fixed broken backlogs, and embedded AI into
+          sprint rituals that 40+ people now use daily.
+          I work where <strong>execution matters more than slides</strong>.
+        </p>
+        <div class="hero-cta">
+          <a href="mailto:pedropizarro@live.it" class="btn-primary copy-email">Get in touch ↗</a>
+          <a href="https://linkedin.com/in/pedro-pizarro-diaz" class="btn-secondary">LinkedIn profile</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: foto con 3 layer transform isolati -->
+      <div class="hero-photo-scroll" aria-hidden="true">
+        <div class="hero-photo-wrapper">
+          <div class="hero-photo-inner">
+            <img
+              src="assets/pedro-pizarro.jpg"
+              alt="Pedro Pizarro, Delivery Manager"
+              class="hero-photo-img"
+              width="400" height="400"
+              loading="eager" decoding="async"
+            >
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 </div>
@@ -1221,10 +1308,25 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
+  /* ── HERO PHOTO PARALLAX ── */
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var heroPhotoScroll = document.querySelector('.hero-photo-scroll');
+  var heroPhotoScrollActive = heroPhotoScroll && !prefersReducedMotion;
+
+  function updatePhotoParallax() {
+    if (!heroPhotoScrollActive) { return; }
+    if (window.innerWidth <= 768) {
+      heroPhotoScroll.style.transform = 'translateY(0px)';
+      return;
+    }
+    heroPhotoScroll.style.transform = 'translateY(' + (window.scrollY * 0.30) + 'px)';
+  }
+
   /* ── SCROLL LISTENER ── */
   window.addEventListener('scroll', function () {
     updateProgress();
     updateBtn();
+    updatePhotoParallax();
   }, { passive: true });
 
   /* ── SMOOTH SCROLL FOR ANCHOR LINKS ── */
@@ -1287,6 +1389,23 @@
     reveals.forEach(function (el) { revealObserver.observe(el); });
   } else {
     reveals.forEach(function (el) { el.classList.add('visible'); });
+  }
+
+  /* ── HERO PHOTO TILT (mouse 3D) ── */
+  var heroPhotoWrapper = document.querySelector('.hero-photo-wrapper');
+  if (heroPhotoWrapper && !prefersReducedMotion) {
+    var heroSection = document.querySelector('.hero');
+    heroSection.addEventListener('mousemove', function (e) {
+      var rect = heroPhotoWrapper.getBoundingClientRect();
+      var dx = Math.max(-1, Math.min(1, (e.clientX - rect.left - rect.width / 2) / (rect.width / 2)));
+      var dy = Math.max(-1, Math.min(1, (e.clientY - rect.top - rect.height / 2) / (rect.height / 2)));
+      heroPhotoWrapper.style.transform = 'rotateX(' + (dy * -8) + 'deg) rotateY(' + (dx * 8) + 'deg)';
+    });
+    heroSection.addEventListener('mouseleave', function () {
+      heroPhotoWrapper.style.transition = 'transform 0.6s ease';
+      heroPhotoWrapper.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      setTimeout(function () { heroPhotoWrapper.style.transition = ''; }, 700);
+    });
   }
 
   /* ── COPY EMAIL ── */
