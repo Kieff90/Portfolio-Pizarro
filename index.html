@@ -58,6 +58,7 @@
     height: 70%;
     background: radial-gradient(ellipse at center, rgba(232,255,74,0.06) 0%, transparent 70%);
     filter: blur(60px);
+    animation: meshDrift1 18s ease-in-out infinite;
   }
   .bg-mesh::after {
     content: '';
@@ -68,6 +69,7 @@
     height: 65%;
     background: radial-gradient(ellipse at center, rgba(255,107,53,0.05) 0%, transparent 70%);
     filter: blur(60px);
+    animation: meshDrift2 22s ease-in-out infinite;
   }
 
   .container {
@@ -326,7 +328,7 @@
   }
 
   /* ── PROJECTS ── */
-  .projects { display: flex; flex-direction: column; gap: 2px; }
+  .projects { display: flex; flex-direction: column; gap: 2px; perspective: 1000px; }
 
   .project-card {
     background: rgba(255,255,255,0.04);
@@ -581,6 +583,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2px;
+    perspective: 1000px;
   }
 
   .cert-item {
@@ -734,6 +737,25 @@
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
+  /* ── BACKGROUND MESH DRIFT ── */
+  @keyframes meshDrift1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%       { transform: translate(3%, 4%) scale(1.04); }
+  }
+  @keyframes meshDrift2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%       { transform: translate(-4%, -3%) scale(1.06); }
+  }
+
+  /* ── SECTION LABEL BLUR-IN ── */
+  .section-label.reveal {
+    filter: blur(5px);
+    transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+  }
+  .section-label.reveal.visible {
+    filter: blur(0px);
+  }
+
   /* ── PREFERS REDUCED MOTION ── */
   @media (prefers-reduced-motion: reduce) {
     .hero-eyebrow, .hero-name, .hero-title, .hero-description, .hero-cta {
@@ -750,6 +772,10 @@
     .cert-item, #back-to-top, .nav-links a, .scroll-progress {
       transition: none;
     }
+    /* Mesh drift off */
+    .bg-mesh::before, .bg-mesh::after { animation: none; }
+    /* Section label blur off */
+    .section-label.reveal { filter: none; transition: opacity 0.55s ease, transform 0.55s ease; }
     /* Photo animations off */
     .hero-photo-inner { animation: none; }
     .hero-photo-scroll, .hero-photo-wrapper {
@@ -959,7 +985,7 @@
 <!-- PROJECTS / PORTFOLIO -->
 <div class="container">
   <section class="section" id="work">
-    <div class="section-label">Selected work</div>
+    <div class="section-label reveal">Selected work</div>
 
     <div class="projects">
 
@@ -1078,7 +1104,7 @@
 <!-- EXPERIENCE -->
 <div class="container">
   <section class="section" id="experience">
-    <div class="section-label">Experience</div>
+    <div class="section-label reveal">Experience</div>
 
     <div class="experience-list">
 
@@ -1139,7 +1165,7 @@
 <!-- SKILLS -->
 <div class="container">
   <section class="section" id="skills">
-    <div class="section-label">Capabilities</div>
+    <div class="section-label reveal">Capabilities</div>
 
     <div class="skills-grid">
       <div class="skill-group reveal">
@@ -1210,7 +1236,7 @@
 <!-- CERTIFICATIONS -->
 <div class="container">
   <section class="section" id="certifications">
-    <div class="section-label">Certifications</div>
+    <div class="section-label reveal">Certifications</div>
 
     <div class="certs-grid">
       <div class="cert-item reveal">
@@ -1406,6 +1432,77 @@
       heroPhotoWrapper.style.transform = 'rotateX(0deg) rotateY(0deg)';
       setTimeout(function () { heroPhotoWrapper.style.transition = ''; }, 700);
     });
+  }
+
+  /* ── CARD 3D TILT (project-card + cert-item) ── */
+  if (!prefersReducedMotion) {
+    var tiltCards = document.querySelectorAll('.project-card, .cert-item');
+    tiltCards.forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var rect = card.getBoundingClientRect();
+        var dx = Math.max(-1, Math.min(1, (e.clientX - rect.left - rect.width / 2) / (rect.width / 2)));
+        var dy = Math.max(-1, Math.min(1, (e.clientY - rect.top - rect.height / 2) / (rect.height / 2)));
+        card.style.transform = 'translateY(-2px) rotateX(' + (dy * -6) + 'deg) rotateY(' + (dx * 6) + 'deg)';
+      });
+      card.addEventListener('mouseleave', function () {
+        card.style.transition = 'border-color 0.2s, background 0.2s, transform 0.4s ease, box-shadow 0.2s';
+        card.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg)';
+        setTimeout(function () { card.style.transition = ''; }, 420);
+      });
+    });
+  }
+
+  /* ── STATS COUNT-UP ── */
+  var statsContainer = document.querySelector('.stats');
+  if (statsContainer && 'IntersectionObserver' in window) {
+    var statsDone = false;
+    var statsObserver = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting && !statsDone) {
+        statsDone = true;
+        statsObserver.disconnect();
+        document.querySelectorAll('.stat-number').forEach(function (el) {
+          var raw = el.textContent.trim();
+          var prefix = raw.match(/^[^0-9]*/)[0];
+          var suffix = raw.match(/[^0-9]*$/)[0];
+          var target = parseInt(raw.replace(/[^0-9]/g, ''), 10);
+          if (!target) { return; }
+          var start = 0;
+          var duration = 1200;
+          var startTime = null;
+          function step(ts) {
+            if (!startTime) { startTime = ts; }
+            var progress = Math.min((ts - startTime) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3); /* cubic ease-out */
+            el.textContent = prefix + Math.round(eased * target) + suffix;
+            if (progress < 1) { requestAnimationFrame(step); }
+          }
+          requestAnimationFrame(step);
+        });
+      }
+    }, { threshold: 0.4 });
+    statsObserver.observe(statsContainer);
+  }
+
+  /* ── MAGNETIC BUTTON ── */
+  if (!prefersReducedMotion) {
+    var magnetBtn = document.querySelector('.btn-primary');
+    if (magnetBtn) {
+      document.addEventListener('mousemove', function (e) {
+        var rect = magnetBtn.getBoundingClientRect();
+        var cx = rect.left + rect.width / 2;
+        var cy = rect.top + rect.height / 2;
+        var dx = e.clientX - cx;
+        var dy = e.clientY - cy;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        var radius = 70;
+        if (dist < radius) {
+          var pull = (1 - dist / radius);
+          magnetBtn.style.transform = 'translateY(-2px) translate(' + (dx * pull * 0.25) + 'px, ' + (dy * pull * 0.15) + 'px)';
+        } else {
+          magnetBtn.style.transform = '';
+        }
+      });
+    }
   }
 
   /* ── COPY EMAIL ── */
