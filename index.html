@@ -924,7 +924,7 @@
 </head>
 <body>
 <div class="bg-video" aria-hidden="true">
-  <video id="bg-video" muted playsinline preload="auto" src="assets/animazione-coste.mp4"></video>
+  <video id="bg-video" muted playsinline autoplay loop src="assets/animazione-coste.mp4"></video>
 </div>
 <div class="bg-video-overlay" aria-hidden="true"></div>
 <div class="bg-mesh" aria-hidden="true"></div>
@@ -1375,20 +1375,7 @@
     heroPhotoScroll.style.transform = 'translateY(' + (window.scrollY * 0.30) + 'px)';
   }
 
-  /* ── SCROLL-DRIVEN VIDEO ── */
-  var bgVideo = document.getElementById('bg-video');
-  if (bgVideo) {
-    bgVideo.addEventListener('loadedmetadata', function () {
-      window.addEventListener('scroll', function () {
-        var total = document.body.scrollHeight - window.innerHeight;
-        if (total > 0 && bgVideo.readyState >= 2) {
-          bgVideo.currentTime = (window.scrollY / total) * bgVideo.duration;
-        }
-      }, { passive: true });
-    });
-  }
-
-  /* ── SCROLL LISTENER ── */
+/* ── SCROLL LISTENER ── */
   window.addEventListener('scroll', function () {
     updateProgress();
     updateBtn();
