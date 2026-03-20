@@ -56,6 +56,12 @@
     object-fit: cover;
     opacity: 0.22;
   }
+  .bg-video video::-webkit-media-controls,
+  .bg-video video::-webkit-media-controls-start-playback-button,
+  .bg-video video::-webkit-media-controls-panel {
+    display: none !important;
+    -webkit-appearance: none;
+  }
   .bg-video-overlay {
     position: fixed;
     inset: 0;
@@ -1357,6 +1363,18 @@
   btn.addEventListener('click', function () {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  /* ── BG VIDEO AUTOPLAY FALLBACK ── */
+  var bgVideo = document.getElementById('bg-video');
+  if (bgVideo) {
+    var playAttempt = bgVideo.play();
+    if (playAttempt !== undefined) {
+      playAttempt.catch(function () {
+        // Autoplay blocked (e.g. low-power mode) — hide gracefully
+        bgVideo.parentElement.style.display = 'none';
+      });
+    }
+  }
 
   /* ── HERO PHOTO PARALLAX ── */
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
