@@ -709,7 +709,97 @@
 
   /* ── ABOUT ── */
   .about-text {
-    max-width: 720px;
+    max-width: 820px;
+  }
+
+  .about-intro {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #cccccc;
+    margin-bottom: 32px;
+    max-width: 660px;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 36px;
+  }
+
+  @media (max-width: 640px) {
+    .about-grid { grid-template-columns: 1fr; }
+  }
+
+  .about-col-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .about-col p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #aaaaaa;
+  }
+
+  .about-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 28px;
+    padding: 24px 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .about-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .about-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .about-stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .about-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pill.accent-pill {
+    color: var(--accent);
+    border-color: rgba(232,255,74,0.3);
   }
 
   .about-text p {
@@ -1227,10 +1317,52 @@
   <section class="section" id="about">
     <div class="section-label reveal">About</div>
     <div class="about-text reveal">
-      <p>Pedro Pizarro Diaz is a Delivery Manager and AI Product Leader based in Milan, Italy. Over 14 years, he has led software delivery across banking, aerospace, energy, and AI startups — managing 5+ concurrent workstreams, owning release pipelines, and coordinating teams of 40+.</p>
-      <p>He specialises in embedding AI into delivery workflows: custom assistants, agentic pipelines, and LLM governance frameworks now used daily by 40+ professionals, achieving +35% story readiness and −40% repetitive planning overhead. In 2025 he published <em>Inverting Prompting</em>, a framework for structuring AI-augmented sprint ceremonies.</p>
-      <p>Previously a Scrum Master in compliance-regulated aerospace environments and distributed Italy/India teams, cutting lead time by 50% via Lean-Kanban systems.</p>
-      <p class="about-meta">Certifications: SAFe 6 Agilist · PSM II · ICF ACSTH · Claude with the Anthropic API (2026) &nbsp;·&nbsp; Languages: Italian (native) · Spanish (native) · English (C2) &nbsp;·&nbsp; Available for consulting mandates remotely across the EU.</p>
+      <p class="about-intro">Delivery Manager and AI Product Leader based in Milan, Italy — 14 years leading software delivery across banking, aerospace, energy, and AI startups.</p>
+
+      <div class="about-grid">
+        <div class="about-col">
+          <h4 class="about-col-label">What I do</h4>
+          <p>Lead multi-team delivery: 5+ concurrent workstreams, release pipelines, teams of 40+. Embed AI into delivery workflows — custom assistants, agentic pipelines, LLM governance frameworks used daily by 40+ professionals. Published <em>Inverting Prompting</em> (2025), a framework for AI-augmented sprint ceremonies.</p>
+        </div>
+        <div class="about-col">
+          <h4 class="about-col-label">How I do it</h4>
+          <p>SAFe, Scrum, Lean-Kanban applied across banking, aerospace, and AI startup contexts. Previously Scrum Master in compliance-regulated aerospace and distributed Italy/India teams, cutting lead time by 50%. Remote-first, EU-available.</p>
+        </div>
+      </div>
+
+      <div class="about-highlights">
+        <div class="about-stat">
+          <span class="about-stat-num">14</span>
+          <span class="about-stat-label">years exp.</span>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat-num">40+</span>
+          <span class="about-stat-label">team size</span>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat-num">+35%</span>
+          <span class="about-stat-label">story readiness</span>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat-num">−40%</span>
+          <span class="about-stat-label">planning overhead</span>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat-num">−50%</span>
+          <span class="about-stat-label">lead time</span>
+        </div>
+      </div>
+
+      <div class="about-pills">
+        <span class="pill">SAFe 6 Agilist</span>
+        <span class="pill">PSM II</span>
+        <span class="pill">ICF ACSTH</span>
+        <span class="pill">Claude API 2026</span>
+        <span class="pill">Italian · native</span>
+        <span class="pill">Spanish · native</span>
+        <span class="pill">English · C2</span>
+        <span class="pill accent-pill">Available EU remote</span>
+      </div>
     </div>
   </section>
 </div>
@@ -1552,7 +1684,7 @@
         <p class="pub-abstract">Applies Carl Jacobi's inversion principle to AI prompt engineering. Instead of prompting directly toward a goal, the opposite is prompted first — surfacing failure modes and hidden variables — then refined into a precise, effective prompt. Demonstrated in training and delivery contexts.</p>
         <div class="pub-footer-row">
           <span class="pub-author">Pedro Pizarro Diaz · ORCID 0009-0005-8714-8976</span>
-          <a href="https://drive.google.com/drive/folders/10YO39DLTHWM60L2F3cYUUXmp6znHWbgH?usp=share_link" class="pub-link" target="_blank" rel="noopener noreferrer">Read paper ↗</a>
+          <a href="https://drive.google.com/file/d/1t3E-Ypao7kxmkSsbhY3uGXFZR43HtxIQ/view" class="pub-link" target="_blank" rel="noopener noreferrer">Read paper ↗</a>
         </div>
       </div>
 
@@ -1565,7 +1697,7 @@
         <p class="pub-abstract">Explores how Emotional Intelligence (EI) and AI work together in fast-paced Agile environments. Covers conflict resolution, adaptive leadership, and team performance through case studies — arguing that EI is the distinctively human complement to AI's analytical power.</p>
         <div class="pub-footer-row">
           <span class="pub-author">Pedro Pizarro Diaz · ORCID 0009-0005-8714-8976</span>
-          <a href="https://drive.google.com/drive/folders/10YO39DLTHWM60L2F3cYUUXmp6znHWbgH?usp=share_link" class="pub-link" target="_blank" rel="noopener noreferrer">Read paper ↗</a>
+          <a href="https://drive.google.com/file/d/1ziXyraW3W_oOsrPc60SPm4fsChg6cCS1/view" class="pub-link" target="_blank" rel="noopener noreferrer">Read paper ↗</a>
         </div>
       </div>
 
@@ -1578,7 +1710,7 @@
         <p class="pub-abstract">Examines how AI integration into family life is transforming the parental role. Proposes a "parental emotional mediation" framework — adapting Goleman's emotional intelligence theory to the digital age — with practical tools like the "candy test" and "emotional traffic light."</p>
         <div class="pub-footer-row">
           <span class="pub-author">Pedro Pizarro Diaz · ORCID 0009-0005-8714-8976</span>
-          <a href="https://drive.google.com/drive/folders/10YO39DLTHWM60L2F3cYUUXmp6znHWbgH?usp=share_link" class="pub-link" target="_blank" rel="noopener noreferrer">Read paper ↗</a>
+          <a href="https://drive.google.com/file/d/1I7lcN0QrB6kgJeTizV1OXWQUa52Lm8Lf/view" class="pub-link" target="_blank" rel="noopener noreferrer">Read paper ↗</a>
         </div>
       </div>
 
