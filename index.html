@@ -2435,7 +2435,8 @@
             },
             think: {
               provider: { type: 'anthropic', model: 'claude-sonnet-4-6' },
-              prompt: PEDRO_INSTRUCTIONS
+              prompt: PEDRO_INSTRUCTIONS,
+              temperature: 0.2
             },
             speak: {
               provider: { type: 'deepgram', model: 'aura-2-aries-en' }
