@@ -2372,10 +2372,10 @@
 
     var ws = null;
     var mediaStream = null;
-    var audioCtx = null;
+    var audioCtx = null;       // mic capture context (48000 Hz)
+    var playCtx = null;        // single playback context (24000 Hz) — reused for all chunks
+    var nextStartTime = 0;     // precise scheduling timestamp
     var scriptProcessor = null;
-    var audioQueue = [];
-    var isPlaying = false;
     var isConnected = false;
 
     var hasMediaDevices = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
@@ -2487,8 +2487,8 @@
         setState('recording', 'Listening — speak now');
       } else if (msg.type === 'UserStartedSpeaking') {
         setState('recording', 'Listening...');
-        audioQueue = [];
-        isPlaying = false;
+        // Reset playback scheduling so next response starts immediately
+        nextStartTime = 0;
       } else if (msg.type === 'ConversationText') {
         if (msg.role === 'user') {
           transcriptEl.textContent = msg.content;
@@ -2536,31 +2536,34 @@
         });
     }
 
-    function queueAudio(arrayBuffer) {
-      audioQueue.push(arrayBuffer);
-      if (!isPlaying) { playNext(); }
+    function ensurePlayCtx() {
+      if (!playCtx || playCtx.state === 'closed') {
+        // Single AudioContext reused for all chunks — avoids glitches/distortion
+        playCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 24000 });
+        nextStartTime = 0;
+      }
+      // Resume if suspended by browser autoplay policy
+      if (playCtx.state === 'suspended') { playCtx.resume(); }
     }
 
-    function playNext() {
-      if (audioQueue.length === 0) { isPlaying = false; return; }
-      isPlaying = true;
-      var buffer = audioQueue.shift();
-      var pcm16 = new Int16Array(buffer);
+    function queueAudio(arrayBuffer) {
+      ensurePlayCtx();
+      // Decode raw PCM16 linear → float32 (Deepgram output: linear16 @ 24000 Hz)
+      var pcm16 = new Int16Array(arrayBuffer);
       var float32 = new Float32Array(pcm16.length);
       for (var i = 0; i < pcm16.length; i++) {
         float32[i] = pcm16[i] / 32768.0;
       }
-      var playCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 24000 });
+      // Create AudioBuffer and schedule precisely after the previous chunk
       var audioBuf = playCtx.createBuffer(1, float32.length, 24000);
       audioBuf.copyToChannel(float32, 0);
       var src = playCtx.createBufferSource();
       src.buffer = audioBuf;
       src.connect(playCtx.destination);
-      src.start(0);
-      src.onended = function () {
-        playCtx.close();
-        playNext();
-      };
+      // Chain chunks seamlessly: start exactly when previous chunk ends
+      var startAt = Math.max(nextStartTime, playCtx.currentTime + 0.02); // 20ms buffer for safety
+      src.start(startAt);
+      nextStartTime = startAt + audioBuf.duration;
     }
 
     function cleanup() {
@@ -2568,9 +2571,9 @@
       if (scriptProcessor) { scriptProcessor.disconnect(); scriptProcessor = null; }
       if (mediaStream) { mediaStream.getTracks().forEach(function (t) { t.stop(); }); mediaStream = null; }
       if (audioCtx) { audioCtx.close(); audioCtx = null; }
+      if (playCtx) { playCtx.close(); playCtx = null; }
+      nextStartTime = 0;
       if (ws) { ws.close(); ws = null; }
-      audioQueue = [];
-      isPlaying = false;
     }
 
     voiceBtn.addEventListener('click', function () {
