@@ -39,8 +39,15 @@
       "description": "Delivery Manager and AI Product Leader con 14 anni di esperienza in Agile transformation, AI workflow integration, LLM governance e complex systems delivery. Basato a Milano, disponibile per consulenze remote EU.",
       "url": "https://pedropizarrodiaz.it",
       "sameAs": [
-        "https://www.linkedin.com/in/pedropizarrodiaz"
+        "https://www.linkedin.com/in/pedropizarrodiaz",
+        "https://github.com/Kieff90",
+        "https://orcid.org/0009-0005-8714-8976"
       ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "ORCID",
+        "value": "0009-0005-8714-8976"
+      },
       "knowsAbout": ["Agile", "Scrum", "Delivery Management", "AI Product Development", "Jira", "Digital Transformation", "Team Leadership", "LLM Governance", "Agentic Workflows", "Claude AI", "Anthropic API", "SAFe", "Lean-Kanban", "Azure DevOps"],
       "worksFor": {
         "@type": "Organization",
@@ -51,6 +58,33 @@
         "addressLocality": "Milano",
         "addressCountry": "IT"
       }
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://pedropizarrodiaz.it/#inverting-prompting",
+      "name": "Inverting Prompting: An Application of Carl Jacobi's Principle of Inversion in AI",
+      "author": {"@id": "https://pedropizarrodiaz.it/#person"},
+      "description": "Introduces the 'Inverting Prompting' technique, applying Carl Jacobi's inversion principle to AI prompt engineering. Instead of directly prompting AI toward a goal, the opposite is prompted to identify obstacles and failure modes, then refined into precise, effective prompts.",
+      "keywords": ["Artificial Intelligence", "Prompt Engineering", "Mental Models", "Inversion Principle"],
+      "url": "https://pedropizarrodiaz.it"
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://pedropizarrodiaz.it/#synergizing-ai-ei",
+      "name": "Synergizing Artificial and Emotional Intelligence",
+      "author": {"@id": "https://pedropizarrodiaz.it/#person"},
+      "description": "Explores the intersection of AI and Emotional Intelligence (EI) in Agile environments. Demonstrates how integrating both improves conflict resolution, adaptive leadership, and team performance through case studies and real-world applications.",
+      "keywords": ["Artificial Intelligence", "Emotional Intelligence", "Agile", "Leadership"],
+      "url": "https://pedropizarrodiaz.it"
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://pedropizarrodiaz.it/#ai-family-education",
+      "name": "AI, Family, and Educational Change: Rethinking the Parenting Role",
+      "author": {"@id": "https://pedropizarrodiaz.it/#person"},
+      "description": "Examines how AI integration into family life is transforming parenting. Proposes a framework for 'parental emotional mediation' adapting Goleman's emotional intelligence theory to the digital age, with practical strategies including the 'candy test' and 'emotional traffic light'.",
+      "keywords": ["Artificial Intelligence", "Emotional Intelligence", "Family Education", "Parenting"],
+      "url": "https://pedropizarrodiaz.it"
     },
     {
       "@type": "WebSite",
@@ -741,6 +775,89 @@
     flex-shrink: 0;
   }
 
+  /* ── PUBLICATIONS ── */
+  .pub-list {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    max-width: 800px;
+  }
+
+  .pub-item {
+    border-left: 2px solid var(--border);
+    padding-left: 24px;
+    transition: border-color 0.2s;
+  }
+
+  .pub-item:hover {
+    border-color: var(--accent);
+  }
+
+  .pub-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .pub-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  .pub-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pub-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  .pub-abstract {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 12px;
+  }
+
+  .pub-footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .pub-author {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted2);
+    letter-spacing: 0.04em;
+  }
+
+  .pub-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: opacity 0.2s;
+  }
+
+  .pub-link:hover { opacity: 0.7; }
+
   /* ── FOOTER ── */
   footer {
     padding: 48px 0;
@@ -1035,6 +1152,7 @@
         <a href="#experience">Experience</a>
         <a href="#skills">Skills</a>
         <a href="#certifications">Certifications</a>
+        <a href="#writing">Writing</a>
         <a href="#contact">Contact</a>
       </div>
     </nav>
@@ -1418,6 +1536,56 @@
   </section>
 </div>
 
+<!-- PUBLICATIONS -->
+<div class="container">
+  <section class="section" id="writing">
+    <div class="section-label reveal">Writing</div>
+
+    <div class="pub-list">
+
+      <div class="pub-item reveal">
+        <div class="pub-meta">
+          <span class="pub-year">2025</span>
+          <span class="pub-tag">Prompt Engineering</span>
+        </div>
+        <h3 class="pub-title">Inverting Prompting: An Application of Carl Jacobi's Principle of Inversion in AI</h3>
+        <p class="pub-abstract">Applies Carl Jacobi's inversion principle to AI prompt engineering. Instead of prompting directly toward a goal, the opposite is prompted first — surfacing failure modes and hidden variables — then refined into a precise, effective prompt. Demonstrated in training and delivery contexts.</p>
+        <div class="pub-footer-row">
+          <span class="pub-author">Pedro Pizarro Diaz · ORCID 0009-0005-8714-8976</span>
+          <a href="https://drive.google.com/drive/folders/10YO39DLTHWM60L2F3cYUUXmp6znHWbgH?usp=share_link" class="pub-link" target="_blank" rel="noopener noreferrer">Read paper ↗</a>
+        </div>
+      </div>
+
+      <div class="pub-item reveal">
+        <div class="pub-meta">
+          <span class="pub-year">2024</span>
+          <span class="pub-tag">AI · Agile · Leadership</span>
+        </div>
+        <h3 class="pub-title">Synergizing Artificial and Emotional Intelligence</h3>
+        <p class="pub-abstract">Explores how Emotional Intelligence (EI) and AI work together in fast-paced Agile environments. Covers conflict resolution, adaptive leadership, and team performance through case studies — arguing that EI is the distinctively human complement to AI's analytical power.</p>
+        <div class="pub-footer-row">
+          <span class="pub-author">Pedro Pizarro Diaz · ORCID 0009-0005-8714-8976</span>
+          <a href="https://drive.google.com/drive/folders/10YO39DLTHWM60L2F3cYUUXmp6znHWbgH?usp=share_link" class="pub-link" target="_blank" rel="noopener noreferrer">Read paper ↗</a>
+        </div>
+      </div>
+
+      <div class="pub-item reveal">
+        <div class="pub-meta">
+          <span class="pub-year">2024</span>
+          <span class="pub-tag">AI · Education · Parenting</span>
+        </div>
+        <h3 class="pub-title">AI, Family, and Educational Change: Rethinking the Parenting Role</h3>
+        <p class="pub-abstract">Examines how AI integration into family life is transforming the parental role. Proposes a "parental emotional mediation" framework — adapting Goleman's emotional intelligence theory to the digital age — with practical tools like the "candy test" and "emotional traffic light."</p>
+        <div class="pub-footer-row">
+          <span class="pub-author">Pedro Pizarro Diaz · ORCID 0009-0005-8714-8976</span>
+          <a href="https://drive.google.com/drive/folders/10YO39DLTHWM60L2F3cYUUXmp6znHWbgH?usp=share_link" class="pub-link" target="_blank" rel="noopener noreferrer">Read paper ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
 <!-- FOOTER -->
 <div class="container" id="contact">
   <footer>
@@ -1426,6 +1594,7 @@
       <a href="mailto:pedropizarro@live.it" class="footer-link copy-email">pedropizarro@live.it</a>
       <a href="tel:+393761310537" class="footer-link">+39 376 131 0537</a>
       <a href="https://linkedin.com/in/pedro-pizarro-diaz" class="footer-link">LinkedIn ↗</a>
+      <a href="https://github.com/Kieff90" class="footer-link" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
     </div>
   </footer>
 </div>
@@ -1503,7 +1672,7 @@
 
   /* ── ACTIVE NAV SECTION ── */
   var navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-  var sectionIds = ['work', 'experience', 'skills', 'certifications', 'contact'];
+  var sectionIds = ['work', 'experience', 'skills', 'certifications', 'writing', 'contact'];
   var sections = sectionIds.map(function (id) { return document.getElementById(id); }).filter(Boolean);
 
   if (navLinks.length && sections.length) {
