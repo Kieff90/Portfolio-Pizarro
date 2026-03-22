@@ -2416,7 +2416,9 @@
 
     function connect() {
       setState('loading', 'Connecting...');
-      ws = new WebSocket('wss://agent.deepgram.com/agent', ['token', DG_API_KEY]);
+      // Browser WebSocket cannot set custom headers (Authorization), so we pass the key
+      // as a URL query parameter — the standard Deepgram browser authentication method
+      ws = new WebSocket('wss://agent.deepgram.com/agent?authorization=Token%20' + DG_API_KEY);
       ws.binaryType = 'arraybuffer';
 
       ws.onopen = function () {
