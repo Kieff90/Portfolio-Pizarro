@@ -2416,9 +2416,34 @@
 
     function connect() {
       setState('loading', 'Connecting...');
-      // Browser WebSocket cannot set custom headers (Authorization), so we pass the key
-      // as a URL query parameter — the standard Deepgram browser authentication method
-      ws = new WebSocket('wss://agent.deepgram.com/agent?authorization=Token%20' + DG_API_KEY);
+      // Step 1: get a short-lived token via HTTP fetch (fetch CAN send Authorization header)
+      // This is the official Deepgram browser auth pattern — raw API key never goes in WS URL
+      fetch('https://api.deepgram.com/v1/auth/grant', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Token ' + DG_API_KEY,
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(function (res) {
+        if (!res.ok) { throw new Error('Auth ' + res.status); }
+        return res.json();
+      })
+      .then(function (data) {
+        var tempToken = data.key;
+        if (!tempToken) { throw new Error('No token in response'); }
+        openWebSocket(tempToken);
+      })
+      .catch(function (err) {
+        console.error('[Voice] token fetch failed:', err.message);
+        showError('Could not connect to assistant. Please try again.');
+        setState('idle', 'Click the microphone to try again');
+      });
+    }
+
+    function openWebSocket(token) {
+      // Step 2: connect WebSocket with the short-lived token in the URL
+      ws = new WebSocket('wss://agent.deepgram.com/agent?token=' + encodeURIComponent(token));
       ws.binaryType = 'arraybuffer';
 
       ws.onopen = function () {
@@ -2459,14 +2484,18 @@
         } catch (e) { /* ignore */ }
       };
 
-      ws.onerror = function () {
+      ws.onerror = function (event) {
+        console.error('[Voice WS] onerror:', event);
         showError('Connection error. Please try again.');
         cleanup();
       };
 
-      ws.onclose = function () {
+      ws.onclose = function (event) {
+        console.warn('[Voice WS] onclose code:', event.code, 'reason:', event.reason || '(none)');
         if (isConnected) {
           setState('idle', 'Session ended. Click to start again.');
+        } else if (event.code === 1006) {
+          showError('Connection refused (code 1006). Check console for details.');
         }
         cleanup();
       };
