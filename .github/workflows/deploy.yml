@@ -12,26 +12,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
-          username: su1172020
-          server: access-5019887635.webspace-host.com
-          port: 22
-          password: ${{ secrets.SFTP_PASSWORD }}
-          local_path: './'
-          remote_path: '/'
-          sftp_only: true
-          args: '-o StrictHostKeyChecking=no'
-          exclude: |
-            .git*
-            .github
-            .claude
-            .DS_Store
-            *.bak*
-            .agent
-            .agents
-            skills-lock.json
-            *.mp4
-            *.mov
-            cloudflare
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
+      - name: Deploy via SFTP (lftp)
+        env:
+          SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+        run: |
+          lftp -c "
+            set sftp:auto-confirm yes;
+            set net:timeout 30;
+            set net:max-retries 3;
+            open sftp://su1172020:$SFTP_PASSWORD@access-5019887635.webspace-host.com;
+            mirror --reverse --delete \
+              --exclude-glob=.git \
+              --exclude-glob=.github \
+              --exclude-glob=.claude \
+              --exclude-glob=.DS_Store \
+              --exclude-glob='*.bak*' \
+              --exclude-glob=.agent \
+              --exclude-glob=.agents \
+              --exclude-glob=skills-lock.json \
+              --exclude-glob='*.mp4' \
+              --exclude-glob='*.mov' \
+              --exclude-glob=cloudflare \
+              ./ /;
+          "
