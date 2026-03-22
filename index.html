@@ -2416,34 +2416,15 @@
 
     function connect() {
       setState('loading', 'Connecting...');
-      // Step 1: get a short-lived token via HTTP fetch (fetch CAN send Authorization header)
-      // This is the official Deepgram browser auth pattern — raw API key never goes in WS URL
-      fetch('https://api.deepgram.com/v1/auth/grant', {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Token ' + DG_API_KEY,
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(function (res) {
-        if (!res.ok) { throw new Error('Auth ' + res.status); }
-        return res.json();
-      })
-      .then(function (data) {
-        var tempToken = data.access_token;
-        if (!tempToken) { throw new Error('No access_token in response: ' + JSON.stringify(data)); }
-        openWebSocket(tempToken);
-      })
-      .catch(function (err) {
-        console.error('[Voice] token fetch failed:', err.message);
-        showError('Could not connect to assistant. Please try again.');
-        setState('idle', 'Click the microphone to try again');
-      });
+      openWebSocket();
     }
 
-    function openWebSocket(token) {
-      // Step 2: connect WebSocket with the short-lived token in the URL
-      ws = new WebSocket('wss://agent.deepgram.com/agent?token=' + encodeURIComponent(token));
+    function openWebSocket() {
+      // Browser auth: API key via Sec-WebSocket-Protocol subprotocol
+      // Source: @deepgram/sdk v5.0.0 CustomClient.js lines 347-376
+      // "Token API_KEY" → protocols: ["token", "API_KEY"]
+      // URL: wss://agent.deepgram.com/v1/agent/converse (from SDK V1Client.js line 67)
+      ws = new WebSocket('wss://agent.deepgram.com/v1/agent/converse', ['token', DG_API_KEY]);
       ws.binaryType = 'arraybuffer';
 
       ws.onopen = function () {
