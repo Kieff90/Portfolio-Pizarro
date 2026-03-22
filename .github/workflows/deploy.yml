@@ -32,3 +32,6 @@ jobs:
             .agent
             .agents
             skills-lock.json
+            *.mp4
+            *.mov
+            cloudflare
