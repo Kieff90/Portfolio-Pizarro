@@ -38,3 +38,8 @@ jobs:
               --exclude-glob=cloudflare \
               ./ /;
           "
+
+      - name: Notify IndexNow (Bing/Yandex)
+        run: |
+          curl -s "https://api.indexnow.org/indexnow?url=https%3A%2F%2Fpedropizarrodiaz.it%2F&key=f7d3a2c8e1b94f56980c3a7d2e6f1b08" \
+            -o /dev/null -w "IndexNow status: %{http_code}\n"

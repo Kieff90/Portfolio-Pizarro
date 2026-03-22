@@ -15,7 +15,11 @@
 <meta property="og:url" content="https://pedropizarrodiaz.it/">
 <meta property="og:title" content="Pedro Pizarro — Delivery Manager & AI Product Leader | Milano">
 <meta property="og:description" content="Delivery Manager con oltre 10 anni di esperienza in Agile transformation, AI product development e team leadership. Basato in Italia.">
-<meta property="og:image" content="https://pedropizarrodiaz.it/og-image.jpg">
+<meta property="og:image" content="https://pedropizarrodiaz.it/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Pedro Pizarro — Delivery Manager & AI Product Leader">
+<meta property="og:site_name" content="pedropizarrodiaz.it">
 <meta property="og:locale" content="it_IT">
 <meta property="og:locale:alternate" content="en_GB">
 
@@ -24,7 +28,7 @@
 <meta name="twitter:url" content="https://pedropizarrodiaz.it/">
 <meta name="twitter:title" content="Pedro Pizarro — Delivery Manager & AI Product Leader | Milano">
 <meta name="twitter:description" content="Delivery Manager con oltre 10 anni di esperienza in Agile transformation, AI product development e team leadership.">
-<meta name="twitter:image" content="https://pedropizarrodiaz.it/og-image.jpg">
+<meta name="twitter:image" content="https://pedropizarrodiaz.it/og-image.png">
 
 <!-- JSON-LD: Person + WebSite -->
 <script type="application/ld+json">
@@ -94,6 +98,15 @@
       "description": "Portfolio professionale di Pedro Pizarro Diaz, Delivery Manager & AI Product Leader basato in Italia.",
       "inLanguage": ["it", "en"],
       "about": {"@id": "https://pedropizarrodiaz.it/#person"}
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://pedropizarrodiaz.it/#profilepage",
+      "url": "https://pedropizarrodiaz.it/",
+      "name": "Pedro Pizarro Diaz — Delivery Manager & AI Product Leader",
+      "dateCreated": "2024-01-01",
+      "dateModified": "2026-03-22",
+      "mainEntity": {"@id": "https://pedropizarrodiaz.it/#person"}
     }
   ]
 }
@@ -389,40 +402,6 @@
   }
 
   .btn-secondary:hover { color: var(--text); border-color: var(--text); }
-
-  /* ── STATS ── */
-  .stats {
-    padding: 48px 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-  }
-
-  .stat {
-    padding: 0 32px 0 0;
-    border-right: 1px solid var(--border);
-    margin-right: 32px;
-  }
-  .stat:last-child { border-right: none; margin-right: 0; }
-  .stat:first-child { padding-left: 0; }
-
-  .stat-number {
-    font-family: 'Playfair Display', serif;
-    font-size: 44px;
-    font-weight: 700;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .stat-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    line-height: 1.4;
-  }
 
   /* ── SECTION HEADER ── */
   .section {
@@ -1507,13 +1486,6 @@
     .hero-layout { flex-direction: column-reverse; gap: 32px; }
     .hero-photo-scroll { width: clamp(140px, 40vw, 200px); align-self: center; }
 
-    .stats {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 32px 0;
-    }
-    .stat { border-right: none; margin-right: 0; padding-right: 0; }
-    .stat:nth-child(odd) { border-right: 1px solid var(--border); padding-right: 24px; }
-
     .section { padding: 56px 0; }
 
     .project-card {
@@ -1545,10 +1517,6 @@
     .hero { padding: 36px 0 32px; }
     .hero-cta { flex-direction: column; align-items: flex-start; }
     .hero-photo-scroll { width: clamp(120px, 36vw, 160px); }
-
-    .stats { grid-template-columns: repeat(2, 1fr); gap: 24px 0; }
-    .stat:nth-child(odd) { border-right: 1px solid var(--border); padding-right: 16px; }
-    .stat-number { font-size: 36px; }
 
     .section { padding: 40px 0; }
 
