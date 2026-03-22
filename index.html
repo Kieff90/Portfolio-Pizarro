@@ -2319,7 +2319,7 @@
 
     // ⚠️ Inserire qui la Deepgram restricted key
     // Crearla su console.deepgram.com con scope usage:write e budget cap $20/mese
-    var DG_API_KEY = '***DEEPGRAM_KEY_REMOVED_2***';
+    var DG_API_KEY = '***DEEPGRAM_KEY_REMOVED***'; // Member role
 
     var PEDRO_INSTRUCTIONS = [
       'You are a voice assistant representing Pedro Pizarro Diaz on his professional portfolio website.',
@@ -2430,8 +2430,8 @@
         return res.json();
       })
       .then(function (data) {
-        var tempToken = data.key;
-        if (!tempToken) { throw new Error('No token in response'); }
+        var tempToken = data.access_token;
+        if (!tempToken) { throw new Error('No access_token in response: ' + JSON.stringify(data)); }
         openWebSocket(tempToken);
       })
       .catch(function (err) {
