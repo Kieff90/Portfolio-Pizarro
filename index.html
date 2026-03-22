@@ -36,12 +36,12 @@
       "@id": "https://pedropizarrodiaz.it/#person",
       "name": "Pedro Pizarro Diaz",
       "jobTitle": "Delivery Manager",
-      "description": "Delivery Manager con oltre 10 anni di esperienza in Agile transformation, AI product development e complex systems integration.",
+      "description": "Delivery Manager and AI Product Leader con 14 anni di esperienza in Agile transformation, AI workflow integration, LLM governance e complex systems delivery. Basato a Milano, disponibile per consulenze remote EU.",
       "url": "https://pedropizarrodiaz.it",
       "sameAs": [
         "https://www.linkedin.com/in/pedropizarrodiaz"
       ],
-      "knowsAbout": ["Agile", "Scrum", "Delivery Management", "AI Product Development", "Jira", "Digital Transformation", "Team Leadership"],
+      "knowsAbout": ["Agile", "Scrum", "Delivery Management", "AI Product Development", "Jira", "Digital Transformation", "Team Leadership", "LLM Governance", "Agentic Workflows", "Claude AI", "Anthropic API", "SAFe", "Lean-Kanban", "Azure DevOps"],
       "worksFor": {
         "@type": "Organization",
         "name": "Freelance / Consulenza"
@@ -673,6 +673,31 @@
     flex-shrink: 0;
   }
 
+  /* ── ABOUT ── */
+  .about-text {
+    max-width: 720px;
+  }
+
+  .about-text p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text);
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .about-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .about-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px !important;
+    color: var(--muted) !important;
+    letter-spacing: 0.04em;
+    line-height: 1.8 !important;
+  }
+
   /* ── CERTS ── */
   .certs-grid {
     display: grid;
@@ -1005,6 +1030,7 @@
   <div class="container">
     <nav>
       <div class="nav-links">
+        <a href="#about">About</a>
         <a href="#work">Work</a>
         <a href="#experience">Experience</a>
         <a href="#skills">Skills</a>
@@ -1076,6 +1102,19 @@
       <div class="stat-label">Professionals<br>using my AI setup</div>
     </div>
   </div>
+</div>
+
+<!-- ABOUT -->
+<div class="container">
+  <section class="section" id="about">
+    <div class="section-label reveal">About</div>
+    <div class="about-text reveal">
+      <p>Pedro Pizarro Diaz is a Delivery Manager and AI Product Leader based in Milan, Italy. Over 14 years, he has led software delivery across banking, aerospace, energy, and AI startups — managing 5+ concurrent workstreams, owning release pipelines, and coordinating teams of 40+.</p>
+      <p>He specialises in embedding AI into delivery workflows: custom assistants, agentic pipelines, and LLM governance frameworks now used daily by 40+ professionals, achieving +35% story readiness and −40% repetitive planning overhead. In 2025 he published <em>Inverting Prompting</em>, a framework for structuring AI-augmented sprint ceremonies.</p>
+      <p>Previously a Scrum Master in compliance-regulated aerospace environments and distributed Italy/India teams, cutting lead time by 50% via Lean-Kanban systems.</p>
+      <p class="about-meta">Certifications: SAFe 6 Agilist · PSM II · ICF ACSTH · Claude with the Anthropic API (2026) &nbsp;·&nbsp; Languages: Italian (native) · Spanish (native) · English (C2) &nbsp;·&nbsp; Available for consulting mandates remotely across the EU.</p>
+    </div>
+  </section>
 </div>
 
 <!-- PROJECTS / PORTFOLIO -->
@@ -1336,6 +1375,11 @@
 
     <div class="certs-grid">
       <div class="cert-item reveal">
+        <span class="cert-year">2026</span>
+        <span class="cert-name">Claude with the Anthropic API</span>
+        <span class="cert-badge"></span>
+      </div>
+      <div class="cert-item reveal">
         <span class="cert-year">2025</span>
         <span class="cert-name">Certified SAFe 6 Agilist</span>
         <span class="cert-badge"></span>
@@ -1368,11 +1412,6 @@
       <div class="cert-item reveal">
         <span class="cert-year">2020</span>
         <span class="cert-name">Professional Scrum Master I (PSM I)</span>
-        <span class="cert-badge"></span>
-      </div>
-      <div class="cert-item reveal">
-        <span class="cert-year">2017</span>
-        <span class="cert-name">ITIL Foundation</span>
         <span class="cert-badge"></span>
       </div>
     </div>
