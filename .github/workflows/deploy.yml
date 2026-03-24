@@ -15,6 +15,17 @@ jobs:
       - name: Install lftp
         run: sudo apt-get install -y lftp
 
+      - name: Inject Deepgram key into config.local.js
+        env:
+          DEEPGRAM_KEY: ${{ secrets.DEEPGRAM_KEY }}
+        run: |
+          if [ -z "$DEEPGRAM_KEY" ]; then
+            echo "⚠️  DEEPGRAM_KEY secret not set — voice assistant will be hidden on site."
+            echo "window.DEEPGRAM_KEY = '';" > config.local.js
+          else
+            echo "window.DEEPGRAM_KEY = '$DEEPGRAM_KEY';" > config.local.js
+          fi
+
       - name: Deploy via SFTP (lftp)
         env:
           SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}

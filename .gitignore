@@ -1,0 +1,13 @@
+# Secrets — never commit
+config.local.js
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Backup files
+*.bak
+*.bak.*

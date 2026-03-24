@@ -2199,6 +2199,9 @@
 <!-- BACK TO TOP -->
 <button id="back-to-top" aria-label="Back to top">↑</button>
 
+<!-- Voice assistant config: loaded from config.local.js (gitignored, injected by CI) -->
+<script src="config.local.js"></script>
+
 <script>
 (function () {
   'use strict';
@@ -2427,9 +2430,9 @@
   (function () {
     'use strict';
 
-    // ⚠️ Inserire qui la Deepgram restricted key
-    // Crearla su console.deepgram.com con scope usage:write e budget cap $20/mese
-    var DG_API_KEY = '***DEEPGRAM_KEY_REMOVED***'; // Member role
+    // Key injected at runtime from config.local.js (gitignored).
+    // In CI the file is generated from the DEEPGRAM_KEY GitHub secret before deploy.
+    var DG_API_KEY = (typeof window !== 'undefined' && window.DEEPGRAM_KEY) ? window.DEEPGRAM_KEY : '';
 
     var PEDRO_INSTRUCTIONS = [
       'You are a voice assistant representing Pedro Pizarro Diaz on his professional portfolio website.',
@@ -2479,6 +2482,12 @@
     var textSubmit    = document.getElementById('voice-text-submit');
 
     if (!voiceBtn) { return; }
+
+    // Graceful degradation: if key not injected, hide voice button silently
+    if (!DG_API_KEY) {
+      voiceBtn.style.display = 'none';
+      return;
+    }
 
     var ws = null;
     var mediaStream = null;
