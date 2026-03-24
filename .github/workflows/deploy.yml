@@ -29,13 +29,15 @@ jobs:
 
       - name: Deploy via SFTP (lftp)
         env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_USER: ${{ secrets.SFTP_USER }}
           SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
         run: |
           lftp -c "
             set sftp:auto-confirm yes;
             set net:timeout 30;
             set net:max-retries 3;
-            open sftp://su1172020:$SFTP_PASSWORD@access-5019887635.webspace-host.com;
+            open sftp://$SFTP_USER:$SFTP_PASSWORD@$SFTP_HOST;
             mirror --reverse --delete \
               --exclude-glob=.git \
               --exclude-glob=.github \
