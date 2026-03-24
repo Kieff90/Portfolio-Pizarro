@@ -1,5 +1,6 @@
 # Secrets — never commit
 config.local.js
+api/deepgram.conf.php
 
 # macOS
 .DS_Store

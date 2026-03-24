@@ -1,0 +1,4 @@
+# Only token.php is accessible via HTTP — all other files (including deepgram.conf.php) are blocked
+<FilesMatch "^(?!token\.php$)">
+    Require all denied
+</FilesMatch>

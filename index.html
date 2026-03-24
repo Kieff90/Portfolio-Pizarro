@@ -2199,9 +2199,6 @@
 <!-- BACK TO TOP -->
 <button id="back-to-top" aria-label="Back to top">↑</button>
 
-<!-- Voice assistant config: loaded from config.local.js (gitignored, injected by CI) -->
-<script src="config.local.js"></script>
-
 <script>
 (function () {
   'use strict';
@@ -2430,9 +2427,6 @@
   (function () {
     'use strict';
 
-    // Key injected at runtime from config.local.js (gitignored).
-    // In CI the file is generated from the DEEPGRAM_KEY GitHub secret before deploy.
-    var DG_API_KEY = (typeof window !== 'undefined' && window.DEEPGRAM_KEY) ? window.DEEPGRAM_KEY : '';
 
     var PEDRO_INSTRUCTIONS = [
       'You are a voice assistant representing Pedro Pizarro Diaz on his professional portfolio website.',
@@ -2483,12 +2477,6 @@
 
     if (!voiceBtn) { return; }
 
-    // Graceful degradation: if key not injected, hide voice button silently
-    if (!DG_API_KEY) {
-      voiceBtn.style.display = 'none';
-      return;
-    }
-
     var ws = null;
     var mediaStream = null;
     var audioCtx = null;       // mic capture context (48000 Hz)
@@ -2536,15 +2524,28 @@
 
     function connect() {
       setState('loading', 'Connecting...');
-      openWebSocket();
+      // Fetch a short-lived token from the server proxy — the real API key never reaches the browser
+      fetch('/api/token.php')
+        .then(function (r) {
+          if (!r.ok) { throw new Error('HTTP ' + r.status); }
+          return r.json();
+        })
+        .then(function (data) {
+          if (!data.access_token) { throw new Error('No access_token in response'); }
+          openWebSocket(data.access_token);
+        })
+        .catch(function () {
+          showError('Could not connect to voice service. Please try again.');
+          setState('idle', 'Click the microphone to start a conversation');
+        });
     }
 
-    function openWebSocket() {
-      // Browser auth: API key via Sec-WebSocket-Protocol subprotocol
+    function openWebSocket(token) {
+      // Browser auth: short-lived token from /api/token.php (real key stays server-side)
       // Source: @deepgram/sdk v5.0.0 CustomClient.js lines 347-376
       // "Token API_KEY" → protocols: ["token", "API_KEY"]
       // URL: wss://agent.deepgram.com/v1/agent/converse (from SDK V1Client.js line 67)
-      ws = new WebSocket('wss://agent.deepgram.com/v1/agent/converse', ['token', DG_API_KEY]);
+      ws = new WebSocket('wss://agent.deepgram.com/v1/agent/converse', ['token', token]);
       ws.binaryType = 'arraybuffer';
 
       ws.onopen = function () {
