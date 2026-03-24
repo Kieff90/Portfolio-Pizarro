@@ -1,37 +1,10 @@
 # ── Security Headers ──────────────────────────────────────────────────────────
-<IfModule mod_headers.c>
-    # Prevent clickjacking
-    Header always set X-Frame-Options "DENY"
-
-    # Prevent MIME sniffing
-    Header always set X-Content-Type-Options "nosniff"
-
-    # Control referrer leakage on outbound links
-    Header always set Referrer-Policy "strict-origin-when-cross-origin"
-
-    # Limit microphone API to this origin only (used by voice assistant)
-    Header always set Permissions-Policy "microphone=(self)"
-
-    # HSTS: force HTTPS for 1 year
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
-
-    # Content Security Policy
-    # Notes:
-    #   - 'unsafe-inline' required: all JS and CSS is inline in index.html
-    #   - googletagmanager: Google Analytics
-    #   - fonts.googleapis.com / fonts.gstatic.com: Google Fonts
-    #   - wss://agent.deepgram.com: voice assistant WebSocket
-    #   - google-analytics.com: GA4 beacon
-    Header always set Content-Security-Policy "\
-default-src 'self'; \
-script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; \
-style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; \
-font-src 'self' https://fonts.gstatic.com; \
-img-src 'self' data: https:; \
-connect-src 'self' wss://agent.deepgram.com https://www.google-analytics.com https://region1.google-analytics.com; \
-media-src 'self' blob:; \
-frame-ancestors 'none';"
-</IfModule>
+Header set X-Frame-Options "DENY"
+Header set X-Content-Type-Options "nosniff"
+Header set Referrer-Policy "strict-origin-when-cross-origin"
+Header set Permissions-Policy "microphone=(self)"
+Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' wss://agent.deepgram.com https://www.google-analytics.com https://region1.google-analytics.com; media-src 'self' blob:; frame-ancestors 'none';"
 
 # ── Compression ───────────────────────────────────────────────────────────────
 <IfModule mod_deflate.c>
