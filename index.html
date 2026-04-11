@@ -1987,16 +1987,35 @@
 <!-- HERO -->
 <div class="container">
   <section class="hero">
-    <!-- Direction E: CSS 3D sphere -->
-    <div class="hero-sphere-wrap" aria-hidden="true">
-      <div class="hero-sphere"></div>
-      <div class="hero-sphere-ring"></div>
-      <div class="hero-sphere-ring hero-sphere-ring--2"></div>
-    </div>
-
     <div class="hero-layout">
       <div class="hero-content">
-        <p class="hero-eyebrow">AI Delivery Manager · Remote EU</p>
+
+        <!-- Voice Orb — AI assistant trigger -->
+        <button class="orb-blob-wrap" id="hero-orb"
+                aria-label="Avvia conversazione con Pedro AI"
+                title="Click to talk to Pedro">
+          <div class="orb-blob"></div>
+          <div class="orb-ring-1" aria-hidden="true"></div>
+          <div class="orb-ring-2" aria-hidden="true"></div>
+        </button>
+
+        <p class="orb-talk-label" aria-hidden="true">
+          <span class="orb-dot"></span>
+          Click to talk to Pedro
+        </p>
+
+        <!-- Avatar + eyebrow -->
+        <div class="hero-avatar-row">
+          <img
+            src="assets/pedro-pizarro.jpg"
+            alt="Pedro Pizarro, AI Delivery Manager"
+            class="hero-avatar"
+            width="48" height="48"
+            loading="eager" decoding="async"
+          >
+          <p class="hero-eyebrow">AI Delivery Manager · Remote EU</p>
+        </div>
+
         <h1 class="hero-name">Pedro <span>Pizarro.</span></h1>
         <p class="hero-title">I ship software. Teams actually deliver.</p>
         <p class="hero-description">
@@ -2009,10 +2028,11 @@
           <a href="mailto:pedropizarro@live.it" class="btn-primary copy-email">Get in touch ↗</a>
           <a href="https://linkedin.com/in/pedro-pizarro-diaz" class="btn-secondary" target="_blank" rel="me noopener noreferrer">LinkedIn profile</a>
         </div>
+
       </div>
     </div>
 
-    <!-- Photo kept hidden for SEO alt text -->
+    <!-- Hidden photo preserved for structured data alt text -->
     <div class="hero-photo-scroll" aria-hidden="true">
       <div class="hero-photo-wrapper">
         <div class="hero-photo-inner">
@@ -2021,7 +2041,7 @@
             alt="Pedro Pizarro, AI Delivery Manager"
             class="hero-photo-img"
             width="400" height="400"
-            loading="eager" decoding="async"
+            loading="lazy" decoding="async"
           >
         </div>
       </div>
