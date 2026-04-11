@@ -1710,7 +1710,8 @@
   .hero-title { animation: fadeInUp 0.5s 0.2s ease both; }
   .hero-description { animation: fadeInUp 0.5s 0.3s ease both; }
   .hero-cta { animation: fadeInUp 0.5s 0.4s ease both; }
-  .hero-photo-scroll { animation: fadeInUp 0.5s 0.5s ease both; }
+  .hero-avatar-row  { animation: fadeInUp 0.5s 0.4s ease both; }
+  .orb-talk-label   { animation: fadeInUp 0.5s 0.5s ease both; }
 
   /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 4px; }
@@ -1820,12 +1821,10 @@
     /* Section label blur off */
     .section-label.reveal { filter: none; transition: opacity 0.55s ease, transform 0.55s ease; }
     /* Photo animations off */
-    .hero-photo-inner { animation: none; }
-    .hero-photo-scroll, .hero-photo-wrapper {
-      transform: none !important;
-      transition: none !important;
-      will-change: auto;
-    }
+    /* Blob animations off — keep static shape */
+    .orb-blob { animation: none; border-radius: 50%; }
+    .orb-ring-1, .orb-ring-2 { animation: none; }
+    .orb-dot { animation: none; opacity: 0.7; }
     /* Voice neon off — keep border visible but static */
     .voice-btn,
     .voice-btn.recording,
@@ -1871,7 +1870,8 @@
     .hero-photo-scroll, .hero-photo-wrapper, .hero-photo-inner {
       transform: none !important; animation: none !important;
     }
-    .hero-sphere-wrap { display: none; }
+    .orb-blob-wrap, .orb-ring-1, .orb-ring-2, .orb-talk-label { display: none !important; }
+    .hero-avatar { width: 32px; height: 32px; filter: none; }
   }
 
   /* ── RESPONSIVE: TABLET ── */
@@ -1893,7 +1893,8 @@
     .nav-links::-webkit-scrollbar { display: none; }
 
     .hero { padding: 28px 0 40px; }
-    .hero-sphere-wrap { width: 120px; height: 120px; margin-bottom: 28px; }
+    .orb-blob-wrap { width: 150px; height: 150px; }
+    .orb-blob      { width: 150px; height: 150px; }
 
     .stats { grid-template-columns: repeat(2, 1fr); }
     .stat:nth-child(2) { border-right: none; }
@@ -1929,7 +1930,8 @@
     nav { gap: 8px; }
 
     .hero { padding: 36px 0 32px; }
-    .hero-sphere-wrap { width: 100px; height: 100px; margin-bottom: 24px; }
+    .orb-blob-wrap { width: 120px; height: 120px; }
+    .orb-blob      { width: 120px; height: 120px; }
     .hero-cta { flex-direction: column; align-items: center; }
 
     .section { padding: 40px 0; }
