@@ -468,6 +468,11 @@
   .hero-name span {
     display: block;
     color: var(--accent);
+    text-shadow: -3px 0 var(--accent2), 3px 0 var(--accent);
+    transition: text-shadow 0.3s;
+  }
+  .hero-name span:hover {
+    text-shadow: -5px 0 var(--accent2), 5px 0 var(--accent), 0 0 30px rgba(0,229,204,0.5);
   }
 
   .hero-title {
@@ -481,6 +486,8 @@
 
   .hero-description {
     max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
     font-size: 16px;
     color: #aaaaaa;
     line-height: 1.65;
@@ -497,25 +504,69 @@
     gap: 16px;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
   }
 
-  /* ── HERO LAYOUT (2 colonne) ── */
+  /* ── HERO LAYOUT (Direction E — centered column) ── */
   .hero-layout {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: clamp(40px, 6vw, 96px);
+    text-align: center;
+    gap: 0;
   }
   .hero-content {
-    flex: 1 1 0;
-    min-width: 0;
+    width: 100%;
+    max-width: 680px;
   }
 
-  /* ── HERO PHOTO (3 layer isolati) ── */
+  /* ── HERO 3D SPHERE ── */
+  .hero-sphere-wrap {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 40px;
+  }
+  .hero-sphere {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--accent), var(--accent3), var(--accent2), var(--accent));
+    animation: sphereSpin 8s linear infinite;
+    position: relative;
+  }
+  .hero-sphere::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(240,235,248,0.25), var(--bg) 70%);
+  }
+  .hero-sphere-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(0,229,204,0.3);
+    animation: sphereRingPulse 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .hero-sphere-ring { inset: -20px; }
+  .hero-sphere-ring--2 {
+    inset: -36px;
+    border-color: rgba(255,97,210,0.2);
+    animation-delay: 1s;
+  }
+  @keyframes sphereSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes sphereRingPulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50%       { opacity: 0.8; transform: scale(1.04); }
+  }
+
+  /* ── HERO PHOTO (hidden in Dir-E; kept for SEO alt text) ── */
   .hero-photo-scroll {
-    flex: 0 0 auto;
-    width: clamp(220px, 28vw, 380px);
-    perspective: 800px;
-    will-change: transform;
+    display: none;
   }
   .hero-photo-wrapper {
     width: 100%;
@@ -1672,8 +1723,7 @@
     .hero-photo-scroll, .hero-photo-wrapper, .hero-photo-inner {
       transform: none !important; animation: none !important;
     }
-    .hero-layout { display: flex; gap: 40px; }
-    .hero-photo-scroll { width: 160px; perspective: none; }
+    .hero-sphere-wrap { display: none; }
   }
 
   /* ── RESPONSIVE: TABLET ── */
@@ -1695,8 +1745,7 @@
     .nav-links::-webkit-scrollbar { display: none; }
 
     .hero { padding: 28px 0 40px; }
-    .hero-layout { flex-direction: column-reverse; gap: 32px; }
-    .hero-photo-scroll { width: clamp(140px, 40vw, 200px); align-self: center; }
+    .hero-sphere-wrap { width: 120px; height: 120px; margin-bottom: 28px; }
 
     .stats { grid-template-columns: repeat(2, 1fr); }
     .stat:nth-child(2) { border-right: none; }
@@ -1732,9 +1781,8 @@
     nav { gap: 8px; }
 
     .hero { padding: 36px 0 32px; }
-    .hero-layout { flex-direction: row; align-items: flex-start; gap: 16px; }
-    .hero-photo-scroll { width: clamp(80px, 24vw, 108px); align-self: flex-start; flex-shrink: 0; }
-    .hero-cta { flex-direction: column; align-items: flex-start; }
+    .hero-sphere-wrap { width: 100px; height: 100px; margin-bottom: 24px; }
+    .hero-cta { flex-direction: column; align-items: center; }
 
     .section { padding: 40px 0; }
 
@@ -1777,9 +1825,14 @@
 <!-- HERO -->
 <div class="container">
   <section class="hero">
-    <div class="hero-layout">
+    <!-- Direction E: CSS 3D sphere -->
+    <div class="hero-sphere-wrap" aria-hidden="true">
+      <div class="hero-sphere"></div>
+      <div class="hero-sphere-ring"></div>
+      <div class="hero-sphere-ring hero-sphere-ring--2"></div>
+    </div>
 
-      <!-- LEFT: contenuto testuale — nomi classi invariati -->
+    <div class="hero-layout">
       <div class="hero-content">
         <p class="hero-eyebrow">AI Delivery Manager · Remote EU</p>
         <h1 class="hero-name">Pedro <span>Pizarro.</span></h1>
@@ -1795,22 +1848,21 @@
           <a href="https://linkedin.com/in/pedro-pizarro-diaz" class="btn-secondary" target="_blank" rel="me noopener noreferrer">LinkedIn profile</a>
         </div>
       </div>
+    </div>
 
-      <!-- RIGHT: foto con 3 layer transform isolati -->
-      <div class="hero-photo-scroll" aria-hidden="true">
-        <div class="hero-photo-wrapper">
-          <div class="hero-photo-inner">
-            <img
-              src="assets/pedro-pizarro.jpg"
-              alt="Pedro Pizarro, AI Delivery Manager"
-              class="hero-photo-img"
-              width="400" height="400"
-              loading="eager" decoding="async"
-            >
-          </div>
+    <!-- Photo kept hidden for SEO alt text -->
+    <div class="hero-photo-scroll" aria-hidden="true">
+      <div class="hero-photo-wrapper">
+        <div class="hero-photo-inner">
+          <img
+            src="assets/pedro-pizarro.jpg"
+            alt="Pedro Pizarro, AI Delivery Manager"
+            class="hero-photo-img"
+            width="400" height="400"
+            loading="eager" decoding="async"
+          >
         </div>
       </div>
-
     </div>
   </section>
 </div>
