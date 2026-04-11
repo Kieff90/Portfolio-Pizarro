@@ -1354,14 +1354,7 @@
 
   /* voice-btn hidden ma nel DOM per il JS */
   .voice-btn--hidden {
-    position: absolute;
-    width: 1px; height: 1px;
-    padding: 0; margin: -1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    white-space: nowrap;
-    border: 0;
-    pointer-events: none;
+    display: none !important;
   }
 
   /* status row: wave bars + testo */
@@ -2169,10 +2162,6 @@
       <div class="stat-label">Cycle time<br>reduced</div>
     </div>
     <div class="stat">
-      <div class="stat-number">40+</div>
-      <div class="stat-label">Professionals<br>using my AI setup</div>
-    </div>
-    <div class="stat">
       <div class="stat-number">+40%</div>
       <div class="stat-label">Sprint capacity<br>per cycle</div>
     </div>
@@ -2450,16 +2439,6 @@
           <li>Banking · Aerospace</li>
           <li>Energy · Insurance</li>
           <li>Public Sector · AI Startups</li>
-        </ul>
-      </div>
-      <div class="skill-group reveal">
-        <div class="skill-group-title">Tools</div>
-        <ul class="skill-list">
-          <li>Jira · Confluence</li>
-          <li>Azure DevOps · GitHub</li>
-          <li>Miro · Notion · ClickUp</li>
-          <li>Google Workspace · M365</li>
-          <li>Asana</li>
         </ul>
       </div>
       <div class="skill-group reveal">
