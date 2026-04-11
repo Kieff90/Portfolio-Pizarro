@@ -1363,7 +1363,7 @@
     align-items: center;
     justify-content: center;
     gap: 16px;
-    min-height: 48px;
+    min-height: 0;
   }
   .hero-voice-status .voice-state {
     font-family: 'DM Mono', monospace;
@@ -1505,10 +1505,13 @@
 
   /* Wave bars */
   .voice-wave {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 4px;
     height: 40px;
+  }
+  .voice-wave.active {
+    display: flex;
   }
 
   .wave-bar {
