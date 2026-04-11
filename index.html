@@ -443,7 +443,7 @@
 
   /* ── HERO ── */
   .hero {
-    padding: 48px 0 56px;
+    padding: 48px 0 32px;
   }
 
   .hero-eyebrow {
@@ -1176,16 +1176,12 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0;
-    padding: 48px 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    padding: 40px 0;
   }
 
   .stat {
-    padding: 24px 28px;
-    border-right: 1px solid var(--border);
+    padding: 20px 28px;
   }
-  .stat:last-child { border-right: none; }
 
   .stat-number {
     font-family: 'Space Grotesk', sans-serif;
@@ -1345,7 +1341,7 @@
 
   /* ── HERO VOICE UI (sotto l'orb nel hero) ── */
   .hero-voice-ui {
-    margin-top: 32px;
+    margin-top: 8px;
     width: 100%;
     max-width: 560px;
     margin-left: auto;
@@ -1359,11 +1355,13 @@
 
   /* status row: wave bars + testo */
   .hero-voice-status {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     gap: 16px;
-    min-height: 0;
+  }
+  .hero-voice-ui.voice-active .hero-voice-status {
+    display: flex;
   }
   .hero-voice-status .voice-state {
     font-family: 'DM Mono', monospace;
@@ -2882,19 +2880,25 @@
       voiceBtn.setAttribute('aria-pressed', 'false');
       voiceBtn.disabled = false;
       if (heroOrb) heroOrb.classList.remove('orb-recording', 'orb-loading', 'orb-speaking');
+      var heroVoiceUi = document.querySelector('.hero-voice-ui');
       if (s === 'recording') {
         voiceBtn.classList.add('recording');
         voiceBtn.setAttribute('aria-pressed', 'true');
         voiceWave.classList.add('active');
         if (heroOrb) heroOrb.classList.add('orb-recording');
+        if (heroVoiceUi) heroVoiceUi.classList.add('voice-active');
       } else if (s === 'loading') {
         voiceBtn.classList.add('loading');
         voiceBtn.disabled = true;
         if (heroOrb) heroOrb.classList.add('orb-loading');
+        if (heroVoiceUi) heroVoiceUi.classList.add('voice-active');
       } else if (s === 'speaking') {
         voiceBtn.classList.add('speaking');
         if (heroOrb) heroOrb.classList.add('orb-speaking');
         voiceWave.classList.add('active');
+        if (heroVoiceUi) heroVoiceUi.classList.add('voice-active');
+      } else {
+        if (heroVoiceUi) heroVoiceUi.classList.remove('voice-active');
       }
     }
 
