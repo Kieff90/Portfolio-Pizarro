@@ -2817,6 +2817,7 @@
       '- Projects: SAFe transformation for European energy company (40+ people, 6 BUs), Jira Cloud migration (100+ users, zero scope creep), FlowMeUp AI startup (MVP in 2 months)'
     ].join('\n');
 
+    var heroOrb       = document.getElementById('hero-orb');
     var voiceBtn      = document.getElementById('voice-btn');
     var voiceWave     = document.getElementById('voice-wave');
     var voiceState    = document.getElementById('voice-state');
@@ -2858,15 +2859,19 @@
       voiceWave.classList.remove('active');
       voiceBtn.setAttribute('aria-pressed', 'false');
       voiceBtn.disabled = false;
+      if (heroOrb) heroOrb.classList.remove('orb-recording', 'orb-loading', 'orb-speaking');
       if (s === 'recording') {
         voiceBtn.classList.add('recording');
         voiceBtn.setAttribute('aria-pressed', 'true');
         voiceWave.classList.add('active');
+        if (heroOrb) heroOrb.classList.add('orb-recording');
       } else if (s === 'loading') {
         voiceBtn.classList.add('loading');
         voiceBtn.disabled = true;
+        if (heroOrb) heroOrb.classList.add('orb-loading');
       } else if (s === 'speaking') {
         voiceBtn.classList.add('speaking');
+        if (heroOrb) heroOrb.classList.add('orb-speaking');
         voiceWave.classList.add('active');
       }
     }
@@ -3081,6 +3086,21 @@
       transcriptBox.hidden = true;
       connect();
     });
+
+    /* Hero orb — same behaviour as voice-btn */
+    if (heroOrb) {
+      heroOrb.addEventListener('click', function () {
+        if (isConnected) {
+          cleanup();
+          setState('idle', 'Click the microphone to start a conversation');
+          return;
+        }
+        responseCard.hidden = true;
+        voiceError.hidden = true;
+        transcriptBox.hidden = true;
+        connect();
+      });
+    }
 
     if (disconnectBtn) {
       disconnectBtn.addEventListener('click', function () {
