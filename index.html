@@ -1343,6 +1343,43 @@
     margin-bottom: 16px;
   }
 
+  /* ── HERO VOICE UI (sotto l'orb nel hero) ── */
+  .hero-voice-ui {
+    margin-top: 32px;
+    width: 100%;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* voice-btn hidden ma nel DOM per il JS */
+  .voice-btn--hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+    pointer-events: none;
+  }
+
+  /* status row: wave bars + testo */
+  .hero-voice-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    min-height: 48px;
+  }
+  .hero-voice-status .voice-state {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
   .voice-subtitle {
     font-size: 15px;
     color: var(--muted);
@@ -2031,6 +2068,71 @@
           <a href="https://linkedin.com/in/pedro-pizarro-diaz" class="btn-secondary" target="_blank" rel="me noopener noreferrer">LinkedIn profile</a>
         </div>
 
+        <!-- ── VOICE UI — funzionale, ancorato all'orb ── -->
+        <div class="hero-voice-ui" id="voice" aria-label="AI voice assistant">
+
+          <!-- voice-btn: invisibile ma richiesto dal JS per inizializzare -->
+          <button id="voice-btn" class="voice-btn voice-btn--hidden" aria-label="Start voice conversation" aria-pressed="false" type="button" aria-hidden="true" tabindex="-1">
+            <span class="voice-btn-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="2" width="6" height="13" rx="3"/>
+                <path d="M5 10a7 7 0 0 0 14 0"/>
+                <line x1="12" y1="19" x2="12" y2="22"/>
+                <line x1="9" y1="22" x2="15" y2="22"/>
+              </svg>
+            </span>
+            <span class="voice-btn-ring" aria-hidden="true"></span>
+            <span class="voice-btn-ring voice-btn-ring--2" aria-hidden="true"></span>
+          </button>
+
+          <!-- Status + wave: visibili sotto l'orb -->
+          <div class="hero-voice-status">
+            <div class="voice-wave" id="voice-wave" aria-hidden="true">
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+            </div>
+            <p class="voice-state" id="voice-state" aria-live="polite"></p>
+          </div>
+
+          <!-- Text fallback (no mic/WebSocket) -->
+          <div class="voice-text-fallback" id="voice-text-fallback" hidden>
+            <p class="voice-fallback-note">Voice not supported in this browser. Type your question below.</p>
+            <div class="voice-text-row">
+              <input type="text" id="voice-text-input" class="voice-text-input"
+                     placeholder="e.g. What certifications does Pedro have?"
+                     maxlength="500" aria-label="Type your question about Pedro"/>
+              <button type="button" id="voice-text-submit" class="btn-primary" style="white-space:nowrap">Ask ↗</button>
+            </div>
+          </div>
+
+          <!-- Transcript -->
+          <div class="voice-transcript-box" id="voice-transcript-box" hidden>
+            <div class="voice-transcript-label">You said</div>
+            <p class="voice-transcript" id="voice-transcript"></p>
+          </div>
+
+          <!-- Response card -->
+          <div class="voice-response-card" id="voice-response-card" hidden>
+            <div class="voice-response-header">
+              <span class="voice-response-label">Pedro's assistant</span>
+              <button type="button" id="voice-disconnect-btn" class="voice-replay-btn">✕ End conversation</button>
+            </div>
+            <p class="voice-response-text" id="voice-response-text"></p>
+            <div class="voice-response-meta">
+              <span class="voice-response-source">Based on verified profile data</span>
+            </div>
+          </div>
+
+          <!-- Error -->
+          <div class="voice-error" id="voice-error" hidden role="alert">
+            <span id="voice-error-text"></span>
+          </div>
+
+        </div><!-- /hero-voice-ui -->
+
       </div>
     </div>
 
@@ -2102,70 +2204,6 @@
         <span class="pill">Italian · native</span>
         <span class="pill">Spanish · native</span>
         <span class="pill">English · C2</span>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- VOICE ASSISTANT -->
-<div class="container">
-  <section class="section" id="voice">
-    <h2 class="section-label reveal">Ask Pedro</h2>
-    <div class="voice-assistant reveal">
-      <h2 class="section-title">Talk to my Pedro AI</h2>
-
-      <div class="voice-interface">
-        <button id="voice-btn" class="voice-btn" aria-label="Start voice conversation" aria-pressed="false" type="button">
-          <span class="voice-btn-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="2" width="6" height="13" rx="3"/>
-              <path d="M5 10a7 7 0 0 0 14 0"/>
-              <line x1="12" y1="19" x2="12" y2="22"/>
-              <line x1="9" y1="22" x2="15" y2="22"/>
-            </svg>
-          </span>
-          <span class="voice-btn-ring" aria-hidden="true"></span>
-          <span class="voice-btn-ring voice-btn-ring--2" aria-hidden="true"></span>
-        </button>
-        <div class="voice-wave" id="voice-wave" aria-hidden="true">
-          <span class="wave-bar"></span>
-          <span class="wave-bar"></span>
-          <span class="wave-bar"></span>
-          <span class="wave-bar"></span>
-          <span class="wave-bar"></span>
-        </div>
-      </div>
-
-      <p class="voice-state" id="voice-state" aria-live="polite">Click the microphone to start a conversation</p>
-
-      <div class="voice-text-fallback" id="voice-text-fallback" hidden>
-        <p class="voice-fallback-note">Voice not supported in this browser. Type your question below.</p>
-        <div class="voice-text-row">
-          <input type="text" id="voice-text-input" class="voice-text-input"
-                 placeholder="e.g. What certifications does Pedro have?"
-                 maxlength="500" aria-label="Type your question about Pedro"/>
-          <button type="button" id="voice-text-submit" class="btn-primary" style="white-space:nowrap">Ask ↗</button>
-        </div>
-      </div>
-
-      <div class="voice-transcript-box" id="voice-transcript-box" hidden>
-        <div class="voice-transcript-label">You said</div>
-        <p class="voice-transcript" id="voice-transcript"></p>
-      </div>
-
-      <div class="voice-response-card" id="voice-response-card" hidden>
-        <div class="voice-response-header">
-          <span class="voice-response-label">Pedro's assistant</span>
-          <button type="button" id="voice-disconnect-btn" class="voice-replay-btn">✕ End conversation</button>
-        </div>
-        <p class="voice-response-text" id="voice-response-text"></p>
-        <div class="voice-response-meta">
-          <span class="voice-response-source">Based on verified profile data</span>
-        </div>
-      </div>
-
-      <div class="voice-error" id="voice-error" hidden role="alert">
-        <span id="voice-error-text"></span>
       </div>
     </div>
   </section>
