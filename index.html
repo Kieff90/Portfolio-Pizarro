@@ -407,9 +407,9 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    background: rgba(10,10,10,0.9);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(26,10,46,0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
   }
 
@@ -592,8 +592,8 @@
     outline: 1px solid rgba(255,255,255,0.10);
     outline-offset: 4px;
     box-shadow:
-      0 0 0 1px rgba(232,255,74,0.15),
-      0 0 0 8px rgba(232,255,74,0.04),
+      0 0 0 1px rgba(0,229,204,0.15),
+      0 0 0 8px rgba(0,229,204,0.04),
       0 24px 60px rgba(0,0,0,0.60),
       0 8px 24px rgba(0,0,0,0.40),
       inset 0 1px 0 rgba(255,255,255,0.06);
@@ -603,11 +603,11 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--accent);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     color: #0a0a0a;
     font-family: 'DM Mono', monospace;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     padding: 14px 28px;
@@ -616,16 +616,16 @@
     transition: all 0.2s;
   }
 
-  .btn-primary:hover { background: #d4eb3a; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(232,255,74,0.25); }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,229,204,0.30); }
 
   .btn-secondary {
     font-family: 'DM Mono', monospace;
     font-size: 12px;
-    color: var(--muted);
+    color: var(--accent);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     text-decoration: none;
-    border-bottom: 1px solid var(--muted2);
+    border-bottom: 1px solid rgba(0,229,204,0.4);
     padding-bottom: 2px;
     transition: color 0.2s, border-color 0.2s;
   }
@@ -1008,7 +1008,7 @@
 
   .pill.accent-pill {
     color: var(--accent);
-    border-color: rgba(232,255,74,0.3);
+    border-color: rgba(0,229,204,0.3);
   }
 
   .about-text p {
@@ -1688,7 +1688,7 @@
     .voice-btn.speaking,
     .voice-btn.loading {
       animation: none;
-      box-shadow: 0 0 0 2px rgba(232,255,74,0.4);
+      box-shadow: 0 0 0 2px rgba(0,229,204,0.4);
     }
   }
 
