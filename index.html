@@ -343,7 +343,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.22;
+    opacity: 0.05;
   }
   .bg-video video::-webkit-media-controls,
   .bg-video video::-webkit-media-controls-start-playback-button,
@@ -355,7 +355,7 @@
     position: fixed;
     inset: 0;
     z-index: 0;
-    background: rgba(10,10,10,0.60);
+    background: rgba(26,10,46,0.75);
     pointer-events: none;
   }
 
@@ -370,24 +370,28 @@
   .bg-mesh::before {
     content: '';
     position: absolute;
-    top: -20%;
-    left: -15%;
-    width: 60%;
-    height: 70%;
-    background: radial-gradient(ellipse at center, rgba(232,255,74,0.03) 0%, transparent 70%);
-    filter: blur(60px);
-    animation: meshDrift1 18s ease-in-out infinite;
+    top: -10%;
+    left: -10%;
+    width: 65%;
+    height: 75%;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(123,47,255,0.28) 0%, transparent 55%),
+      radial-gradient(ellipse at 70% 20%, rgba(0,229,204,0.16) 0%, transparent 50%);
+    filter: blur(70px);
+    animation: meshDrift1 20s ease-in-out infinite;
   }
   .bg-mesh::after {
     content: '';
     position: absolute;
-    bottom: -20%;
-    right: -15%;
-    width: 55%;
-    height: 65%;
-    background: radial-gradient(ellipse at center, rgba(255,107,53,0.025) 0%, transparent 70%);
-    filter: blur(60px);
-    animation: meshDrift2 22s ease-in-out infinite;
+    bottom: -15%;
+    right: -10%;
+    width: 60%;
+    height: 70%;
+    background:
+      radial-gradient(ellipse at 60% 70%, rgba(255,97,210,0.14) 0%, transparent 55%),
+      radial-gradient(ellipse at 20% 80%, rgba(123,47,255,0.18) 0%, transparent 50%);
+    filter: blur(70px);
+    animation: meshDrift2 25s ease-in-out infinite;
   }
 
   .container {
