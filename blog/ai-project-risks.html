@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }</script>
+<title>AI Project Risks: 7 Failure Modes and How to Avoid Them | Pedro Pizarro</title>
+<meta name="description" content="McKinsey reports 70% of AI projects fail to reach production. Here are the 7 failure modes I see repeatedly in AI projects — and the delivery practices that prevent each one.">
+<meta name="keywords" content="AI project risks, why AI projects fail, AI project failure modes, AI delivery risk management, LLM project risks, AI project management Italy">
+<meta name="author" content="Pedro Pizarro Diaz">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://pedropizarrodiaz.it/blog/ai-project-risks.html">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://pedropizarrodiaz.it/blog/ai-project-risks.html">
+<meta property="og:title" content="AI Project Risks: 7 Failure Modes and How to Avoid Them">
+<meta property="og:description" content="70% of AI projects fail to reach production. Here are the 7 failure modes I see repeatedly — and the delivery practices that prevent them.">
+<meta property="og:image" content="https://pedropizarrodiaz.it/og-image.png">
+<meta property="og:site_name" content="pedropizarrodiaz.it">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Project Risks: 7 Failure Modes and How to Avoid Them">
+<meta name="twitter:description" content="70% of AI projects fail to reach production. The 7 failure modes and how to prevent them.">
+<meta name="twitter:image" content="https://pedropizarrodiaz.it/og-image.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://pedropizarrodiaz.it/blog/ai-project-risks.html",
+      "headline": "AI Project Risks: The 7 Most Common Failure Modes and How to Avoid Them",
+      "description": "McKinsey reports 70% of AI projects fail to reach production. The 7 failure modes and the delivery practices that prevent each one.",
+      "url": "https://pedropizarrodiaz.it/blog/ai-project-risks.html",
+      "datePublished": "2026-01-20",
+      "dateModified": "2026-01-20",
+      "author": { "@id": "https://pedropizarrodiaz.it/#person" },
+      "publisher": { "@id": "https://pedropizarrodiaz.it/#person" },
+      "inLanguage": "en",
+      "wordCount": 1050,
+      "about": { "@type": "Thing", "name": "AI Project Risk Management" },
+      "keywords": ["AI project risks", "AI project failure", "LLM governance", "AI delivery", "risk management"]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do AI projects fail?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "According to McKinsey (2024), 70% of AI projects fail to reach production. The most common failure modes are: unclear success criteria before the pilot begins, data that isn't ready for production use, lack of LLM governance (model versioning, output validation), missing human-in-the-loop checkpoints, no change management plan for end users, scope creep during the pilot phase, and underestimating the operational complexity of maintaining AI systems post-deployment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the biggest risks in AI project delivery?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The 7 biggest risks in AI project delivery are: 1) Undefined success criteria — no KPI to measure go/no-go; 2) Data debt — poor quality or inaccessible data discovered mid-project; 3) Model drift — model performance degrades as real-world data distribution shifts; 4) Prompt regression — model version updates break existing prompts; 5) Hallucination in production — LLM outputs incorrect facts in live systems without validation; 6) Adoption failure — technically successful AI tool with low user adoption; 7) Compliance gaps — EU AI Act or GDPR requirements discovered post-launch."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you manage risk in an AI project?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Risk management in AI projects requires three layers beyond traditional PM: output validation pipelines (test model outputs against expected ranges before they reach users), model versioning governance (treat model updates like code deployments — with regression tests), and human-in-the-loop checkpoints (define which decisions require human review regardless of model confidence). Additionally: run shadow deployments before full rollout, define clear escalation paths for model failures, and maintain an audit trail for LLM outputs in regulated industries."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8W56KE5NY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Z8W56KE5NY');
+</script>
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2300E5CC'/%3E%3Cstop offset='100%25' stop-color='%23FF61D2'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='6' fill='%231A0A2E'/%3E%3Ctext x='16' y='23' font-family='Arial Black%2CArial%2Csans-serif' font-size='22' font-weight='900' text-anchor='middle' fill='url(%23g)'%3EP%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/shared.css">
+<style>
+  .post-layout { display: grid; grid-template-columns: 1fr 280px; gap: 80px; align-items: start; }
+  .post-sidebar { position: sticky; top: 96px; }
+  .sidebar-block { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 24px; margin-bottom: 16px; }
+  .sidebar-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; }
+  .sidebar-links { display: flex; flex-direction: column; gap: 10px; }
+  .sidebar-link { font-size: 13px; color: var(--muted); text-decoration: none; line-height: 1.4; transition: color 0.2s; }
+  .sidebar-link:hover { color: var(--accent); }
+  .post-meta { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 40px; }
+  .post-meta-item { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted2); letter-spacing: 0.08em; text-transform: uppercase; }
+  .risk-card {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 24px;
+    padding: 28px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+  .risk-card:hover { border-color: rgba(255,255,255,0.16); }
+  .risk-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 36px; font-weight: 700;
+    color: rgba(255,255,255,0.1);
+    line-height: 1;
+  }
+  .risk-label { font-family: 'DM Mono', monospace; font-size: 10px; color: #ff6b6b; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .risk-title { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+  .risk-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
+  .risk-fix { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.06em; display: flex; align-items: flex-start; gap: 8px; }
+  .risk-fix::before { content: '→'; flex-shrink: 0; }
+  .faq-section { margin-top: 64px; }
+  .faq-item { border-bottom: 1px solid var(--border); padding: 28px 0; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-question { font-family: 'Space Grotesk', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+  .faq-answer { font-size: 15px; color: #c8c0d8; line-height: 1.75; font-weight: 300; }
+  @media (max-width: 960px) { .post-layout { grid-template-columns: 1fr; } .post-sidebar { position: static; } }
+  @media (max-width: 640px) { .risk-card { grid-template-columns: 1fr; } .risk-num { font-size: 24px; } }
+</style>
+</head>
+<body>
+<div class="bg-mesh" aria-hidden="true"></div>
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<header class="site-header">
+  <div class="container">
+    <nav>
+      <a href="/" class="nav-logo">Pedro<span>.</span></a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/services.html">Services</a>
+        <a href="/blog/" class="active">Blog</a>
+        <a href="/case-studies/">Case Studies</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <section class="page-hero">
+    <p class="page-hero-eyebrow"><a href="/blog/" style="color:var(--muted);text-decoration:none;">Blog</a> &nbsp;/&nbsp; Risk Management</p>
+    <h1 class="page-hero-title" style="font-size:clamp(26px,4vw,52px);"><span class="accent">AI Project Risks:</span><br>The 7 Most Common Failure Modes<br>and How to Avoid Them</h1>
+    <div class="post-meta">
+      <span class="post-meta-item">Pedro Pizarro</span>
+      <span class="post-meta-item">January 2026</span>
+      <span class="post-meta-item">7 min read</span>
+    </div>
+  </section>
+</div>
+
+<div class="container">
+  <div class="post-layout">
+
+    <article>
+
+      <div class="prose">
+        <p><strong>McKinsey's 2024 State of AI report puts it plainly: 70% of AI projects fail to reach production.</strong> In my experience across energy, aerospace, logistics, and AI startups in Italy, that number rings true. The failures are rarely technical. They're delivery failures. The same patterns repeat.</p>
+
+        <p>Here are the 7 failure modes I see most often, with the specific delivery practice that prevents each one.</p>
+      </div>
+
+      <div class="stat-callout reveal">
+        <div class="stat-callout-item">
+          <div class="stat-callout-num">70%</div>
+          <div class="stat-callout-label">AI projects that never reach production (McKinsey 2024)</div>
+        </div>
+        <div class="stat-callout-item">
+          <div class="stat-callout-num">60%</div>
+          <div class="stat-callout-label">AI project time spent on data preparation (Gartner)</div>
+        </div>
+        <div class="stat-callout-item">
+          <div class="stat-callout-num">40%</div>
+          <div class="stat-callout-label">Cost reduction from early AI governance investment (Gartner)</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 40px;" class="reveal">
+
+        <div class="risk-card">
+          <div class="risk-num">01</div>
+          <div>
+            <div class="risk-label">Risk</div>
+            <div class="risk-title">No defined success criteria before the pilot</div>
+            <div class="risk-desc">Teams start building without agreeing on what "success" means. The pilot becomes open-ended. After 3 months, there's still no clear answer on whether it worked. Budget runs out or stakeholders lose confidence.</div>
+            <div class="risk-fix">Define go/no-go KPIs before writing a single line of code. "If we don't hit X by week 8, we stop." Write it down. Get sign-off.</div>
+          </div>
+        </div>
+
+        <div class="risk-card">
+          <div class="risk-num">02</div>
+          <div>
+            <div class="risk-label">Risk</div>
+            <div class="risk-title">Data that isn't ready for production</div>
+            <div class="risk-desc">The demo works on curated sample data. The real data is scattered across 4 systems, has quality issues, and isn't accessible without a 6-week procurement process. This kills more AI projects than any technical limitation. Gartner estimates 60% of AI project time is spent on data preparation.</div>
+            <div class="risk-fix">Run a data audit before the pilot. Map: where is the data, who owns it, what's the quality, what's the access process. No audit = no pilot start date.</div>
+          </div>
+        </div>
+
+        <div class="risk-card">
+          <div class="risk-num">03</div>
+          <div>
+            <div class="risk-label">Risk</div>
+            <div class="risk-title">Model drift discovered post-launch</div>
+            <div class="risk-desc">The model performs well at launch. Six months later, real-world data distribution has shifted: new product categories, new customer language, seasonal patterns. Model accuracy degrades silently. Nobody notices until the business outcome deteriorates.</div>
+            <div class="risk-fix">Set up drift monitoring from day one. Define thresholds. Build automated alerts. Treat model performance as a live KPI, not a one-time test result.</div>
+          </div>
+        </div>
+
+        <div class="risk-card">
+          <div class="risk-num">04</div>
+          <div>
+            <div class="risk-label">Risk</div>
+            <div class="risk-title">Prompt regression after model version update</div>
+            <div class="risk-desc">Your prompts work perfectly with model version 1. The model provider releases version 2 with improved safety filters and updated RLHF. Your outputs change. Without regression tests, you discover this in production when users complain.</div>
+            <div class="risk-fix">Version control your prompts like code. Build a prompt regression test suite. Run it against every model version update before deploying. This is LLM governance 101.</div>
+          </div>
+        </div>
+
+        <div class="risk-card">
+          <div class="risk-num">05</div>
+          <div>
+            <div class="risk-label">Risk</div>
+            <div class="risk-title">Hallucination in production without validation</div>
+            <div class="risk-desc">LLMs generate plausible-sounding incorrect information. In a client facing context or a regulated industry, this is a business risk, a legal risk, and a reputational risk. The problem isn't that models hallucinate. They do. The problem is deploying them without output validation.</div>
+            <div class="risk-fix">Design output validation pipelines before go-live. Define what "unacceptable output" looks like. Build automated checks. For high-stakes decisions, require human in the loop review regardless of model confidence.</div>
+          </div>
+        </div>
+
+        <div class="risk-card">
+          <div class="risk-num">06</div>
+          <div>
+            <div class="risk-label">Risk</div>
+            <div class="risk-title">Technically successful tool, zero adoption</div>
+            <div class="risk-desc">The AI tool works. It's accurate, fast, and well-integrated. But the team that was supposed to use it hasn't changed their workflow. They still do things the old way. The ROI is zero because the adoption rate is near zero. I've seen this in large enterprises where the IT team delivered exactly what was asked for, and nobody used it.</div>
+            <div class="risk-fix">Include change management in the project scope from day one. Identify champions, run workshops, get early adopters involved in the pilot, measure adoption rate as a project KPI alongside technical performance.</div>
+          </div>
+        </div>
+
+        <div class="risk-card">
+          <div class="risk-num">07</div>
+          <div>
+            <div class="risk-label">Risk</div>
+            <div class="risk-title">Compliance gaps discovered after launch</div>
+            <div class="risk-desc">The EU AI Act is now in force. GDPR applies to AI-processed personal data. For high-risk AI systems, conformity assessments are mandatory. Requirements discovered post-launch require expensive remediation, or a product shutdown.</div>
+            <div class="risk-fix">Map your system against EU AI Act risk categories before building. Involve legal/compliance in the scoping phase, not at sign-off. For high-risk systems, plan conformity assessment time into the project schedule.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="prose" style="margin-top:48px;">
+        <h2>The common thread</h2>
+        <p>Every one of these failure modes has the same root cause: <strong>treating AI projects like traditional software projects</strong>. Traditional software is deterministic. You write tests, it passes or fails. AI is probabilistic, live, and continuously changing.</p>
+        <p>The delivery practices that prevent these failures aren't exotic. They're extensions of good delivery discipline applied to a new class of system. Define success upfront. Test continuously. Monitor in production. Include humans in the loop. Manage change.</p>
+        <p>For more on how to structure the delivery process for AI projects, see <a href="/blog/implementare-ai-azienda.html">Come Implementare l'AI in Azienda</a> or <a href="/services.html">contact me</a> about your specific situation.</p>
+      </div>
+
+      <!-- FAQ -->
+      <div class="faq-section reveal">
+        <h2 class="section-label">FAQ</h2>
+        <div class="faq-item">
+          <div class="faq-question">Why do AI projects fail?</div>
+          <div class="faq-answer">According to McKinsey (2024), 70% of AI projects fail to reach production. The most common failure modes are: undefined success criteria, data that isn't ready for production, model drift, prompt regression after model updates, hallucination without validation pipelines, low user adoption, and compliance gaps discovered post-launch. These are delivery failures, not technical ones.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">What are the biggest risks in AI project delivery?</div>
+          <div class="faq-answer">The 7 biggest risks: undefined KPIs, data debt, model drift, prompt regression, hallucination in production, adoption failure, and compliance gaps. Each has a specific delivery practice that mitigates it. The article above covers all seven with concrete fixes.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">How do you manage risk in an AI project?</div>
+          <div class="faq-answer">Three layers beyond traditional PM: output validation pipelines (test model outputs before they reach users), model versioning governance (treat model updates like code deployments with regression tests), and human in the loop checkpoints (define which decisions require human review regardless of model confidence). Shadow deployments, escalation paths, and audit trails complete the picture for regulated industries.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:64px;" class="reveal">
+        <h2 class="section-label">Related posts</h2>
+        <div class="blog-grid" style="grid-template-columns: repeat(2, 1fr);">
+          <a href="/blog/implementare-ai-azienda.html" class="blog-card">
+            <div class="blog-card-eyebrow">Strategia · 10 min</div>
+            <div class="blog-card-title">Come Implementare l'AI in Azienda</div>
+            <div class="blog-card-meta">Febbraio 2026</div>
+          </a>
+          <a href="/blog/ai-delivery-manager-role.html" class="blog-card">
+            <div class="blog-card-eyebrow">Role &amp; Career · 8 min</div>
+            <div class="blog-card-title">AI Delivery Manager: Role &amp; Skills</div>
+            <div class="blog-card-meta">March 2026</div>
+          </a>
+        </div>
+      </div>
+
+    </article>
+
+    <aside class="post-sidebar">
+      <div class="sidebar-block">
+        <div class="sidebar-label">About the author</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:16px;">Pedro Pizarro is an AI Delivery Manager based in Italy with 14 years in software delivery. He helps companies avoid exactly these failure modes.</p>
+        <a href="/services.html" class="btn-primary" style="font-size:11px;padding:10px 20px;">Work with Pedro ↗</a>
+      </div>
+      <div class="sidebar-block">
+        <div class="sidebar-label">Case Studies</div>
+        <div class="sidebar-links">
+          <a href="/case-studies/enterprise-agile-transformation.html" class="sidebar-link">Enterprise Agile Transformation</a>
+          <a href="/case-studies/ai-startup-mvp.html" class="sidebar-link">AI Startup MVP — 2 months</a>
+          <a href="/case-studies/jira-cloud-migration.html" class="sidebar-link">Jira Migration, Zero Scope Creep</a>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<div class="container" id="contact">
+  <footer>
+    <div class="footer-name">Pedro Pizarro Diaz</div>
+    <div class="footer-contact">
+      <a href="mailto:pedropizarro@live.it" class="footer-link">pedropizarro@live.it</a>
+      <a href="tel:+393761310537" class="footer-link">+39 376 131 0537</a>
+      <a href="https://linkedin.com/in/pedro-pizarro-diaz" class="footer-link" target="_blank" rel="me noopener noreferrer">LinkedIn ↗</a>
+      <a href="https://github.com/Kieff90" class="footer-link" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      <a href="https://medium.com/@pedropizarrodiaz" class="footer-link" target="_blank" rel="me noopener noreferrer">Medium ↗</a>
+    </div>
+  </footer>
+</div>
+
+<button id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+(function () {
+  'use strict';
+  var progress = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', function () { var t = document.body.scrollHeight - window.innerHeight; progress.style.width = (t > 0 ? (window.scrollY / t) * 100 : 0) + '%'; }, { passive: true });
+  var btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', function () { btn.classList.toggle('visible', window.scrollY > 400); }, { passive: true });
+  btn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  var reveals = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } }); }, { threshold: 0.1 });
+  reveals.forEach(function (el) { io.observe(el); });
+})();
+</script>
+</body>
+</html>

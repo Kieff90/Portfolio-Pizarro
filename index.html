@@ -2004,15 +2004,13 @@
 <header class="site-header">
   <div class="container">
     <nav>
+      <a href="/" class="nav-logo">Pedro<span>.</span></a>
       <div class="nav-links">
-        <a href="#about">About</a>
-        <a href="#voice">Ask Pedro</a>
-        <a href="#work">Work</a>
-        <a href="#experience">Experience</a>
-        <a href="#skills">Skills</a>
-        <a href="#certifications">Certifications</a>
-        <a href="#writing">Writing</a>
-        <a href="#contact">Contact</a>
+        <a href="/" class="active">Home</a>
+        <a href="/services.html">Services</a>
+        <a href="/blog/">Blog</a>
+        <a href="/case-studies/">Case Studies</a>
+        <a href="/contact.html">Contact</a>
       </div>
     </nav>
   </div>
@@ -2063,24 +2061,23 @@
           <a href="https://linkedin.com/in/pedro-pizarro-diaz" class="btn-secondary" target="_blank" rel="me noopener noreferrer">LinkedIn profile</a>
         </div>
 
-        <!-- ── VOICE UI — funzionale, ancorato all'orb ── -->
+        <!-- voice-btn: invisibile ma richiesto dal JS per inizializzare -->
+        <button id="voice-btn" class="voice-btn voice-btn--hidden" aria-label="Start voice conversation" aria-pressed="false" type="button" aria-hidden="true" tabindex="-1">
+          <span class="voice-btn-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="2" width="6" height="13" rx="3"/>
+              <path d="M5 10a7 7 0 0 0 14 0"/>
+              <line x1="12" y1="19" x2="12" y2="22"/>
+              <line x1="9" y1="22" x2="15" y2="22"/>
+            </svg>
+          </span>
+          <span class="voice-btn-ring" aria-hidden="true"></span>
+          <span class="voice-btn-ring voice-btn-ring--2" aria-hidden="true"></span>
+        </button>
+
+        <!-- ── VOICE UI — ancorato all'orb nel hero ── -->
         <div class="hero-voice-ui" id="voice" aria-label="AI voice assistant">
 
-          <!-- voice-btn: invisibile ma richiesto dal JS per inizializzare -->
-          <button id="voice-btn" class="voice-btn voice-btn--hidden" aria-label="Start voice conversation" aria-pressed="false" type="button" aria-hidden="true" tabindex="-1">
-            <span class="voice-btn-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="9" y="2" width="6" height="13" rx="3"/>
-                <path d="M5 10a7 7 0 0 0 14 0"/>
-                <line x1="12" y1="19" x2="12" y2="22"/>
-                <line x1="9" y1="22" x2="15" y2="22"/>
-              </svg>
-            </span>
-            <span class="voice-btn-ring" aria-hidden="true"></span>
-            <span class="voice-btn-ring voice-btn-ring--2" aria-hidden="true"></span>
-          </button>
-
-          <!-- Status + wave: visibili sotto l'orb -->
           <div class="hero-voice-status">
             <div class="voice-wave" id="voice-wave" aria-hidden="true">
               <span class="wave-bar"></span>
@@ -2092,7 +2089,6 @@
             <p class="voice-state" id="voice-state" aria-live="polite"></p>
           </div>
 
-          <!-- Text fallback (no mic/WebSocket) -->
           <div class="voice-text-fallback" id="voice-text-fallback" hidden>
             <p class="voice-fallback-note">Voice not supported in this browser. Type your question below.</p>
             <div class="voice-text-row">
@@ -2103,13 +2099,11 @@
             </div>
           </div>
 
-          <!-- Transcript -->
           <div class="voice-transcript-box" id="voice-transcript-box" hidden>
             <div class="voice-transcript-label">You said</div>
             <p class="voice-transcript" id="voice-transcript"></p>
           </div>
 
-          <!-- Response card -->
           <div class="voice-response-card" id="voice-response-card" hidden>
             <div class="voice-response-header">
               <span class="voice-response-label">Pedro's assistant</span>
@@ -2121,7 +2115,6 @@
             </div>
           </div>
 
-          <!-- Error -->
           <div class="voice-error" id="voice-error" hidden role="alert">
             <span id="voice-error-text"></span>
           </div>
@@ -2168,146 +2161,6 @@
       <div class="stat-label">Sprint capacity<br>per cycle</div>
     </div>
   </div>
-</div>
-
-<!-- ABOUT -->
-<div class="container">
-  <section class="section" id="about">
-    <h2 class="section-label reveal">About</h2>
-    <div class="about-text reveal">
-
-      <div class="about-grid">
-        <div class="about-col">
-          <h4 class="about-col-label">What I build</h4>
-          <p>In 2026 I shipped a two-agent pipeline: Gemini Gem reads the sprint ceremony transcript, a PBI Writer agent turns it into epics, stories, acceptance criteria and QA criteria, before the team sits down. That's the work I find interesting. The delivery management side I've been doing for 14 years.</p>
-        </div>
-        <div class="about-col">
-          <h4 class="about-col-label">My context</h4>
-          <p>SAFe, Scrum, Lean-Kanban, applied to what the team actually needs rather than as rigid templates. One of the first Delivery Managers in Europe with the Anthropic API certification.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-</div>
-
-<!-- PROJECTS / PORTFOLIO -->
-<div class="container">
-  <section class="section" id="work">
-    <h2 class="section-label reveal">Selected work</h2>
-
-    <div class="projects">
-
-      <!-- Project 1 -->
-      <div class="project-card reveal">
-        <div>
-          <div class="project-index">01 / 03</div>
-          <h3 class="project-title">Enterprise Agile Transformation & Team Performance</h3>
-          <div class="project-role">Agile Delivery Manager · Digital Transformation Lead</div>
-          <p class="project-desc">
-            Major European energy company. 6 business units, 40+ people, 5 concurrent workstreams. 
-            Moved from waterfall to SAFe/Scrum without stopping delivery. Then embedded AI into sprint rituals. Story readiness up, manual work down.
-          </p>
-          <div class="project-tags">
-            <span class="tag">SAFe</span>
-            <span class="tag">Scrum</span>
-            <span class="tag">AI Workflows</span>
-            <span class="tag">LLM Governance</span>
-            <span class="tag">6 Business Units</span>
-          </div>
-        </div>
-        <div class="project-metrics">
-          <div class="metric-row">
-            <div class="metric-value">85%</div>
-            <div class="metric-desc">Sprint commit rate (up from 60%)</div>
-          </div>
-          <div class="metric-row">
-            <div class="metric-value">−50%</div>
-            <div class="metric-desc">Cycle time: 6 days → 3 days</div>
-          </div>
-          <div class="metric-row">
-            <div class="metric-value">70%</div>
-            <div class="metric-desc">Enterprise AI adoption rate</div>
-          </div>
-          <div class="metric-row">
-            <div class="metric-value">+35%</div>
-            <div class="metric-desc">Story readiness via AI assistants</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 2 -->
-      <div class="project-card reveal">
-        <div>
-          <div class="project-index">02 / 03</div>
-          <h3 class="project-title">Complex Systems Integration: Jira Migration</h3>
-          <div class="project-role">Technical Project Manager</div>
-          <p class="project-desc">
-            Major logistics company. Jira on-premise → cloud migration for 100+ people, 
-            multiple legacy systems, unrealistic timelines pushed by management. 
-            Used flow metrics to kill the bad timeline before it killed the project. 
-            Zero scope creep, zero post-production firefighting.
-          </p>
-          <div class="project-tags">
-            <span class="tag">Jira Cloud Migration</span>
-            <span class="tag">Flow Metrics</span>
-            <span class="tag">Quality Gates</span>
-            <span class="tag">100+ Users</span>
-          </div>
-        </div>
-        <div class="project-metrics">
-          <div class="metric-row">
-            <div class="metric-value">0</div>
-            <div class="metric-desc">Scope creep. Definition of Done enforced throughout.</div>
-          </div>
-          <div class="metric-row">
-            <div class="metric-value">3w</div>
-            <div class="metric-desc">Post-production firefighting saved by quality gates</div>
-          </div>
-          <div class="metric-row">
-            <div class="metric-value">100+</div>
-            <div class="metric-desc">Users migrated across complex legacy systems</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 3 -->
-      <div class="project-card reveal">
-        <div>
-          <div class="project-index">03 / 03</div>
-          <h3 class="project-title">AI Startup Product Development</h3>
-          <div class="project-role">Product Development and Go to Market</div>
-          <p class="project-desc">
-            Built from zero. AI automation platform for Italian SMEs: knowledge search + process automation.
-            Translated complex AI capabilities into user stories and market-ready features. 
-            MVP shipped in 2 months. Competitive analysis across 15+ tools (Zapier, Make, n8n).
-          </p>
-          <div class="project-tags">
-            <span class="tag">AI Product</span>
-            <span class="tag">MVP in 2 months</span>
-            <span class="tag">RAG / AREX</span>
-            <span class="tag">N8N</span>
-            <span class="tag">LLM Governance</span>
-          </div>
-        </div>
-        <div class="project-metrics">
-          <div class="metric-row">
-            <div class="metric-value">2mo</div>
-            <div class="metric-desc">Zero to working MVP with iterative releases</div>
-          </div>
-          <div class="metric-row">
-            <div class="metric-value">30+</div>
-            <div class="metric-desc">SME owner interviews for feature validation</div>
-          </div>
-          <div class="metric-row">
-            <div class="metric-value">150+</div>
-            <div class="metric-desc">Competitors analyzed in market positioning</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
 </div>
 
 <!-- EXPERIENCE -->
@@ -2637,7 +2490,7 @@
 
   /* ── ACTIVE NAV SECTION ── */
   var navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-  var sectionIds = ['work', 'experience', 'skills', 'certifications', 'writing', 'voice', 'contact'];
+  var sectionIds = ['contact'];
   var sections = sectionIds.map(function (id) { return document.getElementById(id); }).filter(Boolean);
 
   if (navLinks.length && sections.length) {
