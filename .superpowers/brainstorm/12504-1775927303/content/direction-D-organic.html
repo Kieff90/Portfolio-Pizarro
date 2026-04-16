@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direction D — Organic Warm / Editorial Luxury</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #F2EDE4;
+  --brown: #2C1810;
+  --sage: #6B8F71;
+  --caramel: #C4956A;
+  --muted: #8A7A6E;
+}
+
+body {
+  background: var(--cream);
+  color: var(--brown);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Grain texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.label-top {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 16px 48px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Cursor dot */
+.cursor-dot {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--caramel);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 200;
+  transform: translate(-50%, -50%);
+  transition: all 0.1s ease;
+}
+
+/* Nav */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 48px;
+  position: relative;
+  z-index: 1;
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--brown);
+}
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--caramel); }
+
+/* Hero */
+.hero {
+  padding: 60px 48px 80px;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  align-items: end;
+  gap: 60px;
+}
+.hero-text {}
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--sage);
+}
+.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(72px, 12vw, 148px);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--brown);
+}
+.hero-name em {
+  font-style: italic;
+  color: var(--caramel);
+}
+.hero-tagline {
+  margin-top: 28px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 420px;
+}
+
+/* Photo panel */
+.hero-photo {
+  background: var(--caramel);
+  height: 380px;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
+}
+.hero-photo::before {
+  content: 'PP';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 120px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(242,237,228,0.2);
+}
+.photo-caption {
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.8;
+}
+
+/* Stats strip */
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 0 48px;
+  gap: 0;
+  border-top: 1px solid rgba(44,24,16,0.12);
+  border-bottom: 1px solid rgba(44,24,16,0.12);
+  position: relative;
+  z-index: 1;
+}
+.stat-item {
+  padding: 28px 0 28px 28px;
+  border-right: 1px solid rgba(44,24,16,0.12);
+}
+.stat-item:first-child { padding-left: 0; }
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 44px;
+  font-weight: 300;
+  color: var(--caramel);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* About section */
+.about {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 60px;
+  padding: 60px 48px;
+  position: relative;
+  z-index: 1;
+}
+.about-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.about-body {
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--brown);
+  font-weight: 300;
+}
+.about-body strong {
+  font-weight: 400;
+  color: var(--sage);
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+.tag {
+  border: 1px solid rgba(107,143,113,0.4);
+  padding: 5px 14px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sage);
+  border-radius: 20px;
+}
+
+/* CTA */
+.cta-section {
+  padding: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(44,24,16,0.12);
+  position: relative;
+  z-index: 1;
+}
+.cta-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--brown);
+  max-width: 420px;
+  line-height: 1.4;
+}
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.btn-primary {
+  background: var(--brown);
+  color: var(--cream);
+  padding: 14px 28px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.3s;
+}
+.btn-primary:hover { background: var(--caramel); }
+.btn-ghost {
+  color: var(--brown);
+  padding: 14px 0;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid var(--brown);
+  transition: color 0.3s, border-color 0.3s;
+}
+.btn-ghost:hover { color: var(--caramel); border-color: var(--caramel); }
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursor"></div>
+<div class="label-top">⬡ Direction D — Organic Warm · KARO Crafts / Olha Lazarieva / Envato Texture Trend 2026</div>
+
+<nav>
+  <div class="nav-logo">Pedro Pizarro</div>
+  <ul class="nav-links">
+    <li><a href="#">Work</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Voice</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">AI Delivery Manager · Remote EU</div>
+    <h1 class="hero-name">Pedro<br><em>Pizarro.</em></h1>
+    <p class="hero-tagline">I ship software. Teams actually deliver. I build the AI layer that makes both happen faster.</p>
+  </div>
+  <div class="hero-photo">
+    <span class="photo-caption">Based in Italy</span>
+  </div>
+</section>
+
+<div class="stats-strip">
+  <div class="stat-item">
+    <div class="stat-num">14</div>
+    <div class="stat-label">Years delivering software</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">+85%</div>
+    <div class="stat-label">Team velocity</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">−50%</div>
+    <div class="stat-label">Cycle time</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">+40%</div>
+    <div class="stat-label">Sprint capacity</div>
+  </div>
+</div>
+
+<section class="about">
+  <div>
+    <div class="about-label">What I do</div>
+  </div>
+  <div>
+    <p class="about-body">
+      I'm one of the first Delivery Managers in Europe with the <strong>Anthropic API certification</strong>. I build custom agents and agentic workflows deployed in production — a two-agent pipeline that reads sprint ceremony transcripts from Google Drive and produces a ready backlog before the team sits down.
+    </p>
+    <div class="tags">
+      <span class="tag">Agentic AI</span>
+      <span class="tag">Multi-Agent</span>
+      <span class="tag">Anthropic API</span>
+      <span class="tag">Scrum</span>
+      <span class="tag">DORA Metrics</span>
+      <span class="tag">n8n</span>
+    </div>
+  </div>
+</section>
+
+<div class="cta-section">
+  <div class="cta-quote">"Let's build something that ships."</div>
+  <div class="cta-buttons">
+    <a href="#" class="btn-primary">Ask Pedro (Voice) →</a>
+    <a href="#" class="btn-ghost">Download CV</a>
+  </div>
+</div>
+
+<script>
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+</script>
+</body>
+</html>

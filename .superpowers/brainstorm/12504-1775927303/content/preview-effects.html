@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preview Effetti — Layout C Animato</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+
+/* ===========================
+   RESET + BASE
+   =========================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Mono', monospace;
+  background: #060a12;
+  color: #EFD2B0;
+  overflow-x: hidden;
+}
+
+/* ===========================
+   LABEL UI
+   =========================== */
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: rgba(255,197,112,0.5);
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-bottom: 1px solid rgba(255,197,112,0.08);
+  background: rgba(6,10,18,0.9);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+/* ===========================
+   EFFECT 1: SPLIT SCREEN HERO
+   Con animated gradient + glassmorphism + DM Mono
+   =========================== */
+.preview-block {
+  border-bottom: 1px solid rgba(255,197,112,0.06);
+  position: relative;
+}
+
+/* ---- ANIMATED BG MESH ---- */
+.bg-mesh {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 60%, rgba(255,197,112,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 20%, rgba(30,50,99,0.5) 0%, transparent 60%),
+    radial-gradient(ellipse at 55% 85%, rgba(15,27,53,0.7) 0%, transparent 50%);
+  animation: meshFloat 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* Noise overlay */
+.bg-mesh::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+@keyframes meshFloat {
+  0%   { transform: translate(0%, 0%) scale(1); }
+  33%  { transform: translate(2%, -3%) scale(1.02); }
+  66%  { transform: translate(-2%, 2%) scale(0.98); }
+  100% { transform: translate(1%, -1%) scale(1.01); }
+}
+
+/* ---- SPLIT LAYOUT ---- */
+.split {
+  display: flex;
+  height: 420px;
+  position: relative;
+  background: linear-gradient(135deg, #0D1B35 0%, #0A1220 100%);
+  overflow: hidden;
+}
+
+/* ---- LEFT PANEL ---- */
+.panel-left {
+  flex: 0 0 52%;
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: rgba(255,197,112,0.7);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 16px;
+  height: 1px;
+  background: rgba(255,197,112,0.5);
+}
+
+.hero-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(48px, 6vw, 80px);
+  line-height: 0.92;
+  color: #EFD2B0;
+  letter-spacing: -2px;
+  margin-bottom: 16px;
+}
+.hero-name .accent {
+  color: #FFC570;
+  display: inline;
+}
+
+.hero-tagline {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: rgba(239,210,176,0.55);
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+/* ---- GLASSMORPHISM STATS ---- */
+.stats-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: rgba(255,197,112,0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,197,112,0.12);
+  border-radius: 10px;
+  padding: 10px 14px;
+  transition: all 0.35s ease;
+  cursor: default;
+}
+.stat-card:hover {
+  background: rgba(255,197,112,0.12);
+  border-color: rgba(255,197,112,0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255,197,112,0.10);
+}
+.stat-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: #FFC570;
+  display: block;
+  line-height: 1;
+}
+.stat-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 2px;
+  color: rgba(239,210,176,0.4);
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+/* ---- CTA BUTTONS ---- */
+.cta-row { display: flex; gap: 10px; align-items: center; }
+
+.btn-primary {
+  position: relative;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #0D1B35;
+  background: #FFC570;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255,197,112,0.35);
+}
+
+.btn-ghost {
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,197,112,0.7);
+  background: transparent;
+  cursor: pointer;
+  z-index: 1;
+}
+.btn-ghost::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #FFC570, #EFD2B0, #FFC570, #EFD2B0);
+  background-size: 300% 300%;
+  animation: borderGradient 3s linear infinite;
+  z-index: -1;
+}
+.btn-ghost::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: #0D1B35;
+  z-index: -1;
+}
+@keyframes borderGradient {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ---- DIVIDER ANIMATO ---- */
+.panel-divider {
+  width: 1px;
+  align-self: stretch;
+  position: relative;
+  z-index: 3;
+  flex-shrink: 0;
+}
+.panel-divider::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255,197,112,0.15) 15%,
+    rgba(255,197,112,0.7) 40%,
+    rgba(255,197,112,1.0) 50%,
+    rgba(255,197,112,0.7) 60%,
+    rgba(255,197,112,0.15) 85%,
+    transparent 100%
+  );
+  animation: dividerScroll 4s ease-in-out infinite;
+}
+@keyframes dividerScroll {
+  0%   { transform: translateY(-30%); opacity: 0.5; }
+  50%  { transform: translateY(0%); opacity: 1; }
+  100% { transform: translateY(30%); opacity: 0.5; }
+}
+
+/* ---- RIGHT PANEL — VOICE ---- */
+.panel-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+  background: linear-gradient(135deg, #0A1628 0%, #060E1E 100%);
+  overflow: hidden;
+}
+
+/* Subtle radial glow in right panel */
+.panel-right::before {
+  content: '';
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,197,112,0.06) 0%, transparent 70%);
+  animation: glowPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes glowPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50%       { transform: scale(1.15); opacity: 1; }
+}
+
+/* ---- MIC ORB ---- */
+.voice-orb {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255,197,112,0.08);
+  border: 1.5px solid rgba(255,197,112,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+.voice-orb:hover {
+  background: rgba(255,197,112,0.15);
+  border-color: rgba(255,197,112,0.6);
+  box-shadow: 0 0 30px rgba(255,197,112,0.2);
+  transform: scale(1.05);
+}
+/* Pulse ring */
+.voice-orb::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,197,112,0.2);
+  animation: orbRing 2.5s ease-out infinite;
+}
+.voice-orb::after {
+  content: '';
+  position: absolute;
+  inset: -18px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,197,112,0.08);
+  animation: orbRing 2.5s ease-out infinite 0.8s;
+}
+@keyframes orbRing {
+  0%   { transform: scale(0.95); opacity: 1; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+
+/* ---- WAVEFORM ---- */
+.waveform {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+}
+.wave-bar {
+  width: 3px;
+  border-radius: 2px;
+  background: #FFC570;
+  animation: waveAnim 1.4s ease-in-out infinite;
+}
+.wave-bar:nth-child(1) { animation-delay: 0.0s; }
+.wave-bar:nth-child(2) { animation-delay: 0.15s; }
+.wave-bar:nth-child(3) { animation-delay: 0.3s; }
+.wave-bar:nth-child(4) { animation-delay: 0.45s; }
+.wave-bar:nth-child(5) { animation-delay: 0.6s; }
+.wave-bar:nth-child(6) { animation-delay: 0.45s; }
+.wave-bar:nth-child(7) { animation-delay: 0.3s; }
+.wave-bar:nth-child(8) { animation-delay: 0.15s; }
+.wave-bar:nth-child(9) { animation-delay: 0.0s; }
+
+@keyframes waveAnim {
+  0%, 100% { height: 4px; opacity: 0.4; }
+  50%       { height: 28px; opacity: 1; }
+}
+
+.voice-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 4px;
+  color: rgba(255,197,112,0.4);
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+/* ---- SCROLL PROGRESS ---- */
+.scroll-progress-demo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 60%;
+  background: linear-gradient(180deg, #FFC570, rgba(255,197,112,0.1));
+  border-radius: 2px;
+  animation: progressGrow 4s ease-in-out infinite alternate;
+}
+@keyframes progressGrow {
+  0%   { height: 10%; }
+  100% { height: 95%; }
+}
+
+
+/* ===========================
+   EFFECT 2 — TYPOGRAPHY DEMO
+   =========================== */
+.type-demo {
+  background: #0D1B35;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.type-col h4 {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: rgba(255,197,112,0.4);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.type-name-before {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 52px;
+  line-height: 0.9;
+  color: #EFD2B0;
+  letter-spacing: -1px;
+}
+.type-name-after {
+  font-family: 'DM Serif Display', serif;
+  font-size: 52px;
+  line-height: 0.9;
+  color: #EFD2B0;
+  letter-spacing: -2px;
+}
+.type-label-before {
+  font-family: monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: rgba(239,210,176,0.5);
+  margin-top: 12px;
+  display: block;
+}
+.type-label-after {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: rgba(255,197,112,0.7);
+  margin-top: 12px;
+  display: block;
+}
+.type-divider {
+  width: 1px;
+  background: rgba(255,197,112,0.08);
+}
+
+
+/* ===========================
+   EFFECT 3 — MOBILE PREVIEW
+   =========================== */
+.mobile-demo {
+  background: #0A1220;
+  padding: 30px;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+}
+.phone-frame {
+  width: 200px;
+  background: #0D1B35;
+  border-radius: 20px;
+  border: 1px solid rgba(255,197,112,0.12);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.phone-header {
+  background: linear-gradient(135deg, #0D1B35, #0A1628);
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid rgba(255,197,112,0.08);
+}
+.phone-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 6px;
+  letter-spacing: 2px;
+  color: rgba(255,197,112,0.5);
+  margin-bottom: 6px;
+}
+.phone-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  line-height: 0.9;
+  color: #EFD2B0;
+}
+.phone-stats {
+  display: flex;
+  gap: 6px;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255,197,112,0.06);
+}
+.phone-stat {
+  background: rgba(255,197,112,0.05);
+  border: 1px solid rgba(255,197,112,0.1);
+  border-radius: 6px;
+  padding: 5px 7px;
+  flex: 1;
+  text-align: center;
+}
+.phone-stat-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 14px;
+  color: #FFC570;
+  display: block;
+}
+.phone-stat-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 5px;
+  letter-spacing: 1px;
+  color: rgba(239,210,176,0.35);
+}
+.phone-content {
+  padding: 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  color: rgba(239,210,176,0.4);
+  line-height: 1.6;
+}
+
+/* Floating mic button */
+.phone-fab {
+  position: relative;
+  margin: 0 16px 16px;
+  background: rgba(255,197,112,0.1);
+  border: 1px solid rgba(255,197,112,0.3);
+  border-radius: 30px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.phone-fab-icon { font-size: 14px; }
+.phone-fab-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 2px;
+  color: rgba(255,197,112,0.6);
+}
+.phone-fab-wave {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  margin-left: auto;
+}
+.phone-fab-wave span {
+  width: 2px;
+  border-radius: 1px;
+  background: #FFC570;
+  animation: waveAnim 1.4s ease-in-out infinite;
+}
+.phone-fab-wave span:nth-child(1) { animation-delay: 0s; }
+.phone-fab-wave span:nth-child(2) { animation-delay: 0.2s; }
+.phone-fab-wave span:nth-child(3) { animation-delay: 0.4s; }
+
+.mobile-desc {
+  max-width: 260px;
+}
+.mobile-desc h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  color: #EFD2B0;
+  margin-bottom: 12px;
+}
+.mobile-desc p {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: rgba(239,210,176,0.5);
+  line-height: 1.8;
+  letter-spacing: 0.5px;
+}
+.mobile-desc ul {
+  list-style: none;
+  margin-top: 12px;
+}
+.mobile-desc ul li {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: rgba(255,197,112,0.6);
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(255,197,112,0.06);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mobile-desc ul li::before { content: '→'; color: rgba(255,197,112,0.3); }
+
+
+/* ===========================
+   PALETTE STRIP
+   =========================== */
+.palette-strip {
+  background: #080f1c;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.swatch-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.swatch {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.swatch-hex {
+  font-family: 'DM Mono', monospace;
+  font-size: 7px;
+  color: rgba(239,210,176,0.4);
+  letter-spacing: 1px;
+}
+.palette-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(255,197,112,0.5);
+  margin-right: 8px;
+}
+.palette-sep {
+  width: 1px;
+  height: 52px;
+  background: rgba(255,197,112,0.08);
+  margin: 0 12px;
+}
+
+/* Page title */
+.page-title {
+  padding: 28px 40px 0;
+  background: #060a12;
+}
+.page-title h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: #EFD2B0;
+  margin-bottom: 4px;
+}
+.page-title p {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(255,197,112,0.4);
+  padding-bottom: 20px;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============================
+     PAGE HEADER
+     ============================ -->
+<div class="page-title">
+  <h1>Layout C — Preview Animato</h1>
+  <p>DATI REALI: Color Hunt 2026 · Typewolf Dic 2025 · Land Book · Lapa Ninja</p>
+</div>
+
+<!-- PALETTE STRIP -->
+<div class="palette-strip">
+  <span class="palette-label">PALETTE</span>
+  <div class="swatch-block">
+    <div class="swatch" style="background:#0D1B35;"></div>
+    <span class="swatch-hex">#0D1B35</span>
+  </div>
+  <div class="swatch-block">
+    <div class="swatch" style="background:#060E1E;"></div>
+    <span class="swatch-hex">#060E1E</span>
+  </div>
+  <div class="swatch-block">
+    <div class="swatch" style="background:#FFC570;"></div>
+    <span class="swatch-hex">#FFC570</span>
+  </div>
+  <div class="swatch-block">
+    <div class="swatch" style="background:#EFD2B0;"></div>
+    <span class="swatch-hex">#EFD2B0</span>
+  </div>
+  <div class="palette-sep"></div>
+  <div class="swatch-block">
+    <div class="swatch" style="background:linear-gradient(135deg,rgba(255,197,112,0.12),transparent);border-color:rgba(255,197,112,0.15);"></div>
+    <span class="swatch-hex">glassmorphism</span>
+  </div>
+  <div class="swatch-block">
+    <div class="swatch" style="background:linear-gradient(135deg,#FFC570,#EFD2B0);"></div>
+    <span class="swatch-hex">gradient accent</span>
+  </div>
+  <div style="margin-left:auto; font-family:'DM Mono',monospace; font-size:8px; color:rgba(255,197,112,0.4); text-align:right; line-height:1.7;">
+    Color Hunt #6 · 1,015 likes 2026<br>
+    Navy base · Amber gold accent<br>
+    NON è nero puro · #0D1B35 dark navy
+  </div>
+</div>
+
+
+<!-- ============================
+     EFFECT 1: SPLIT SCREEN HERO
+     ============================ -->
+<div class="section-label">01 — Split Screen Hero (Desktop) · Animated gradient · Glassmorphism · DM Mono · Divider glow · Voice waveform</div>
+
+<div class="preview-block">
+  <div class="split">
+
+    <!-- Animated bg -->
+    <div class="bg-mesh"></div>
+
+    <!-- Scroll progress -->
+    <div class="scroll-progress-demo"></div>
+
+    <!-- LEFT PANEL -->
+    <div class="panel-left">
+      <div>
+        <div class="hero-eyebrow">AI Delivery Manager · Remote EU</div>
+        <h1 class="hero-name">Pedro<br><span class="accent">Pizarro.</span></h1>
+        <p class="hero-tagline">I ship software.<br>Teams actually deliver.</p>
+      </div>
+
+      <div>
+        <div class="stats-row">
+          <div class="stat-card">
+            <span class="stat-num">14</span>
+            <span class="stat-lbl">yrs exp</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">+85%</span>
+            <span class="stat-lbl">commit rate</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">−50%</span>
+            <span class="stat-lbl">cycle time</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">+40%</span>
+            <span class="stat-lbl">capacity</span>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <button class="btn-primary">What I do</button>
+          <button class="btn-ghost">Download CV ↓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="panel-divider"></div>
+
+    <!-- RIGHT PANEL — VOICE -->
+    <div class="panel-right">
+      <div class="voice-orb">🎙</div>
+
+      <div class="waveform">
+        <div class="wave-bar" style="--d:0s"></div>
+        <div class="wave-bar" style="--d:.15s"></div>
+        <div class="wave-bar" style="--d:.3s"></div>
+        <div class="wave-bar" style="--d:.45s"></div>
+        <div class="wave-bar" style="--d:.6s"></div>
+        <div class="wave-bar" style="--d:.45s"></div>
+        <div class="wave-bar" style="--d:.3s"></div>
+        <div class="wave-bar" style="--d:.15s"></div>
+        <div class="wave-bar" style="--d:0s"></div>
+      </div>
+
+      <span class="voice-label">Ask Pedro</span>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================
+     EFFECT 2: TYPOGRAPHY
+     ============================ -->
+<div class="section-label">02 — Tipografia · Prima vs Dopo · DM Mono (Typewolf Site of the Day 12 Dic 2025)</div>
+
+<div class="type-demo">
+  <div class="type-col">
+    <h4>Prima — font attuale</h4>
+    <div class="type-name-before">Pedro<br>Pizarro.</div>
+    <span class="type-label-before">DELIVERY MANAGER · REMOTE EU</span>
+    <div style="margin-top:20px;">
+      <div class="stats-row" style="margin-bottom:0;">
+        <div style="padding:8px 10px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:8px;">
+          <span style="font-size:18px; color:#e8ff4a; display:block;">14</span>
+          <span style="font-family:monospace; font-size:7px; color:rgba(255,255,255,0.3); letter-spacing:1px;">YRS</span>
+        </div>
+        <div style="padding:8px 10px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:8px;">
+          <span style="font-size:18px; color:#e8ff4a; display:block;">+85%</span>
+          <span style="font-family:monospace; font-size:7px; color:rgba(255,255,255,0.3); letter-spacing:1px;">COMMIT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="type-divider"></div>
+
+  <div class="type-col">
+    <h4>Dopo — DM Serif Display + DM Mono</h4>
+    <div class="type-name-after">Pedro<br><span style="color:#FFC570;">Pizarro.</span></div>
+    <span class="type-label-after">AI DELIVERY MANAGER · REMOTE EU</span>
+    <div style="margin-top:20px;">
+      <div class="stats-row" style="margin-bottom:0;">
+        <div class="stat-card">
+          <span class="stat-num" style="font-size:18px;">14</span>
+          <span class="stat-lbl">yrs exp</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" style="font-size:18px;">+85%</span>
+          <span class="stat-lbl">commit rate</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================
+     EFFECT 3: MOBILE
+     ============================ -->
+<div class="section-label">03 — Mobile (375px) · Left panel → sticky header · Voice → floating FAB bottom</div>
+
+<div class="mobile-demo">
+  <div class="phone-frame">
+    <div class="phone-header">
+      <div class="phone-eyebrow">AI DELIVERY MANAGER · REMOTE EU</div>
+      <div class="phone-name">Pedro<br><span style="color:#FFC570;">Pizarro.</span></div>
+    </div>
+
+    <div class="phone-stats">
+      <div class="phone-stat">
+        <span class="phone-stat-num">14</span>
+        <span class="phone-stat-lbl">YRS</span>
+      </div>
+      <div class="phone-stat">
+        <span class="phone-stat-num">+85%</span>
+        <span class="phone-stat-lbl">COMMIT</span>
+      </div>
+      <div class="phone-stat">
+        <span class="phone-stat-num">−50%</span>
+        <span class="phone-stat-lbl">CYCLE</span>
+      </div>
+      <div class="phone-stat">
+        <span class="phone-stat-num">+40%</span>
+        <span class="phone-stat-lbl">CAP</span>
+      </div>
+    </div>
+
+    <div class="phone-content">
+      AI Delivery Manager with 14 years in software delivery. Builds AI agents and agentic pipelines deployed in production.
+    </div>
+
+    <div class="phone-fab">
+      <span class="phone-fab-icon">🎙</span>
+      <span class="phone-fab-label">ASK PEDRO</span>
+      <div class="phone-fab-wave">
+        <span style="height:4px;"></span>
+        <span style="height:10px;"></span>
+        <span style="height:6px;"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mobile-desc">
+    <h3>Mobile: collasso intelligente</h3>
+    <p>Su desktop: split 52/48 fisso. Su mobile (sotto 768px): il pannello sinistro diventa header sticky compatto. Il pannello voice assistant si trasforma in FAB floating in basso.</p>
+    <ul>
+      <li>Header sticky: nome + eyebrow sempre visibile</li>
+      <li>Stats: strip orizzontale scrollabile</li>
+      <li>Voice: floating action button in basso a destra</li>
+      <li>Nessun overflow orizzontale</li>
+      <li>Zero layout broken su 375px</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ============================
+     EFFECT LIST
+     ============================ -->
+<div class="section-label">04 — Effetti implementati (checklist)</div>
+
+<div style="background:#080f1c; padding:24px 40px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+  <div style="background:rgba(255,197,112,0.04); border:1px solid rgba(255,197,112,0.08); border-radius:8px; padding:14px;">
+    <div style="font-family:'DM Mono',monospace; font-size:7px; letter-spacing:2px; color:rgba(255,197,112,0.5); margin-bottom:8px;">BACKGROUND</div>
+    <div style="font-family:'DM Mono',monospace; font-size:10px; color:#EFD2B0; line-height:1.8;">
+      ✓ Animated radial gradient mesh<br>
+      ✓ Noise texture overlay (SVG)<br>
+      ✓ Navy navy — NOT #000<br>
+      ✓ meshFloat keyframe 12s
+    </div>
+  </div>
+  <div style="background:rgba(255,197,112,0.04); border:1px solid rgba(255,197,112,0.08); border-radius:8px; padding:14px;">
+    <div style="font-family:'DM Mono',monospace; font-size:7px; letter-spacing:2px; color:rgba(255,197,112,0.5); margin-bottom:8px;">GLASSMORPHISM</div>
+    <div style="font-family:'DM Mono',monospace; font-size:10px; color:#EFD2B0; line-height:1.8;">
+      ✓ backdrop-filter: blur(16px)<br>
+      ✓ rgba amber border subtle<br>
+      ✓ hover: border glow + translateY<br>
+      ✓ Su ogni stat card
+    </div>
+  </div>
+  <div style="background:rgba(255,197,112,0.04); border:1px solid rgba(255,197,112,0.08); border-radius:8px; padding:14px;">
+    <div style="font-family:'DM Mono',monospace; font-size:7px; letter-spacing:2px; color:rgba(255,197,112,0.5); margin-bottom:8px;">VOICE PANEL</div>
+    <div style="font-family:'DM Mono',monospace; font-size:10px; color:#EFD2B0; line-height:1.8;">
+      ✓ 9 barre waveform animate<br>
+      ✓ Pulse ring doppio sul mic<br>
+      ✓ Glow radial nel pannello<br>
+      ✓ Hover: scale + box-shadow
+    </div>
+  </div>
+  <div style="background:rgba(255,197,112,0.04); border:1px solid rgba(255,197,112,0.08); border-radius:8px; padding:14px;">
+    <div style="font-family:'DM Mono',monospace; font-size:7px; letter-spacing:2px; color:rgba(255,197,112,0.5); margin-bottom:8px;">DIVIDER</div>
+    <div style="font-family:'DM Mono',monospace; font-size:10px; color:#EFD2B0; line-height:1.8;">
+      ✓ 1px gradient verticale<br>
+      ✓ Glow che scorre 4s loop<br>
+      ✓ Opacity: 0.5 → 1 → 0.5<br>
+      ✓ translateY(-30% → 30%)
+    </div>
+  </div>
+  <div style="background:rgba(255,197,112,0.04); border:1px solid rgba(255,197,112,0.08); border-radius:8px; padding:14px;">
+    <div style="font-family:'DM Mono',monospace; font-size:7px; letter-spacing:2px; color:rgba(255,197,112,0.5); margin-bottom:8px;">CTA BUTTONS</div>
+    <div style="font-family:'DM Mono',monospace; font-size:10px; color:#EFD2B0; line-height:1.8;">
+      ✓ Primary: amber solid + hover glow<br>
+      ✓ Ghost: animated gradient border<br>
+      ✓ borderGradient 300% size loop<br>
+      ✓ DM Mono uppercase labels
+    </div>
+  </div>
+  <div style="background:rgba(255,197,112,0.04); border:1px solid rgba(255,197,112,0.08); border-radius:8px; padding:14px;">
+    <div style="font-family:'DM Mono',monospace; font-size:7px; letter-spacing:2px; color:rgba(255,197,112,0.5); margin-bottom:8px;">TIPOGRAFIA</div>
+    <div style="font-family:'DM Mono',monospace; font-size:10px; color:#EFD2B0; line-height:1.8;">
+      ✓ DM Serif Display (hero name)<br>
+      ✓ DM Mono (tutti i labels)<br>
+      ✓ Typewolf: entrambi trending<br>
+      ✓ Stesso font family — coesione
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

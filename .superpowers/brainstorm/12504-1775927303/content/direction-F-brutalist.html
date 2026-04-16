@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direction F — Brutalist Raw / Anti-Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --paper: #F5F2ED;
+  --ink: #111111;
+  --yellow: #FFE600;
+  --red: #FF3300;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Space Mono', monospace;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Flash overlay */
+#flash {
+  position: fixed;
+  inset: 0;
+  background: var(--yellow);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.05s;
+}
+
+.label-top {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888;
+  padding: 12px 24px;
+  border-bottom: 3px solid var(--ink);
+  font-family: 'Space Mono', monospace;
+}
+
+/* Nav — brutalist */
+nav {
+  display: flex;
+  border-bottom: 3px solid var(--ink);
+}
+.nav-logo {
+  padding: 14px 24px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  border-right: 3px solid var(--ink);
+  flex-shrink: 0;
+}
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin-left: auto;
+}
+.nav-links li {
+  border-left: 3px solid var(--ink);
+}
+.nav-links a {
+  display: block;
+  padding: 14px 20px;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 0.1s, color 0.1s;
+}
+.nav-links a:hover {
+  background: var(--yellow);
+}
+.nav-links li.active a {
+  background: var(--red);
+  color: white;
+}
+
+/* Main grid — broken asymmetric */
+.main-grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  border-bottom: 3px solid var(--ink);
+}
+
+/* Hero — overlapping */
+.hero-zone {
+  padding: 48px 40px 48px 24px;
+  border-right: 3px solid var(--ink);
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+}
+
+/* BIG BG text */
+.bg-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(120px, 22vw, 280px);
+  line-height: 0.85;
+  color: var(--paper);
+  -webkit-text-stroke: 2px var(--ink);
+  position: absolute;
+  top: 20px;
+  left: 16px;
+  z-index: 0;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Overlaid content */
+.hero-overlay {
+  position: relative;
+  z-index: 1;
+}
+.hero-tag {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--yellow);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  margin-bottom: 200px; /* push below the bg text */
+}
+.hero-sub {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 7vw, 72px);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.hero-tagline {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #444;
+  max-width: 360px;
+  border-left: 4px solid var(--yellow);
+  padding-left: 12px;
+}
+
+/* Sidebar — right column */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-block {
+  padding: 20px;
+  border-bottom: 3px solid var(--ink);
+  flex: 1;
+}
+.sidebar-block:last-child { border-bottom: none; }
+.sidebar-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 8px;
+}
+.sidebar-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  line-height: 1;
+  color: var(--ink);
+}
+.sidebar-sub {
+  font-size: 10px;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* Stats bar */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 3px solid var(--ink);
+}
+.stat-cell {
+  padding: 20px 24px;
+  border-right: 3px solid var(--ink);
+  position: relative;
+}
+.stat-cell:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 52px;
+  line-height: 1;
+  color: var(--ink);
+}
+.stat-num.yellow { color: var(--yellow); -webkit-text-stroke: 1px var(--ink); }
+.stat-num.red { color: var(--red); }
+.stat-label {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* Bottom grid */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 3px solid var(--ink);
+}
+.bottom-cell {
+  padding: 24px;
+  border-right: 3px solid var(--ink);
+}
+.bottom-cell:last-child { border-right: none; }
+.cell-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  border-bottom: 3px solid var(--ink);
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+
+.skill-list {
+  list-style: none;
+}
+.skill-item {
+  font-size: 11px;
+  line-height: 1;
+  padding: 7px 0;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.skill-item:last-child { border-bottom: none; }
+.skill-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--yellow);
+  border: 1px solid var(--ink);
+}
+.skill-item.hi .skill-dot { background: var(--red); }
+
+/* Voice panel */
+.voice-panel {
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 180px;
+}
+.voice-orb {
+  width: 56px;
+  height: 56px;
+  border: 3px solid var(--yellow);
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  position: relative;
+  cursor: pointer;
+}
+.voice-orb:hover { background: var(--yellow); }
+.voice-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888;
+}
+
+/* CTA bar */
+.cta-bar {
+  display: flex;
+  border-bottom: 3px solid var(--ink);
+}
+.cta-text-block {
+  padding: 24px;
+  flex: 1;
+  border-right: 3px solid var(--ink);
+}
+.cta-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  line-height: 1.1;
+}
+.cta-sub {
+  font-size: 11px;
+  color: #666;
+  margin-top: 6px;
+}
+.cta-buttons {
+  display: flex;
+}
+.cta-btn {
+  padding: 24px 28px;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-right: 3px solid var(--ink);
+  display: flex;
+  align-items: center;
+  font-family: 'Space Mono', monospace;
+  transition: background 0.1s, color 0.1s;
+}
+.cta-btn:last-child { border-right: none; }
+.cta-btn.primary {
+  background: var(--yellow);
+  color: var(--ink);
+}
+.cta-btn.primary:hover { background: var(--red); color: white; }
+.cta-btn.secondary { color: var(--ink); }
+.cta-btn.secondary:hover { background: var(--ink); color: var(--paper); }
+
+/* Hover shake effect */
+.shake {
+  transition: transform 0.1s;
+}
+.shake:hover {
+  transform: translate(
+    calc((Math.random() - 0.5) * 4px),
+    calc((Math.random() - 0.5) * 4px)
+  );
+}
+</style>
+</head>
+<body>
+
+<div id="flash"></div>
+
+<div class="label-top">⬡ Direction F — Brutalist Raw · REFORM Template / Envato Soft Brutalism 2026 / Anti-Design Intenzionale</div>
+
+<nav>
+  <div class="nav-logo">P.PIZARRO</div>
+  <ul class="nav-links">
+    <li class="active"><a href="#">Work</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Skills</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="main-grid">
+  <div class="hero-zone">
+    <div class="bg-text">PP</div>
+    <div class="hero-overlay">
+      <div class="hero-tag">AI Delivery Manager · Remote EU</div>
+      <div class="hero-sub">I Ship Software.<br>Teams Deliver.</div>
+      <p class="hero-tagline">Building the AI layer that makes delivery faster. Custom agents, pipelines, production-deployed automation.</p>
+    </div>
+  </div>
+  <div class="sidebar">
+    <div class="sidebar-block">
+      <div class="sidebar-label">Experience</div>
+      <div class="sidebar-val">14</div>
+      <div class="sidebar-sub">years</div>
+    </div>
+    <div class="sidebar-block">
+      <div class="sidebar-label">Status</div>
+      <div class="sidebar-val" style="font-size:28px; color: var(--red);">OPEN</div>
+      <div class="sidebar-sub">to opportunities</div>
+    </div>
+    <div class="sidebar-block">
+      <div class="sidebar-label">Location</div>
+      <div class="sidebar-val" style="font-size:20px;">IT/EU</div>
+      <div class="sidebar-sub">Remote first</div>
+    </div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-cell">
+    <div class="stat-num yellow">14</div>
+    <div class="stat-label">Years delivering</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">+85%</div>
+    <div class="stat-label">Team velocity</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num red">−50%</div>
+    <div class="stat-label">Cycle time</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">+40%</div>
+    <div class="stat-label">Sprint capacity</div>
+  </div>
+</div>
+
+<div class="bottom-grid">
+  <div class="bottom-cell">
+    <div class="cell-title">AI Skills</div>
+    <ul class="skill-list">
+      <li class="skill-item hi"><span>Agentic AI Pipelines</span><span class="skill-dot"></span></li>
+      <li class="skill-item hi"><span>Multi-Agent Systems</span><span class="skill-dot"></span></li>
+      <li class="skill-item hi"><span>Anthropic API ✦</span><span class="skill-dot"></span></li>
+      <li class="skill-item"><span>Gemini Gem</span><span class="skill-dot"></span></li>
+      <li class="skill-item"><span>n8n Automation</span><span class="skill-dot"></span></li>
+      <li class="skill-item"><span>Vector Embeddings</span><span class="skill-dot"></span></li>
+    </ul>
+  </div>
+  <div class="bottom-cell">
+    <div class="cell-title">Delivery</div>
+    <ul class="skill-list">
+      <li class="skill-item"><span>Scrum Master</span><span class="skill-dot"></span></li>
+      <li class="skill-item"><span>SAFe PI Planning</span><span class="skill-dot"></span></li>
+      <li class="skill-item"><span>DORA Metrics</span><span class="skill-dot"></span></li>
+      <li class="skill-item"><span>OKR Framework</span><span class="skill-dot"></span></li>
+      <li class="skill-item"><span>Estimation</span><span class="skill-dot"></span></li>
+      <li class="skill-item"><span>Refinement</span><span class="skill-dot"></span></li>
+    </ul>
+  </div>
+  <div class="bottom-cell voice-panel">
+    <div class="voice-orb">🎙</div>
+    <div class="voice-label">Ask Pedro</div>
+  </div>
+</div>
+
+<div class="cta-bar">
+  <div class="cta-text-block">
+    <div class="cta-headline">Let's build something that ships.</div>
+    <div class="cta-sub">Anthropic API Certified · First wave in Europe</div>
+  </div>
+  <div class="cta-buttons">
+    <a href="#" class="cta-btn primary" onclick="flashYellow()">Get in touch →</a>
+    <a href="#" class="cta-btn secondary">Download CV</a>
+  </div>
+</div>
+
+<script>
+function flashYellow() {
+  const flash = document.getElementById('flash');
+  flash.style.opacity = '1';
+  setTimeout(() => { flash.style.opacity = '0'; }, 80);
+}
+
+// Shake effect on stat cells
+document.querySelectorAll('.stat-cell').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    const x = (Math.random() - 0.5) * 6;
+    const y = (Math.random() - 0.5) * 6;
+    el.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.transform = '';
+  });
+});
+</script>
+</body>
+</html>

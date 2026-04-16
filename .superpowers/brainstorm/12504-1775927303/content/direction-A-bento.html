@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direction A — Bento Grid Warm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #FAF8F4;
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  padding: 20px;
+  color: #1A1614;
+}
+
+.label-top {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9A8F86;
+  margin-bottom: 20px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  gap: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.box {
+  background: #FFFFFF;
+  border: 1px solid #E8E3DC;
+  border-radius: 16px;
+  padding: 28px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transform-style: preserve-3d;
+  position: relative;
+  overflow: hidden;
+}
+.box:hover {
+  box-shadow: 8px 12px 32px rgba(26,22,20,0.10);
+}
+
+/* Hero name box — big */
+.box-hero {
+  grid-column: span 7;
+  grid-row: span 2;
+  background: #FAF8F4;
+  border: 1px solid #E8E3DC;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 280px;
+  padding: 36px;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9A8F86;
+  margin-bottom: 12px;
+}
+.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(56px, 8vw, 96px);
+  font-weight: 900;
+  line-height: 0.95;
+  color: #1A1614;
+}
+.hero-name span {
+  color: #D4622A;
+}
+.hero-tagline {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #6B5E57;
+  max-width: 360px;
+  line-height: 1.5;
+}
+
+/* Stat boxes */
+.box-stat {
+  grid-column: span 2;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 110px;
+}
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #D4622A;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #9A8F86;
+  margin-top: 6px;
+}
+
+/* Tagline box */
+.box-tagline {
+  grid-column: span 5;
+  background: #D4622A;
+  color: #FAF8F4;
+  display: flex;
+  align-items: center;
+}
+.box-tagline p {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* CTA box */
+.box-cta {
+  grid-column: span 3;
+  background: #1A1614;
+  color: #FAF8F4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 120px;
+}
+.box-cta .cta-label {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #9A8F86;
+}
+.box-cta .cta-link {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: #FAF8F4;
+}
+.box-cta .arrow {
+  font-size: 32px;
+  color: #D4622A;
+  align-self: flex-end;
+}
+
+/* Skills box */
+.box-skills {
+  grid-column: span 4;
+  min-height: 120px;
+}
+.box-skills .skills-title {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #9A8F86;
+  margin-bottom: 12px;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tag {
+  background: #F2EDE4;
+  border: 1px solid #E8E3DC;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: #6B5E57;
+}
+.tag.accent {
+  background: #D4622A;
+  color: #FAF8F4;
+  border-color: #D4622A;
+}
+
+/* Voice box */
+.box-voice {
+  grid-column: span 3;
+  background: #1A1614;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.voice-orb {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #D4622A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  position: relative;
+}
+.voice-orb::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(212,98,42,0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+.voice-label {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #9A8F86;
+}
+
+/* Location box */
+.box-location {
+  grid-column: span 2;
+  background: #F2EDE4;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.box-location .loc-icon { font-size: 24px; }
+.box-location .loc-text {
+  font-size: 12px;
+  color: #6B5E57;
+  line-height: 1.4;
+}
+
+/* Certification box */
+.box-cert {
+  grid-column: span 5;
+  background: #F2EDE4;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 80px;
+}
+.cert-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #D4622A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.cert-text {
+  font-size: 13px;
+  color: #1A1614;
+  line-height: 1.4;
+}
+.cert-text strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.cert-text span {
+  color: #9A8F86;
+  font-size: 11px;
+}
+
+/* Available badge */
+.box-available {
+  grid-column: span 2;
+  background: #2A5C3F;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.avail-dot {
+  width: 8px;
+  height: 8px;
+  background: #4AE58A;
+  border-radius: 50%;
+  animation: blink 1.5s ease-in-out infinite;
+}
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.avail-text {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+}
+
+/* 3D tilt JS */
+</style>
+</head>
+<body>
+
+<div class="label-top">⬡ Direction A — Bento Grid Warm · Awwwards / Muzli Top 100 2026 Trend</div>
+
+<div class="bento">
+
+  <!-- Hero name -->
+  <div class="box box-hero" data-tilt>
+    <span class="hero-eyebrow">AI Delivery Manager · Remote EU</span>
+    <h1 class="hero-name">Pedro<br><span>Pizarro.</span></h1>
+    <p class="hero-tagline">I ship software.<br>Teams actually deliver.</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="box box-stat" data-tilt>
+    <div class="stat-num">14</div>
+    <div class="stat-label">yrs exp</div>
+  </div>
+  <div class="box box-stat" data-tilt>
+    <div class="stat-num">+85%</div>
+    <div class="stat-label">velocity</div>
+  </div>
+  <div class="box box-stat" data-tilt>
+    <div class="stat-num">−50%</div>
+    <div class="stat-label">cycle time</div>
+  </div>
+
+  <!-- Tagline -->
+  <div class="box box-tagline" data-tilt>
+    <p>"One of the first Delivery Managers in Europe with the Anthropic API certification."</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="box box-cta" data-tilt>
+    <span class="cta-label">Work together</span>
+    <span class="cta-link">Let's talk</span>
+    <span class="arrow">↗</span>
+  </div>
+
+  <!-- Skills -->
+  <div class="box box-skills" data-tilt>
+    <div class="skills-title">Stack</div>
+    <div class="tags">
+      <span class="tag accent">Agentic AI</span>
+      <span class="tag accent">Multi-Agent</span>
+      <span class="tag">Scrum</span>
+      <span class="tag">DORA Metrics</span>
+      <span class="tag">n8n</span>
+      <span class="tag">Gemini</span>
+      <span class="tag">ClickUp</span>
+    </div>
+  </div>
+
+  <!-- Voice -->
+  <div class="box box-voice" data-tilt>
+    <div class="voice-orb">🎙</div>
+    <div class="voice-label">Ask Pedro</div>
+  </div>
+
+  <!-- Available -->
+  <div class="box box-available" data-tilt>
+    <div class="avail-dot"></div>
+    <div class="avail-text">Open to<br>opportunities</div>
+  </div>
+
+  <!-- Location -->
+  <div class="box box-location" data-tilt>
+    <div class="loc-icon">📍</div>
+    <div class="loc-text">Italy<br>Remote EU</div>
+  </div>
+
+  <!-- Cert -->
+  <div class="box box-cert" data-tilt>
+    <div class="cert-badge">✦</div>
+    <div class="cert-text">
+      <strong>Anthropic API Certified</strong>
+      <span>First wave · Europe · 2024</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// 3D tilt on hover
+document.querySelectorAll('[data-tilt]').forEach(el => {
+  el.addEventListener('mousemove', e => {
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    el.style.transform = `perspective(600px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateZ(4px)`;
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.transform = 'perspective(600px) rotateY(0deg) rotateX(0deg) translateZ(0)';
+    el.style.transition = 'transform 0.4s ease';
+  });
+  el.addEventListener('mouseenter', () => {
+    el.style.transition = 'none';
+  });
+});
+</script>
+</body>
+</html>

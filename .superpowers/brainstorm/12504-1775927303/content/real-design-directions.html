@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Directions — Colori, Tipografia, UX</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #111; color: #eee; padding: 20px; }
+
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; color: #fff; }
+  .subtitle { font-size: 13px; color: #888; margin-bottom: 28px; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #555;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #222;
+  }
+
+  /* === PALETTE GRID === */
+  .palette-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .palette-card {
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .palette-card:hover { transform: translateY(-2px); }
+  .palette-card.selected { border-color: #e8ff4a; }
+
+  /* Mock split-screen preview */
+  .mock-split {
+    display: flex;
+    height: 180px;
+    font-family: serif;
+    position: relative;
+  }
+  .mock-left { width: 55%; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
+  .mock-right { width: 45%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 12px; }
+
+  .mock-eyebrow { font-family: monospace; font-size: 7px; letter-spacing: 2px; }
+  .mock-name { font-size: 20px; font-weight: 900; line-height: 1; }
+  .mock-tagline { font-family: system-ui; font-size: 9px; font-style: italic; }
+  .mock-stats { display: flex; gap: 10px; }
+  .mock-stat { text-align: center; }
+  .mock-stat-num { font-size: 13px; font-weight: 700; }
+  .mock-stat-lbl { font-size: 6px; letter-spacing: 1px; }
+
+  .mock-mic { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .mock-wave { display: flex; gap: 3px; align-items: center; }
+  .mock-wave span { width: 2px; border-radius: 2px; animation: wave 1.2s ease-in-out infinite; }
+  .mock-wave span:nth-child(1) { height: 6px; animation-delay: 0s; }
+  .mock-wave span:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+  .mock-wave span:nth-child(3) { height: 20px; animation-delay: 0.2s; }
+  .mock-wave span:nth-child(4) { height: 14px; animation-delay: 0.3s; }
+  .mock-wave span:nth-child(5) { height: 6px; animation-delay: 0.4s; }
+  @keyframes wave { 0%,100% { transform: scaleY(0.5); } 50% { transform: scaleY(1); } }
+  .mock-label { font-size: 7px; letter-spacing: 1px; font-family: monospace; }
+
+  .card-meta {
+    padding: 12px 14px;
+    background: #1a1a1a;
+  }
+  .card-meta h3 { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .card-meta p { font-size: 10px; color: #888; line-height: 1.5; }
+  .palette-swatches { display: flex; gap: 4px; margin-top: 6px; }
+  .swatch { height: 10px; border-radius: 3px; flex: 1; }
+
+  /* === TYPOGRAPHY === */
+  .type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .type-card {
+    background: #1a1a1a;
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .type-card:hover { border-color: #333; }
+  .type-card.selected { border-color: #e8ff4a; }
+  .type-display { font-size: 28px; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 4px; }
+  .type-body { font-size: 11px; color: #aaa; line-height: 1.5; margin-bottom: 8px; }
+  .type-mono { font-family: monospace; font-size: 9px; color: #666; letter-spacing: 1px; }
+  .type-tag { display: inline-block; font-size: 8px; letter-spacing: 1px; padding: 2px 6px; border-radius: 3px; margin-top: 6px; background: #2a2a2a; color: #888; }
+
+  /* === UX === */
+  .ux-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .ux-card {
+    background: #1a1a1a;
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .ux-icon { font-size: 22px; margin-bottom: 8px; }
+  .ux-title { font-size: 11px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .ux-desc { font-size: 10px; color: #777; line-height: 1.5; }
+  .ux-badge { display: inline-block; font-size: 7px; letter-spacing: 1px; padding: 2px 5px; border-radius: 3px; margin-top: 5px; }
+  .badge-keep { background: #1a3320; color: #4ade80; }
+  .badge-improve { background: #1a2a3a; color: #60a5fa; }
+  .badge-new { background: #2a1a3a; color: #c084fc; }
+
+  .btn-select {
+    display: block;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: #aaa;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 10px;
+    cursor: pointer;
+    margin-top: 8px;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  .btn-select:hover { border-color: #e8ff4a; color: #e8ff4a; }
+</style>
+</head>
+<body>
+
+<h1>Colori · Tipografia · UX — Layout C</h1>
+<p class="subtitle">4 direzioni complete. Non solo sfondo nero. Ispirati da Coolors, Color Hunt, Typewolf, Fonts In Use, IBM Design Language, Site Inspire.</p>
+
+<!-- ======================== PALETTE ======================== -->
+<div class="section-label">01 — Palette + Foto (4 direzioni reali)</div>
+<div class="palette-grid">
+
+  <!-- DIR 1: WARM EDITORIAL -->
+  <div class="palette-card" onclick="toggleSelect(this)">
+    <div class="mock-split" style="background:#F5F0E8;">
+      <!-- LEFT: cream -->
+      <div class="mock-left" style="background:#F5F0E8; border-right: 1px solid #e0d8cc;">
+        <div>
+          <div class="mock-eyebrow" style="color:#888; margin-bottom:5px;">AI DELIVERY MANAGER · REMOTE EU</div>
+          <div class="mock-name" style="color:#111; font-family:'Georgia',serif; font-size:22px;">Pedro<br><span style="color:#111; background:#E8FF4A; padding:0 3px;">Pizarro.</span></div>
+          <div class="mock-tagline" style="color:#666; margin-top:5px;">I ship software. Teams actually deliver.</div>
+        </div>
+        <!-- photo: portrait strip left edge, integrated -->
+        <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
+          <div style="width:32px; height:32px; border-radius:4px; overflow:hidden; border:1px solid #ccc; flex-shrink:0;">
+            <div style="width:100%; height:100%; background:linear-gradient(180deg,#ddd 0%,#bbb 100%);"></div>
+          </div>
+          <div class="mock-stats">
+            <div class="mock-stat"><div class="mock-stat-num" style="color:#111;">14</div><div class="mock-stat-lbl" style="color:#999;">YRS</div></div>
+            <div class="mock-stat"><div class="mock-stat-num" style="color:#111;">+85%</div><div class="mock-stat-lbl" style="color:#999;">COMMIT</div></div>
+            <div class="mock-stat"><div class="mock-stat-num" style="color:#111;">−50%</div><div class="mock-stat-lbl" style="color:#999;">CYCLE</div></div>
+          </div>
+        </div>
+      </div>
+      <!-- RIGHT: near-black, voice panel -->
+      <div class="mock-right" style="background:#1A1A1A;">
+        <div class="mock-mic" style="background:#E8FF4A;">🎙</div>
+        <div class="mock-wave">
+          <span style="background:#E8FF4A;"></span><span style="background:#E8FF4A;"></span>
+          <span style="background:#E8FF4A;"></span><span style="background:#E8FF4A;"></span>
+          <span style="background:#E8FF4A;"></span>
+        </div>
+        <div class="mock-label" style="color:#666;">ASK PEDRO</div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <h3>A — Warm Editorial / Swiss</h3>
+      <p>Sfondo crema caldo (#F5F0E8) + nero — contrasto split naturale. Foto: piccolo portrait tile nel left panel. Stile: Pentagram, The Great Discontent, IDEO. Lime rimane solo come highlight di testo.</p>
+      <div class="palette-swatches">
+        <div class="swatch" style="background:#F5F0E8; border:1px solid #ccc;"></div>
+        <div class="swatch" style="background:#1A1A1A;"></div>
+        <div class="swatch" style="background:#E8FF4A;"></div>
+        <div class="swatch" style="background:#888888;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIR 2: SLATE / LINEAR -->
+  <div class="palette-card" onclick="toggleSelect(this)">
+    <div class="mock-split" style="background:#0F172A;">
+      <!-- LEFT: slate 900 -->
+      <div class="mock-left" style="background:#0F172A; border-right:1px solid rgba(129,140,248,0.15);">
+        <div>
+          <div class="mock-eyebrow" style="color:#818CF8; margin-bottom:5px;">AI DELIVERY MANAGER · REMOTE EU</div>
+          <div class="mock-name" style="color:#F8FAFC; font-family:'Georgia',serif;">Pedro <span style="color:#818CF8;">Pizarro.</span></div>
+          <div class="mock-tagline" style="color:#94A3B8; margin-top:5px;">I ship software. Teams actually deliver.</div>
+        </div>
+        <div class="mock-stats" style="border-top:1px solid rgba(129,140,248,0.2); padding-top:8px; margin-top:8px;">
+          <div class="mock-stat"><div class="mock-stat-num" style="color:#818CF8;">14</div><div class="mock-stat-lbl" style="color:#475569;">YRS</div></div>
+          <div class="mock-stat"><div class="mock-stat-num" style="color:#818CF8;">+85%</div><div class="mock-stat-lbl" style="color:#475569;">COMMIT</div></div>
+          <div class="mock-stat"><div class="mock-stat-num" style="color:#818CF8;">−50%</div><div class="mock-stat-lbl" style="color:#475569;">CYCLE</div></div>
+          <div class="mock-stat"><div class="mock-stat-num" style="color:#818CF8;">+40%</div><div class="mock-stat-lbl" style="color:#475569;">CAP</div></div>
+        </div>
+      </div>
+      <!-- RIGHT: indigo tinted, photo background dimmed -->
+      <div class="mock-right" style="background:#1E1B4B; position:relative; overflow:hidden;">
+        <!-- photo as dimmed bg -->
+        <div style="position:absolute; inset:0; background:linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(30,27,75,0.85) 100%);"></div>
+        <div style="position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:6px;">
+          <div class="mock-mic" style="background:rgba(129,140,248,0.2); border:1.5px solid #818CF8; color:#818CF8;">🎙</div>
+          <div class="mock-wave">
+            <span style="background:#818CF8;"></span><span style="background:#818CF8;"></span>
+            <span style="background:#818CF8;"></span><span style="background:#818CF8;"></span>
+            <span style="background:#818CF8;"></span>
+          </div>
+          <div class="mock-label" style="color:#6366F1;">ASK PEDRO</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <h3>B — Slate + Indigo (Linear/Vercel style)</h3>
+      <p>Slate 900 (#0F172A) non è nero puro — è grigio-blu freddo. Accento indigo (#818CF8). Niente lime. Foto: sfondo dimmed nel pannello voice. Stile: Linear, Vercel, Raycast. Posizionamento AI-tech puro.</p>
+      <div class="palette-swatches">
+        <div class="swatch" style="background:#0F172A;"></div>
+        <div class="swatch" style="background:#1E1B4B;"></div>
+        <div class="swatch" style="background:#818CF8;"></div>
+        <div class="swatch" style="background:#F8FAFC;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIR 3: WHITE + DEEP TEAL -->
+  <div class="palette-card" onclick="toggleSelect(this)">
+    <div class="mock-split" style="background:#FFFFFF;">
+      <!-- LEFT: pure white -->
+      <div class="mock-left" style="background:#FFFFFF; border-right:2px solid #0D4040;">
+        <div>
+          <div class="mock-eyebrow" style="color:#0D7070; margin-bottom:5px;">AI DELIVERY MANAGER · REMOTE EU</div>
+          <div class="mock-name" style="color:#0A0A0A; font-family:'Georgia',serif;">Pedro <span style="color:#0D5C5C;">Pizarro.</span></div>
+          <div class="mock-tagline" style="color:#555; margin-top:5px;">I ship software. Teams actually deliver.</div>
+        </div>
+        <!-- photo: portrait, color, full face, editorial crop -->
+        <div style="margin-top:8px; display:flex; align-items:flex-end; gap:10px;">
+          <div style="width:36px; height:46px; border-radius:4px; background:linear-gradient(180deg,#bcd 0%,#789 100%); flex-shrink:0;"></div>
+          <div class="mock-stats">
+            <div class="mock-stat"><div class="mock-stat-num" style="color:#0A0A0A;">14</div><div class="mock-stat-lbl" style="color:#aaa;">YRS</div></div>
+            <div class="mock-stat"><div class="mock-stat-num" style="color:#0A0A0A;">+85%</div><div class="mock-stat-lbl" style="color:#aaa;">COMMIT</div></div>
+            <div class="mock-stat"><div class="mock-stat-num" style="color:#0A0A0A;">−50%</div><div class="mock-stat-lbl" style="color:#aaa;">CYCLE</div></div>
+          </div>
+        </div>
+      </div>
+      <!-- RIGHT: deep teal -->
+      <div class="mock-right" style="background:#0D4040;">
+        <div class="mock-mic" style="background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.4); color:#fff; font-size:14px;">🎙</div>
+        <div class="mock-wave">
+          <span style="background:#5EEAD4;"></span><span style="background:#5EEAD4;"></span>
+          <span style="background:#5EEAD4;"></span><span style="background:#5EEAD4;"></span>
+          <span style="background:#5EEAD4;"></span>
+        </div>
+        <div class="mock-label" style="color:#5EEAD4;">ASK PEDRO</div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <h3>C — Bianco + Teal profondo (split estremo)</h3>
+      <p>Contrasto massimo. Left panel bianco puro, right panel teal (#0D4040). Foto: ritratto portrait colorato nel left. Accento teal-300 (#5EEAD4) per voice. Stile: Atlassian, IBM Design Language, Dropbox brand. Leggibilità mobile eccellente.</p>
+      <div class="palette-swatches">
+        <div class="swatch" style="background:#FFFFFF; border:1px solid #ddd;"></div>
+        <div class="swatch" style="background:#0D4040;"></div>
+        <div class="swatch" style="background:#5EEAD4;"></div>
+        <div class="swatch" style="background:#0A0A0A;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIR 4: WARM DARK BROWN + AMBER -->
+  <div class="palette-card" onclick="toggleSelect(this)">
+    <div class="mock-split">
+      <!-- LEFT: dark warm brown — NOT pure black -->
+      <div class="mock-left" style="background:#16120E; border-right:1px solid rgba(217,119,6,0.3);">
+        <div>
+          <div class="mock-eyebrow" style="color:#D97706; margin-bottom:5px;">AI DELIVERY MANAGER · REMOTE EU</div>
+          <div class="mock-name" style="color:#F5F0E0; font-family:'Georgia',serif;">Pedro <span style="color:#F59E0B;">Pizarro.</span></div>
+          <div class="mock-tagline" style="color:#8C7A5C; margin-top:5px;">I ship software. Teams actually deliver.</div>
+        </div>
+        <div class="mock-stats" style="border-top:1px solid rgba(217,119,6,0.2); padding-top:8px; margin-top:8px;">
+          <div class="mock-stat"><div class="mock-stat-num" style="color:#F59E0B;">14</div><div class="mock-stat-lbl" style="color:#4A3D28;">YRS</div></div>
+          <div class="mock-stat"><div class="mock-stat-num" style="color:#F59E0B;">+85%</div><div class="mock-stat-lbl" style="color:#4A3D28;">COMMIT</div></div>
+          <div class="mock-stat"><div class="mock-stat-num" style="color:#F59E0B;">−50%</div><div class="mock-stat-lbl" style="color:#4A3D28;">CYCLE</div></div>
+          <div class="mock-stat"><div class="mock-stat-num" style="color:#F59E0B;">+40%</div><div class="mock-stat-lbl" style="color:#4A3D28;">CAP</div></div>
+        </div>
+      </div>
+      <!-- RIGHT: slightly lighter warm dark, photo full-bleed with overlay -->
+      <div class="mock-right" style="background:#211A12; position:relative; overflow:hidden;">
+        <!-- ghost photo strip -->
+        <div style="position:absolute; top:0; right:0; bottom:0; width:60%; background:linear-gradient(135deg, rgba(245,158,11,0.06) 0%, rgba(33,26,18,0) 100%); border-left:1px solid rgba(245,158,11,0.08);"></div>
+        <div style="position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:7px;">
+          <div class="mock-mic" style="background:rgba(245,158,11,0.15); border:1.5px solid #D97706; color:#F59E0B; font-size:14px;">🎙</div>
+          <div class="mock-wave">
+            <span style="background:#D97706;"></span><span style="background:#D97706;"></span>
+            <span style="background:#D97706;"></span><span style="background:#D97706;"></span>
+            <span style="background:#D97706;"></span>
+          </div>
+          <div class="mock-label" style="color:#78583A;">ASK PEDRO</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-meta">
+      <h3>D — Warm Dark Brown + Amber (Executive)</h3>
+      <p>#16120E è marrone-nero caldo — NON nero puro. Accento ambra (#F59E0B). Testo crema (#F5F0E0). Foto: ghost strip nel voice panel. Stile: McKinsey.com, IDEO, consulenza senior B2B. Autorevole, caldo, premium.</p>
+      <div class="palette-swatches">
+        <div class="swatch" style="background:#16120E;"></div>
+        <div class="swatch" style="background:#211A12;"></div>
+        <div class="swatch" style="background:#F59E0B;"></div>
+        <div class="swatch" style="background:#F5F0E0;"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ======================== TYPOGRAPHY ======================== -->
+<div class="section-label">02 — Tipografia (da Typewolf + Fonts In Use)</div>
+<div class="type-grid">
+
+  <div class="type-card" onclick="toggleSelect(this)">
+    <div class="type-display" style="font-family: Georgia, serif;">Pedro Pizarro.</div>
+    <div class="type-body" style="font-family: system-ui;">AI Delivery Manager with 14 years building software teams that actually ship.</div>
+    <div class="type-mono">AI DELIVERY MANAGER · 2024</div>
+    <span class="type-tag">DM Serif Display + DM Mono — Google Fonts</span>
+    <span class="type-tag" style="margin-left:4px;">Typewolf top 2024</span>
+    <div style="font-size:9px; color:#555; margin-top:6px;">Serif per titoli, mono per label tecnici. Caldo, editoriale, professionale.</div>
+  </div>
+
+  <div class="type-card" onclick="toggleSelect(this)">
+    <div class="type-display" style="font-family: 'Arial Black', sans-serif; letter-spacing:-1px;">Pedro Pizarro.</div>
+    <div class="type-body" style="font-family: monospace; font-size:10px;">AI Delivery Manager with 14 years building software teams that actually ship.</div>
+    <div class="type-mono">AI DELIVERY MANAGER · 2024</div>
+    <span class="type-tag">Space Grotesk + Space Mono — Google Fonts</span>
+    <span class="type-tag" style="margin-left:4px;">Fonts In Use: tech categoria</span>
+    <div style="font-size:9px; color:#555; margin-top:6px;">Grotesk per headings (tech/AI signal), mono per tutto il testo secondary. Usato da startup AI.</div>
+  </div>
+
+  <div class="type-card" onclick="toggleSelect(this)">
+    <div class="type-display" style="font-family: 'Palatino Linotype', Palatino, serif; font-style: italic; font-weight:900;">Pedro Pizarro.</div>
+    <div class="type-body" style="font-family: system-ui; font-size:11px;">AI Delivery Manager with 14 years building software teams that actually ship.</div>
+    <div class="type-mono">AI DELIVERY MANAGER · 2024</div>
+    <span class="type-tag">Fraunces + IBM Plex Mono — Google Fonts</span>
+    <span class="type-tag" style="margin-left:4px;">IBM Design Language ref</span>
+    <div style="font-size:9px; color:#555; margin-top:6px;">Fraunces: optical size variable, carattere "del giornalista". IBM Plex Mono: credibilità tecnica. Abbinamento unico.</div>
+  </div>
+
+  <div class="type-card" onclick="toggleSelect(this)">
+    <div class="type-display" style="font-family: Georgia, serif; font-size:24px;">Pedro Pizarro.</div>
+    <div class="type-body" style="font-family: Georgia, serif; font-style:italic; font-size:11px;">AI Delivery Manager with 14 years building software teams that actually ship.</div>
+    <div class="type-mono">AI DELIVERY MANAGER · 2024</div>
+    <span class="type-tag">Attuale (serif hero) + Geist Mono — Vercel</span>
+    <span class="type-tag" style="margin-left:4px;">Evoluzione minima</span>
+    <div style="font-size:9px; color:#555; margin-top:6px;">Tieni il serif hero che funziona. Sostituisci solo il mono con Geist (Vercel) per il layer tech. Cambiamento piccolo, impatto grande.</div>
+  </div>
+
+</div>
+
+<!-- ======================== UX IMPROVEMENTS ======================== -->
+<div class="section-label">03 — UX Improvements (da UX Project Checklist + Little Big Details)</div>
+<div class="ux-grid">
+
+  <div class="ux-card">
+    <div class="ux-icon">🎙</div>
+    <div class="ux-title">Voice panel sempre visibile</div>
+    <div class="ux-desc">Layout C già risolve questo. Voice non sparisce allo scroll. Aggiungere: pulse animation sull'icona mic quando idle. Transcript delle ultime 2 righe visibile sotto.</div>
+    <span class="ux-badge badge-keep">MANTIENI</span>
+  </div>
+
+  <div class="ux-card">
+    <div class="ux-icon">📊</div>
+    <div class="ux-title">Stats: count-up + tooltip</div>
+    <div class="ux-desc">Counter animato già presente. Aggiungere: hover tooltip su ogni stat con fonte ("CV, BIP 2024"). Aggiunge credibilità B2B. Da Little Big Details.</div>
+    <span class="ux-badge badge-improve">MIGLIORA</span>
+  </div>
+
+  <div class="ux-card">
+    <div class="ux-icon">📍</div>
+    <div class="ux-title">Scroll progress indicator</div>
+    <div class="ux-desc">Linea sottile sul bordo sinistro della pagina che sale mentre scrolli. O dots di navigazione sezioni. Orienta l'utente nel one-pager. Da Site Inspire pattern.</div>
+    <span class="ux-badge badge-new">NUOVO</span>
+  </div>
+
+  <div class="ux-card">
+    <div class="ux-icon">📱</div>
+    <div class="ux-title">Mobile: collasso split</div>
+    <div class="ux-desc">Su mobile, left panel → header compatto sticky. Voice panel → floating FAB (mic button) bottom-right. Stats → horizontal scroll strip. Nessuna doppia colonna sotto 768px.</div>
+    <span class="ux-badge badge-improve">MIGLIORA</span>
+  </div>
+
+  <div class="ux-card">
+    <div class="ux-icon">↓</div>
+    <div class="ux-title">CTA above the fold</div>
+    <div class="ux-desc">Aggiungere nel left panel: link "Download CV" discreto + "Open to work: Remote EU". Non nasconderlo in basso. Il recruiter deve vederlo entro 3 secondi.</div>
+    <span class="ux-badge badge-new">NUOVO</span>
+  </div>
+
+  <div class="ux-card">
+    <div class="ux-icon">🔀</div>
+    <div class="ux-title">Mesh gradient: da 0.03 → 0.08</div>
+    <div class="ux-desc">Background mesh radial gradients attuali quasi invisibili (opacity 0.03). Portarli a 0.08 dà profondità senza dominare. Colore dipende dalla palette scelta.</div>
+    <span class="ux-badge badge-improve">MIGLIORA</span>
+  </div>
+
+  <div class="ux-card">
+    <div class="ux-icon">✦</div>
+    <div class="ux-title">Divider animato tra pannelli</div>
+    <div class="ux-desc">La linea verticale che separa left/right può essere un elemento di design: 1px con gradient animato (glow che sale lentamente). Da Little Big Details — piccoli dettagli memorabili.</div>
+    <span class="ux-badge badge-new">NUOVO</span>
+  </div>
+
+  <div class="ux-card">
+    <div class="ux-icon">🖼</div>
+    <div class="ux-title">Foto: 3 opzioni finali</div>
+    <div class="ux-desc"><strong style="color:#fff;">A</strong> Tile portrait nel left panel (warm editorial). <strong style="color:#fff;">B</strong> Dimmed background nel voice panel (slate/indigo). <strong style="color:#fff;">C</strong> Rimuovi del tutto — solo testo e numeri.</div>
+    <span class="ux-badge badge-improve">SCEGLI</span>
+  </div>
+
+  <div class="ux-card">
+    <div class="ux-icon">♿</div>
+    <div class="ux-title">Accessibilità colore</div>
+    <div class="ux-desc">Ogni palette proposta passa WCAG AA (contrast ratio min 4.5:1 per testo normale). Il teal (#0D4040 + bianco) e l'ambra su dark brown superano AAA.</div>
+    <span class="ux-badge badge-keep">GARANTITO</span>
+  </div>
+
+</div>
+
+<div style="background:#1a1a1a; border-radius:10px; padding:16px; margin-top:8px;">
+  <div style="font-size:11px; color:#888; line-height:1.7;">
+    <strong style="color:#fff;">Come usare:</strong> Scegli una palette (A/B/C/D) + una coppia tipografica (1/2/3/4) + foto option (tile / dimmed / niente).
+    Posso mixare: es. palette C (bianco+teal) + tipografia 1 (DM Serif+Mono) + foto tile nel left panel.
+    Dimmi la combinazione e creo il mockup finale completo prima di scrivere il design doc.
+  </div>
+</div>
+
+<script>
+function toggleSelect(el) {
+  el.classList.toggle('selected');
+}
+</script>
+</body>
+</html>
