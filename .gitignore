@@ -12,3 +12,19 @@ api/deepgram.conf.php
 # Backup files
 *.bak
 *.bak.*
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Claude/agent internals
+.claude/
+.agents/
+.agent/
+.superpowers/
+skills-lock.json
+nav-investigation.spec.js
+nav-screenshots/
+smoke-test.spec.js
+docs/superpowers/
+animazione-coste.mp4
