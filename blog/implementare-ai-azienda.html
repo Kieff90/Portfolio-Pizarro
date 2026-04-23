@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }</script>
-<title>Come Implementare l'AI in Azienda: Guida Pratica | Pedro Pizarro</title>
-<meta name="description" content="Gli errori più comuni nell'implementazione AI in azienda e un framework pratico in tre fasi: valutazione, pilota, e scala. Con esempi reali da progetti italiani. Guida per Delivery Manager.">
-<meta name="keywords" content="implementare AI in azienda, digital transformation AI Italy, AI implementation Italy, come usare AI in azienda, AI delivery manager Italia, trasformazione digitale AI">
+<title>How to Implement AI in Your Company: A Practical Guide for Delivery Managers | Pedro Pizarro</title>
+<meta name="description" content="The most common mistakes in AI implementation and a practical three-phase framework: assess, pilot, scale. With real examples from Italian enterprise and SME projects. Pedro Pizarro, AI Delivery Manager Italy.">
+<meta name="keywords" content="AI implementation company, how to implement AI enterprise, AI delivery manager, AI project framework, LLM governance, AI adoption Italy, AI pilot production">
 <meta name="author" content="Pedro Pizarro Diaz">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://pedropizarrodiaz.it/blog/implementare-ai-azienda.html">
 
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://pedropizarrodiaz.it/blog/implementare-ai-azienda.html">
-<meta property="og:title" content="Come Implementare l'AI in Azienda: Guida Pratica per Delivery Manager">
-<meta property="og:description" content="Framework in tre fasi per implementare l'AI in azienda evitando i 5 errori più comuni. Con esempi reali da progetti italiani.">
+<meta property="og:title" content="How to Implement AI in Your Company: A Practical Guide for Delivery Managers">
+<meta property="og:description" content="Three-phase framework for AI implementation: assess, pilot, scale. The 5 most common failure modes and how to avoid them. Real examples from production deployments.">
 <meta property="og:image" content="https://pedropizarrodiaz.it/og-image.png">
 <meta property="og:site_name" content="pedropizarrodiaz.it">
-<meta property="og:locale" content="it_IT">
+<meta property="og:locale" content="en_US">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Come Implementare l'AI in Azienda: Guida Pratica">
-<meta name="twitter:description" content="Framework in tre fasi: valutazione, pilota, scala. Con esempi reali da progetti italiani.">
+<meta name="twitter:title" content="How to Implement AI in Your Company: A Practical Guide">
+<meta name="twitter:description" content="Three-phase framework: assess, pilot, scale. The 5 failure modes and how to avoid them.">
 <meta name="twitter:image" content="https://pedropizarrodiaz.it/og-image.png">
 
 <script type="application/ld+json">
@@ -31,43 +31,43 @@
     {
       "@type": "BlogPosting",
       "@id": "https://pedropizarrodiaz.it/blog/implementare-ai-azienda.html",
-      "headline": "Come Implementare l'AI in Azienda: Guida Pratica per Delivery Manager",
-      "description": "Gli errori più comuni nell'implementazione AI in azienda e un framework pratico in tre fasi: valutazione, pilota, scala.",
+      "headline": "How to Implement AI in Your Company: A Practical Guide for Delivery Managers",
+      "description": "The most common mistakes in AI implementation and a practical three-phase framework: assess, pilot, scale.",
       "url": "https://pedropizarrodiaz.it/blog/implementare-ai-azienda.html",
       "datePublished": "2026-02-15",
-      "dateModified": "2026-02-15",
+      "dateModified": "2026-04-23",
       "author": { "@id": "https://pedropizarrodiaz.it/#person" },
       "publisher": { "@id": "https://pedropizarrodiaz.it/#person" },
-      "inLanguage": "it",
+      "inLanguage": "en",
       "wordCount": 1200,
       "about": { "@type": "Thing", "name": "AI Implementation" },
-      "keywords": ["AI in azienda", "digital transformation Italy", "AI delivery", "implementare AI", "LLM governance"]
+      "keywords": ["AI implementation", "AI delivery", "LLM governance", "AI pilot", "enterprise AI adoption"]
     },
     {
       "@type": "FAQPage",
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "Come si implementa l'AI in azienda?",
+          "name": "How do you implement AI in a company?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "L'implementazione AI in azienda segue tre fasi: 1) Valutazione: identificare casi d'uso ad alto impatto e bassa complessità, valutare la maturità dei dati, e definire KPI misurabili. 2) Pilota: avviare un progetto pilota su 4-8 settimane con un team dedicato, misurare i risultati rispetto ai KPI definiti. 3) Scala: se il pilota dimostra ROI, espandere gradualmente con governance LLM, change management, e monitoraggio continuo delle performance del modello."
+            "text": "AI implementation follows three phases: Assess (identify the right use case, evaluate data readiness, define measurable KPIs), Pilot (4-8 weeks with a dedicated team, measure results against defined KPIs), Scale (deploy to production with LLM governance, change management, and continuous model performance monitoring). The key is defining exit KPIs before starting the pilot."
           }
         },
         {
           "@type": "Question",
-          "name": "Qual è il costo di implementazione dell'AI in un'azienda italiana?",
+          "name": "What does an AI project pilot cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Il costo dipende dalla complessità del caso d'uso. Un pilota AI (4-8 settimane) per un processo interno tipicamente costa tra €15.000 e €50.000 includendo consulenza, sviluppo, e costi di API. Secondo Gartner, le organizzazioni che investono in governance AI dall'inizio riducono i costi di remediation del 60%. Un Delivery Manager AI dedicato (fractional) per la fase di pilota può ridurre il rischio di fallimento del progetto del 40-60%."
+            "text": "A well-scoped AI pilot (4-8 weeks) typically costs between €15,000 and €50,000, including consulting, development, and API costs. According to Gartner, organizations that invest in AI governance from the start reduce remediation costs by 60%. A fractional AI Delivery Manager for the pilot phase can reduce project failure risk by 40-60%."
           }
         },
         {
           "@type": "Question",
-          "name": "Quanto tempo ci vuole per implementare l'AI in azienda?",
+          "name": "How long does AI implementation take?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Un pilota AI ben strutturato richiede 4-8 settimane. La fase di scala, che porta il pilota in produzione e lo estende ad altri processi, richiede tipicamente 3-6 mesi. I progetti che falliscono tendono ad avere fasi di pilota indefinite (oltre 3 mesi) senza KPI chiari — questo è il segnale più comune di un progetto AI destinato a non raggiungere mai la produzione."
+            "text": "A well-structured pilot takes 4-8 weeks. The scale phase, bringing the pilot to production and expanding to other processes, typically takes 3-6 months. Warning signs of a project heading for failure: a pilot that stretches beyond 3 months, no defined KPIs, no clear delivery ownership."
           }
         }
       ]
@@ -76,7 +76,6 @@
 }
 </script>
 
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8W56KE5NY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -143,12 +142,12 @@
 
 <div class="container">
   <section class="page-hero">
-    <p class="page-hero-eyebrow"><a href="/blog/" style="color:var(--muted);text-decoration:none;">Blog</a> &nbsp;/&nbsp; Strategia</p>
-    <h1 class="page-hero-title" style="font-size:clamp(26px,4vw,50px);">Come Implementare <span class="accent">l'AI in Azienda</span>:<br>Guida Pratica per Delivery Manager</h1>
+    <p class="page-hero-eyebrow"><a href="/blog/" style="color:var(--muted);text-decoration:none;">Blog</a> &nbsp;/&nbsp; Strategy</p>
+    <h1 class="page-hero-title" style="font-size:clamp(26px,4vw,50px);">How to Implement <span class="accent">AI in Your Company</span>:<br>A Practical Guide for Delivery Managers</h1>
     <div class="post-meta">
       <span class="post-meta-item">Pedro Pizarro</span>
-      <span class="post-meta-item">Febbraio 2026</span>
-      <span class="post-meta-item">10 min lettura</span>
+      <span class="post-meta-item">February 2026</span>
+      <span class="post-meta-item">10 min read</span>
     </div>
   </section>
 </div>
@@ -159,13 +158,13 @@
     <article>
       <div class="prose">
 
-        <p>La maggior parte dei progetti AI in azienda non fallisce per problemi tecnologici. Fallisce per problemi di delivery. Mancano KPI chiari, ownership definita, e un processo strutturato che porti il prototipo in produzione.</p>
+        <p>Most AI projects in companies do not fail because of technology. They fail because of delivery. There are no clear KPIs, no defined ownership, and no structured process to take the prototype into production.</p>
 
-        <p>Secondo McKinsey (2024), il <strong>70% dei progetti AI non raggiunge la produzione</strong>. In Italia, dove il processo decisionale è spesso più lento e la cultura del dato meno matura rispetto al Nord Europa, il numero è probabilmente più alto. Ho lavorato su progetti AI in settori come energia, aerospazio, logistica, e startup italiane. Ho visto fallire progetti ben finanziati per ragioni evitabili.</p>
+        <p>McKinsey (2024) reports that <strong>70% of AI projects never reach production</strong>. In organizations where decision cycles are long and data maturity is low, that number is likely higher. I have worked on AI projects across energy, aerospace, logistics, and Italian SMEs. I have watched well-funded projects fail for avoidable reasons.</p>
 
-        <p>Questa guida è per Delivery Manager, responsabili IT, e manager che devono portare l'AI in produzione. Non solo presentarla in una slide.</p>
+        <p>This guide is for Delivery Managers, IT leads, and operations managers who need to get AI into production. Not just onto a slide.</p>
 
-        <h2>I 5 errori più comuni nell'implementazione AI in azienda</h2>
+        <h2>The 5 most common mistakes in company AI implementation</h2>
 
       </div>
 
@@ -173,140 +172,139 @@
         <div class="errore-item">
           <div class="errore-num">01</div>
           <div class="errore-content">
-            <div class="errore-title">Iniziare con il caso d'uso sbagliato</div>
-            <div class="errore-desc">Il primo progetto AI deve essere visibile, misurabile, e a basso rischio operativo. Non iniziare con un processo critico o regolamentato. Scegli qualcosa che funzioni anche se il modello sbaglia il 20% delle volte.</div>
+            <div class="errore-title">Starting with the wrong use case</div>
+            <div class="errore-desc">The first AI project needs to be visible, measurable, and low operational risk. Do not start with a critical or regulated process. Pick something that still works even if the model is wrong 20% of the time.</div>
           </div>
         </div>
         <div class="errore-item">
           <div class="errore-num">02</div>
           <div class="errore-content">
-            <div class="errore-title">Dati non pronti per il progetto</div>
-            <div class="errore-desc">Il 60% del tempo in un progetto AI viene speso sulla qualità e preparazione dei dati (Gartner, 2024). Se i dati non sono strutturati, accessibili, e documentati prima di iniziare, il progetto si bloccherà durante il pilota.</div>
+            <div class="errore-title">Data that is not ready</div>
+            <div class="errore-desc">60% of time in an AI project goes to data quality and preparation (Gartner, 2024). If the data is not structured, accessible, and documented before you start, the project will stall during the pilot.</div>
           </div>
         </div>
         <div class="errore-item">
           <div class="errore-num">03</div>
           <div class="errore-content">
-            <div class="errore-title">Pilota infinito senza KPI di uscita</div>
-            <div class="errore-desc">Un pilota senza KPI di uscita definiti diventa un progetto di ricerca senza fine. Definisci prima del pilota: "Se raggiungiamo X, andiamo in produzione. Se non lo raggiungiamo entro Y settimane, chiudiamo."</div>
+            <div class="errore-title">A pilot with no exit KPIs</div>
+            <div class="errore-desc">A pilot without defined exit KPIs becomes an open-ended research project. Before starting, decide: "If we reach X, we go to production. If we do not reach it within Y weeks, we stop." No ambiguity.</div>
           </div>
         </div>
         <div class="errore-item">
           <div class="errore-num">04</div>
           <div class="errore-content">
-            <div class="errore-title">Nessuna governance LLM</div>
-            <div class="errore-desc">I modelli cambiano versione. I prompt che funzionavano in v1 possono degradare in v2. Senza un processo di model versioning, prompt regression testing, e output validation, scopri i problemi dopo che sono già in produzione.</div>
+            <div class="errore-title">No LLM governance</div>
+            <div class="errore-desc">Models change versions. Prompts that worked in v1 can degrade in v2. Without model versioning, prompt regression testing, and output validation, you discover problems after they are already in production.</div>
           </div>
         </div>
         <div class="errore-item">
           <div class="errore-num">05</div>
           <div class="errore-content">
-            <div class="errore-title">Change management dimenticato</div>
-            <div class="errore-desc">L'AI cambia i flussi di lavoro delle persone. Senza un piano di adozione che includa comunicazione, formazione, e feedback loop, il tool viene costruito e non usato. Ho visto progetti con 70% di adozione AI e progetti con 10%: la differenza era il change management, non la tecnologia.</div>
+            <div class="errore-title">Forgetting change management</div>
+            <div class="errore-desc">AI changes how people work. Without an adoption plan that includes communication, training, and a feedback loop, the tool gets built and not used. I have seen projects with 70% AI adoption and projects with 10%. The difference was change management, not the technology.</div>
           </div>
         </div>
       </div>
 
       <div class="prose">
-        <h2>Il framework in tre fasi: Assess → Pilot → Scale</h2>
-        <p>Questo è il framework che uso nei miei progetti. Non è originale: si ispira al Lean Startup e agli approcci SAFe per la gestione del valore. Ma è pratico e funziona.</p>
+        <h2>The three-phase framework: Assess, Pilot, Scale</h2>
+        <p>This is the framework I use on my projects. It draws from Lean Startup thinking and SAFe value management approaches. It is practical and it works.</p>
       </div>
 
       <div class="reveal">
         <div class="phase-card">
-          <div class="phase-num">Fase 01</div>
-          <div class="phase-title">Assess — Valutazione (2 settimane)</div>
+          <div class="phase-num">Phase 01</div>
+          <div class="phase-title">Assess — 2 weeks</div>
           <div class="phase-desc">
-            In questa fase si identifica il caso d'uso giusto e si verifica la maturità dei dati. Si mappano i processi candidati, si fa uno scoring per impatto e complessità, si audit la qualità dei dati, e si definiscono i KPI di successo del pilota. Al termine si ha un documento di scoping con il caso d'uso selezionato, i KPI definiti, e il piano del pilota.
+            Identify the right use case and verify data readiness. Map candidate processes, score them on impact and complexity, audit data quality, and define the pilot success KPIs. Output: a scoping document with the selected use case, defined KPIs, and pilot plan.
           </div>
         </div>
 
         <div class="phase-card" style="border-left-color: var(--accent2);">
-          <div class="phase-num" style="color:var(--accent2);">Fase 02</div>
-          <div class="phase-title">Pilot — Pilota (4–8 settimane)</div>
+          <div class="phase-num" style="color:var(--accent2);">Phase 02</div>
+          <div class="phase-title">Pilot — 4 to 8 weeks</div>
           <div class="phase-desc">
-            L'obiettivo del pilota è dimostrare che il caso d'uso funziona con dati reali in condizioni controllate. Si sviluppa il prototipo funzionante, si testa con utenti reali (non solo il team IT), si misurano i risultati rispetto ai KPI definiti, e si identificano i rischi operativi e di compliance. Il pilota si chiude con un report di validazione e una raccomandazione chiara: go o no-go per la scala.
+            The pilot's goal is to prove the use case works with real data under controlled conditions. Build the working prototype, test it with real users (not just the IT team), measure results against defined KPIs, and identify operational and compliance risks. The pilot closes with a validation report and a clear recommendation: go or no-go for scale.
           </div>
         </div>
 
         <div class="phase-card" style="border-left-color: var(--accent3);">
-          <div class="phase-num" style="color:var(--accent3);">Fase 03</div>
-          <div class="phase-title">Scale — Scala (3–6 mesi)</div>
+          <div class="phase-num" style="color:var(--accent3);">Phase 03</div>
+          <div class="phase-title">Scale — 3 to 6 months</div>
           <div class="phase-desc">
-            Questa fase porta il pilota in produzione e costruisce l'infrastruttura per espandersi. Il lavoro comprende il deployment in produzione, la governance LLM (model versioning, output validation, audit trail), il change management e la formazione degli utenti, e il monitoraggio continuo delle performance del modello. Si arriva a un sistema AI in produzione con KPI misurati, governance documentata, e una roadmap di espansione verso altri casi d'uso.
+            This phase takes the pilot to production and builds the infrastructure to expand. The work includes production deployment, LLM governance (model versioning, output validation, audit trail), change management and user training, and continuous model performance monitoring. Output: an AI system in production with measured KPIs, documented governance, and a roadmap for expansion to other use cases.
           </div>
         </div>
       </div>
 
       <div class="prose">
 
-        <h2>Esempio reale: AI startup italiana</h2>
+        <h2>A real example: AI automation platform for Italian SMEs</h2>
 
-        <p>Nel 2023 ho guidato la delivery di un MVP AI per una startup italiana nel settore B2B SaaS. Il caso d'uso: automazione dell'analisi competitiva per PMI. Il team aveva le competenze tecniche ma non il processo di delivery.</p>
+        <p>In 2025 I built an AI automation platform for Italian SMEs from scratch, as architect and builder, not as a PM writing specs. The use case: let small companies query their own internal knowledge base (contracts, procedures, operational documents) without the AI inventing answers.</p>
 
-        <p>Abbiamo applicato il framework Assess → Pilot → Scale:</p>
+        <p>The three phases ran like this:</p>
 
         <ul>
-          <li><strong>Assess (2 settimane):</strong> identificato l'analisi competitiva come caso d'uso perché era ripetitiva, misurabile (tempo risparmiato), e a basso rischio operativo (gli output erano informativi, non decisionali).</li>
-          <li><strong>Pilot (6 settimane):</strong> MVP funzionante con 30+ interviste utenti durante lo sviluppo. KPI: riduzione del tempo di analisi da 4 ore a 30 minuti.</li>
-          <li><strong>Scale (ongoing):</strong> produzione in 2 mesi dall'inizio del progetto, con governance LLM e monitoring continuo degli output.</li>
+          <li><strong>Assess (2 weeks):</strong> 30+ structured interviews with Italian SME owners to map real operational pain points. Findings changed what got built and what got dropped. Competitive analysis of 15+ automation platforms to identify where existing tools fell short for this market.</li>
+          <li><strong>Pilot (4 weeks):</strong> Built and tested the core retrieval pipeline with real documents and real users. KPI: zero hallucinated responses, grounded output on every query. LLM governance layer built in from day one.</li>
+          <li><strong>Scale (ongoing):</strong> Working MVP in production in 2 months from architecture start. Real users, real feedback, continuous improvement through an interaction experience graph that learns from validated responses.</li>
         </ul>
 
-        <p>Risultato: <strong>2 mesi al MVP</strong>, 150+ competitor analizzati nel primo mese di produzione. Vedi il <a href="/case-studies/ai-startup-mvp.html">case study completo</a>.</p>
+        <p>Result: <strong>working MVP in 2 months</strong>, zero hallucinations in the first production period. See the <a href="/case-studies/ai-startup-mvp.html">full case study</a>.</p>
 
         <div class="stat-callout reveal">
           <div class="stat-callout-item">
             <div class="stat-callout-num">2</div>
-            <div class="stat-callout-label">Mesi dall'inizio al MVP in produzione</div>
+            <div class="stat-callout-label">Months from architecture to production MVP</div>
           </div>
           <div class="stat-callout-item">
             <div class="stat-callout-num">30+</div>
-            <div class="stat-callout-label">Interviste utenti durante il pilota</div>
+            <div class="stat-callout-label">User interviews before and during build</div>
           </div>
           <div class="stat-callout-item">
-            <div class="stat-callout-num">150+</div>
-            <div class="stat-callout-label">Competitor analizzati nel primo mese</div>
+            <div class="stat-callout-num">0</div>
+            <div class="stat-callout-label">Hallucinated responses in first production period</div>
           </div>
         </div>
 
-        <h2>Strumenti consigliati per l'implementazione AI</h2>
+        <h2>Recommended tools for AI implementation</h2>
 
         <ul>
-          <li><strong>Modelli LLM:</strong> Claude (Anthropic) per task complessi e governance, GPT-4o per integrazione ecosistema Microsoft.</li>
-          <li><strong>Automazione workflow:</strong> N8N (self-hosted, GDPR-friendly per aziende italiane), Zapier per integrazioni leggere.</li>
-          <li><strong>Delivery:</strong> Jira per tracking dei task AI, Azure DevOps per pipeline CI/CD, GitHub per versioning dei prompt.</li>
-          <li><strong>Monitoring:</strong> Langfuse o Helicone per monitoraggio delle performance LLM in produzione.</li>
+          <li><strong>LLMs:</strong> Claude (Anthropic) for complex reasoning and governance-heavy use cases, GPT-4o for Microsoft ecosystem integration.</li>
+          <li><strong>Workflow orchestration:</strong> n8n (self-hosted, GDPR-friendly) for agentic workflows, Zapier for lightweight integrations.</li>
+          <li><strong>Delivery:</strong> Jira for AI task tracking, Azure DevOps for CI/CD pipelines, GitHub for prompt versioning.</li>
+          <li><strong>Monitoring:</strong> Langfuse or Helicone for LLM performance monitoring in production.</li>
         </ul>
 
         <blockquote>
-          <p>"Il progetto AI che non ha un Delivery Manager dedicato diventa un esperimento perpetuo. La differenza tra un prototipo e un prodotto è il processo di delivery." — Pedro Pizarro</p>
+          <p>"An AI project without a dedicated Delivery Manager becomes a perpetual experiment. The difference between a prototype and a product is the delivery process." — Pedro Pizarro</p>
         </blockquote>
 
       </div>
 
-      <!-- FAQ -->
       <div class="faq-section reveal">
-        <h2 class="section-label">Domande frequenti</h2>
+        <h2 class="section-label">Frequently asked questions</h2>
 
         <div class="faq-item">
-          <div class="faq-question">Come si implementa l'AI in azienda?</div>
-          <div class="faq-answer">In tre fasi: Assess (identificare il caso d'uso giusto e valutare la maturità dei dati), Pilot (4-8 settimane con KPI definiti), Scale (portare in produzione con governance LLM e change management). La chiave è avere KPI di uscita chiari prima di iniziare il pilota.</div>
+          <div class="faq-question">How do you implement AI in a company?</div>
+          <div class="faq-answer">In three phases: Assess (identify the right use case and verify data readiness), Pilot (4-8 weeks with defined KPIs), Scale (take it to production with LLM governance and change management). The key is setting exit KPIs before the pilot starts, not during it.</div>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question">Quanto costa implementare l'AI in un'azienda italiana?</div>
-          <div class="faq-answer">Un pilota AI (4-8 settimane) tipicamente costa €15.000–50.000 includendo consulenza, sviluppo, e costi API. Secondo Gartner, investire in governance AI dall'inizio riduce i costi di remediation del 60%. Un Delivery Manager AI fractional per la fase di pilota può ridurre il rischio di fallimento del 40-60%.</div>
+          <div class="faq-question">What does an AI pilot project cost?</div>
+          <div class="faq-answer">A well-scoped AI pilot (4-8 weeks) typically costs between €15,000 and €50,000, including consulting, development, and API costs. According to Gartner, investing in AI governance from the start reduces remediation costs by 60%. A fractional AI Delivery Manager for the pilot phase can reduce project failure risk by 40-60%.</div>
         </div>
 
         <div class="faq-item">
-          <div class="faq-question">Quanto tempo ci vuole?</div>
-          <div class="faq-answer">Un pilota ben strutturato richiede 4-8 settimane. La fase di scala, che porta il pilota in produzione, richiede 3-6 mesi. I segnali di un progetto destinato a fallire: pilota che dura più di 3 mesi, KPI non definiti, nessun ownership chiaro della delivery.</div>
+          <div class="faq-question">How long does AI implementation take?</div>
+          <div class="faq-answer">A well-structured pilot takes 4-8 weeks. The scale phase, bringing the pilot to production, typically takes 3-6 months. The most reliable warning signs of a failing project: a pilot that stretches past 3 months without clear KPIs, and no defined delivery ownership.</div>
         </div>
 
       </div>
 
       <div style="margin-top:64px;" class="reveal">
-        <h2 class="section-label">Articoli correlati</h2>
+        <h2 class="section-label">Related articles</h2>
         <div class="blog-grid" style="grid-template-columns: repeat(2, 1fr);">
           <a href="/blog/ai-project-risks.html" class="blog-card">
             <div class="blog-card-eyebrow">Risk Management · 7 min</div>
@@ -325,12 +323,12 @@
 
     <aside class="post-sidebar">
       <div class="sidebar-block">
-        <div class="sidebar-label">Chi sono</div>
-        <p style="font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:16px;">Pedro Pizarro — AI Delivery Manager con 14 anni di esperienza. Basato in Italia, lavoro da remoto in tutta l'UE.</p>
-        <a href="/about.html" class="btn-secondary" style="font-size:11px;">Bio completa ↗</a>
+        <div class="sidebar-label">About</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:16px;">Pedro Pizarro — AI Delivery Manager with 14 years of experience. Based in Italy, working remotely across the EU.</p>
+        <a href="/contact.html" class="btn-secondary" style="font-size:11px;">Get in touch ↗</a>
       </div>
       <div class="sidebar-block">
-        <div class="sidebar-label">Servizi</div>
+        <div class="sidebar-label">Services</div>
         <div class="sidebar-links">
           <a href="/services.html" class="sidebar-link">AI Project Delivery</a>
           <a href="/services.html" class="sidebar-link">Agile Transformation</a>
@@ -340,7 +338,7 @@
       <div class="sidebar-block">
         <div class="sidebar-label">Case Studies</div>
         <div class="sidebar-links">
-          <a href="/case-studies/ai-startup-mvp.html" class="sidebar-link">AI Startup MVP Italy</a>
+          <a href="/case-studies/ai-startup-mvp.html" class="sidebar-link">AI Platform from Zero</a>
           <a href="/case-studies/enterprise-agile-transformation.html" class="sidebar-link">Enterprise Agile Transformation</a>
         </div>
       </div>
